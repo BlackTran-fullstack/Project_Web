@@ -1,0 +1,40 @@
+#header {
+    width: 100%;
+
+    background: #fff;
+
+    position: sticky;
+    top: -20px;
+    z-index: 1;
+}
+
+#header .nav-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    max-width: calc(100% - 154px);
+    padding-top: 30px;
+    padding-bottom: 10px;
+    margin: auto;
+}
+
+#header .navbar-menu {
+    display: flex;
+    justify-content: space-between;
+
+    width: 33%;
+}
+
+#header .navbar-menu a {
+    font-weight: 500;
+
+    color: #000;
+}
+
+#header .navbar-icons {
+    display: flex;
+    justify-content: space-between;
+
+    width: 19%;
+}

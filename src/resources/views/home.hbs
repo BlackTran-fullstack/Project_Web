@@ -1,0 +1,179 @@
+<main id="home">
+    <div class="hero">
+        <div class="hero-introduce">
+            <div class="hero-content">
+                <p class="sub-title">New Arrival</p>
+
+                <h1 class="title">Discover Our New Collection</h1>
+
+                <p class="desc">Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit. Ut elit tellus, luctus nec ullamcorper
+                    mattis.</p>
+
+                <a href="#!" class="button hero-btn">BUY NOW</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="browse">
+        <div class="browse-content">
+            <div class="browse-introduce">
+                <h3 class="sec-title">Browse The Range</h3>
+
+                <p class="desc">Lorem ipsum dolor sit amet, consectetur
+                    adipiscing elit.</p>
+            </div>
+
+            <div class="browse-category">
+                <div class="category-item">
+                    <a href="#!"><img
+                            src="/img/home_dining.jpg"
+                            alt="Dining"
+                        /></a>
+
+                    <p class="category-title">Dining</p>
+                </div>
+
+                <div class="category-item">
+                    <a href="#!"><img
+                            src="/img/home_living.jpg"
+                            alt="Living"
+                        /></a>
+
+                    <p class="category-title">Living</p>
+                </div>
+
+                <div class="category-item">
+                    <a href="#!"><img
+                            src="/img/home_bedroom.jpg"
+                            alt="Bedroom"
+                        /></a>
+
+                    <p class="category-title">Bedroom</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="products">
+        <div class="products-content">
+            <h2 class="sub-title">Our Products</h2>
+
+            <ul class="list-products">
+                {{#each products}}
+                    <li class="product">
+                        <div class="product-card">
+                            <a href="#!" class="product-btn">
+                                <img
+                                    src="/img/inspiration_bedroom.jpg"
+                                    alt="{{this.name}}"
+                                    class="product-image"
+                                />
+
+                                <div class="product-info">
+                                    <h3 class="product-name">{{this.name}}</h3>
+
+                                    <p
+                                        class="product-desc"
+                                    >{{this.description}}</p>
+
+                                    <p
+                                        class="product-price"
+                                        data-price="{{this.price}}"
+                                    >{{this.price}}</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="product-hover">
+                            <div class="product-actions">
+                                <a
+                                    href="/shop/{{this.slug}}"
+                                    class="button cart-btn"
+                                >View details</a>
+
+                                <div class="actions">
+                                    <a href="#!" class="action share">
+                                        <img src="/img/share.svg" alt="" />
+                                        <p class="action-name">Share</p>
+                                    </a>
+
+                                    <a href="#!" class="action compare">
+                                        <img src="/img/compare.svg" alt="" />
+                                        <p class="action-name">Compare</p>
+                                    </a>
+
+                                    <a href="#!" class="action like">
+                                        <img src="/img/like.svg" alt="" />
+                                        <p class="action-name">Like</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+
+            <a href="/shop" class="button products-btn">Show More</a>
+        </div>
+    </div>
+
+    <div class="inspiration">
+        <div class="inspiration-content">
+            <div class="inspiration-introduce">
+                <h2 class="sub-title">50+ Beautiful rooms inspiration</h2>
+
+                <p class="desc">Our designer already made a lot of beautiful
+                    prototipe of rooms that inspire you</p>
+
+                <a href="#!" class="button inspiration-btn">Explore More</a>
+            </div>
+
+            <div class="inspiration-rooms">
+                <div class="room">
+                    <img
+                        src="/img/inspiration_bedroom.jpg"
+                        alt=""
+                        class="room-picture"
+                    />
+
+                    <div class="room-introduce">
+                        <div class="info">
+                            <div class="general-information">
+                                <p class="numerical-order">01</p>
+                                <div></div>
+                                <p class="room-type">Bed Room</p>
+                            </div>
+
+                            <h3 class="inspiration-name">Inner Peace</h3>
+                        </div>
+                    </div>
+
+                    <a href="#!" class="room-detail">
+                        <img src="/img/room_detail.svg" alt="" />
+                    </a>
+                </div>
+
+                <div class="room">
+                    <img
+                        src="/img/inspiration_living.jpg"
+                        alt=""
+                        class="room-picture"
+                    />
+                </div>
+
+                <div class="room">
+                    <img
+                        src="/img/inspiration_dining.jpg"
+                        alt=""
+                        class="room-picture"
+                    />
+                </div>
+
+                <a href="#!" class="next-room">
+                    <img src="/img/next_room.svg" alt="" />
+                </a>
+            </div>
+        </div>
+    </div>
+</main>

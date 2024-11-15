@@ -1,0 +1,302 @@
+<main id="singleProduct">
+    <div class="breadcrumb">
+        <div class="singleProduct-content">
+            <div class="breadcrumb-content">
+                <a href="/">Home</a>
+                <img src="/img/arrow_right.svg" alt="" />
+                <a href="/shop">Shop</a>
+                <img src="/img/arrow_right.svg" alt="" />
+                <div class="toolbar-separate"></div>
+                <p class="product-name">{{product.name}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="singleProduct-page">
+        <div class="singleProduct-content">
+            <div class="singleProduct-info">
+                <div class="product-image">
+                    <ul class="image-gallery">
+                        <li class="thumbnail"><img
+                                src="/img/inspiration_bedroom.jpg"
+                                alt="{{product.name}}"
+                            /></li>
+                        <li class="thumbnail"><img
+                                src="/img/inspiration_bedroom.jpg"
+                                alt="{{product.name}}"
+                            /></li>
+                        <li class="thumbnail"><img
+                                src="/img/inspiration_bedroom.jpg"
+                                alt="{{product.name}}"
+                            /></li>
+                        <li class="thumbnail"><img
+                                src="/img/inspiration_bedroom.jpg"
+                                alt="{{product.name}}"
+                            /></li>
+                    </ul>
+
+                    <div class="main-image">
+                        <img
+                            src="/img/inspiration_bedroom.jpg"
+                            alt="{{product.name}}"
+                        />
+                    </div>
+                </div>
+
+                <div class="product-info">
+                    <div class="product-title">{{product.name}}</div>
+
+                    <div
+                        class="product-price"
+                        data-price="{{product.price}}"
+                    >{{product.price}}</div>
+
+                    <div class="reviews">
+                        <ul class="stars">
+                            <li class="star"><img
+                                    src="/img/star_full.svg"
+                                    alt=""
+                                /></li>
+                            <li class="star"><img
+                                    src="/img/star_full.svg"
+                                    alt=""
+                                /></li>
+                            <li class="star"><img
+                                    src="/img/star_full.svg"
+                                    alt=""
+                                /></li>
+                            <li class="star"><img
+                                    src="/img/star_full.svg"
+                                    alt=""
+                                /></li>
+                            <li class="star"><img
+                                    src="/img/star_half.svg"
+                                    alt=""
+                                /></li>
+                        </ul>
+
+                        <div class="partition"></div>
+
+                        <p class="review-count">5 Customer Reviews</p>
+                    </div>
+
+                    <p class="product-desc">{{product.long_description}}</p>
+
+                    <div class="size-options">
+                        <p class="size-title">Size</p>
+
+                        <div class="sizes">
+                            <button class="size">L</button>
+                            <button class="size">XL</button>
+                            <button class="size">XS</button>
+                        </div>
+                    </div>
+
+                    <div class="color-options">
+                        <p class="color-title">Color</p>
+
+                        <button
+                            class="color"
+                            style="background: #816DFA;"
+                        ></button>
+                        <button
+                            class="color"
+                            style="background: #000000;"
+                        ></button>
+                        <button
+                            class="color"
+                            style="background: #B88E2F;"
+                        ></button>
+                    </div>
+
+                    <div class="actions">
+                        <div class="quantity-selector">
+                            <button class="quantity-btn reduce">-</button>
+                            <p class="quantity">1</p>
+                            <button class="quantity-btn increase">+</button>
+                        </div>
+
+                        <button class="add-to-cart">Add To Cart</button>
+                        <button class="compare">+ Compare</button>
+                    </div>
+
+                    <div class="separation"></div>
+
+                    <div class="product-summary">
+                        <div class="row">
+                            <div class="topic">
+                                <p>SKU</p>
+                                <p>:</p>
+                            </div>
+
+                            <p class="info sku">SS001</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="topic">
+                                <p>Category</p>
+                                <p>:</p>
+                            </div>
+
+                            <p class="info category">Sofas</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="topic">
+                                <p>Tags</p>
+                                <p>:</p>
+                            </div>
+
+                            <p class="info tags">Sofa, Chair, Home, Shop</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="topic">
+                                <p>Share</p>
+                                <p>:</p>
+                            </div>
+
+                            <div class="info social">
+                                <a href="#!"><img
+                                        src="/img/facebook.svg"
+                                        alt="Facebook"
+                                    /></a>
+                                <a href="#!"><img
+                                        src="/img/linkedIn.svg"
+                                        alt="LinkedIn"
+                                    /></a>
+                                <a href="#!"><img
+                                        src="/img/twitter.svg"
+                                        alt="Twitter"
+                                    /></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="singleProduct-overview">
+        <div class="singleProduct-content">
+            <div class="overview-content">
+                <div class="heading">
+                    <h2 class="tab active">Description</h2>
+                    <h2 class="tab">Additional Information</h2>
+                    <h2 class="tab">Reviews [5]</h2>
+                </div>
+
+                <div class="overview-body">
+                    <p>{{product.long_description}}</p>
+                </div>
+
+                <div class="overview-picture">
+                    <img
+                        src="/img/inspiration_bedroom.jpg"
+                        alt="{{product.name}}"
+                    />
+
+                    <img
+                        src="/img/inspiration_bedroom.jpg"
+                        alt="{{product.name}}"
+                    />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="singleProduct-related-products">
+        <div class="singleProduct-content">
+            <div class="related-products-content">
+                <h2 class="sub-title">Related Products</h2>
+
+                <div class="products">
+                    <div class="products-content">
+                        <ul class="list-products">
+                            {{#each products}}
+                                <li class="product">
+                                    <div class="product-card">
+                                        <a href="#!" class="product-btn">
+                                            <img
+                                                src="/img/inspiration_bedroom.jpg"
+                                                alt="{{this.name}}"
+                                                class="product-image"
+                                            />
+
+                                            <div class="product-info">
+                                                <h3
+                                                    class="product-name"
+                                                >{{this.name}}</h3>
+
+                                                <p
+                                                    class="product-desc"
+                                                >{{this.description}}</p>
+
+                                                <p
+                                                    class="product-price"
+                                                    data-price="{{this.price}}"
+                                                >{{this.price}}</p>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="product-hover">
+                                        <div class="product-actions">
+                                            <a
+                                                href="/shop/{{this.slug}}"
+                                                class="button cart-btn"
+                                            >View details</a>
+
+                                            <div class="actions">
+                                                <a
+                                                    href="#!"
+                                                    class="action share"
+                                                >
+                                                    <img
+                                                        src="/img/share.svg"
+                                                        alt=""
+                                                    />
+                                                    <p
+                                                        class="action-name"
+                                                    >Share</p>
+                                                </a>
+
+                                                <a
+                                                    href="#!"
+                                                    class="action compare"
+                                                >
+                                                    <img
+                                                        src="/img/compare.svg"
+                                                        alt=""
+                                                    />
+                                                    <p
+                                                        class="action-name"
+                                                    >Compare</p>
+                                                </a>
+
+                                                <a
+                                                    href="#!"
+                                                    class="action like"
+                                                >
+                                                    <img
+                                                        src="/img/like.svg"
+                                                        alt=""
+                                                    />
+                                                    <p
+                                                        class="action-name"
+                                                    >Like</p>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {{/each}}
+                        </ul>
+
+                        <a href="/shop" class="button products-btn">Show More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
