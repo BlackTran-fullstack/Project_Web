@@ -1,0 +1,187 @@
+#register .register-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 316px;
+
+    background-image: url(/img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+}
+
+#register .register-header .register-title {
+    font-size: 4.8rem;
+    font-weight: 500;
+
+    text-align: center;
+}
+
+#register .register-header .register-breadcrumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 20px;
+}
+
+#register .register-breadcrumb a {
+    font-weight: 500;
+
+    color: #000;
+}
+
+#register .register-body .register-container {
+    width: 40%;
+    padding: 50px 0;
+    margin: auto;
+}
+
+#register .register-container .sub-title {
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e5e5e8;
+
+    font-weight: 700;
+
+    position: relative;
+}
+
+#register .register-container .sub-title::after {
+    content: "";
+
+    display: block;
+
+    width: 40%;
+    height: 1.5px;
+    background: #b88e2f;
+
+    position: absolute;
+    bottom: -1px;
+}
+
+#register .register-container .title-form {
+    margin-top: 15px;
+
+    font-size: 1.3rem;
+}
+
+#register .register-container #register-form {
+    margin-top: 15px;
+}
+
+#register #register-form .input-group {
+    width: 88%;
+    margin: auto;
+
+    position: relative;
+}
+
+#register #register-form .fa-solid {
+    font-size: 2rem;
+
+    color: #cbcbcb;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 13px;
+}
+
+#register #register-form input {
+    width: 100%;
+    padding: 25px 0;
+    padding-left: 70px;
+    border: 1px solid #9f9f9f;
+
+    border-radius: 10px;
+    outline: none;
+
+    font-size: 1.6rem;
+    font-weight: 400;
+
+    color: #9f9f9f;
+    background: #fff;
+
+    transition: all 0.2s ease;
+}
+
+#register #register-form input:focus {
+    border-color: #b88e2f;
+}
+
+#register #register-form input:focus ~ .fa-envelope,
+#register #register-form input:focus ~ .fa-lock {
+    color: #b88e2f;
+}
+
+#register #register-form .input-group::after {
+    content: "";
+
+    width: 6px;
+    height: 44px;
+
+    background: url(/img/icon_popup_login.png);
+    background-position: -19px 0;
+
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 48px;
+}
+
+#register #register-form .form-password {
+    margin-top: 30px;
+}
+
+#register #register-form .hide_show_password {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10%;
+}
+
+#register .register-container .register-btn {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #b88e2f;
+    margin: 30px auto 0;
+
+    border-radius: 5px;
+
+    font-weight: 700;
+
+    color: #fff;
+    background: #b88e2f;
+
+    transition: 0.5s ease;
+}
+
+#register .register-container .register-btn:hover {
+    color: #b88e2f;
+    background: #fff;
+}
+
+#register .register-container .register-login {
+    margin-top: 20px;
+
+    font-size: 1.2rem;
+    text-align: center;
+
+    color: #9f9f9f;
+}
+
+#register .register-container .register-login .login-link {
+    font-weight: 700;
+
+    color: #6aa1da;
+    margin-left: 6px;
+
+    transition: 0.3s ease;
+}
+
+#register .register-container .register-login .login-link:hover {
+    color: #b88e2f;
+}
