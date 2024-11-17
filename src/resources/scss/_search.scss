@@ -35,3 +35,170 @@
         color: #fff;
     }
 }
+
+
+.hiden{
+    display: none;
+}
+
+.products {
+    margin-top: 56px;
+}
+
+.products .products-content {
+    max-width: calc(100% - 204px);
+    margin: auto;
+}
+
+.products-content .sub-title {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.2;
+
+    text-align: center;
+
+    color: #3a3a3a;
+}
+
+.products .list-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+
+    margin-top: 32px;
+}
+
+.list-products .product {
+    background: #f4f5f7;
+
+    position: relative;
+}
+
+.list-products .product-image {
+    width: 100%;
+
+    object-fit: cover;
+}
+
+.list-products .product-info {
+    padding: 16px 0 30px 16px;
+}
+
+.product-info .product-name {
+    font-size: 2.4rem;
+    font-weight: 600;
+
+    color: #3a3a3a;
+}
+
+.product-info .product-desc {
+    margin-top: 8px;
+
+    font-size: 1.4rem;
+
+    color: #898989;
+}
+
+.product-info .product-price {
+    margin-top: 8px;
+
+    font-size: 2rem;
+    font-weight: 600;
+
+    color: #3a3a3a;
+}
+
+.products-content .products-btn {
+    max-width: 245px;
+    height: 48px;
+    border: 1px solid #b88e2f;
+    margin: 32px auto 0;
+
+    font-weight: 600;
+
+    color: #b88e2f;
+}
+
+.list-products .product-hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(51, 51, 51, 0.72);
+
+    position: absolute;
+    top: 0;
+
+    display: none;
+}
+
+.product-hover .product-actions {
+    width: 88%;
+}
+
+.product-hover .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: 24px;
+}
+
+.product-hover .cart-btn {
+    max-width: 80%;
+    height: 48px;
+    margin: auto;
+
+    font-weight: 600;
+
+    color: #b88e2f;
+    background: #fff;
+}
+
+.product-hover .action {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.product-hover .action-name {
+    font-weight: 600;
+
+    color: #fff;
+}
+
+.product:hover .product-hover {
+    display: flex;
+}
+
+.shop-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 38px;
+
+    margin-top: 70px;
+}
+
+.show-more{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.show-more a{
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: f4f5f7;
+    color: #000;
+}
+
+.show-more a:hover{
+    background-color: #b88e2f;
+    color: #fff;
+}

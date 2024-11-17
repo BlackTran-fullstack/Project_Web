@@ -1,9 +1,81 @@
 <div class="search-form">
-    <form class="form-display" method="GET" action="/shop/search">
+    <form class="form-display" method="GET" action="/search">
         <div>
             <label for="search-input" class="form-label"></label>
-            <input type="text" name="q" class="form-control" id="search-input" placeholder="Search the item (Name, Descripton...)">
+            <input type="text" name="q" class="form-control" id="search-input" placeholder="Search the item (Name, Descripton...)" list="suggestions">
+            <datalist id="suggestions">
+                <option value="Sofa">
+                <option value="Chair">
+                <option value="Table">
+                <option value="Bed">
+                <option value="Desk">
+            </datalist>
         </div>
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="btn-search">Search</button>
     </form>
 </div>
+
+<div class="products">
+        <div class="products-content">
+            <ul class="list-products">
+                {{#each products}}
+                    <li class="product">
+                        <div class="product-card">
+                            <a href="#!" class="product-btn">
+                                <img
+                                    src="/img/inspiration_bedroom.jpg"
+                                    alt="{{this.name}}"
+                                    class="product-image"
+                                />
+
+                                <div class="product-info">
+                                    <h3 class="product-name">{{this.name}}</h3>
+
+                                    <p
+                                        class="product-desc"
+                                    >{{this.description}}</p>
+
+                                    <p
+                                        class="product-price"
+                                        data-price="{{this.price}}"
+                                    >{{this.price}}</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="product-hover">
+                            <div class="product-actions">
+                                <a
+                                    href="/shop/{{this.slug}}"
+                                    class="button cart-btn"
+                                >View details</a>
+
+                                <div class="actions">
+                                    <a href="#!" class="action share">
+                                        <img src="/img/share.svg" alt="" />
+                                        <p class="action-name">Share</p>
+                                    </a>
+
+                                    <a href="#!" class="action compare">
+                                        <img src="/img/compare.svg" alt="" />
+                                        <p class="action-name">Compare</p>
+                                    </a>
+
+                                    <a href="#!" class="action like">
+                                        <img src="/img/like.svg" alt="" />
+                                        <p class="action-name">Like</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+
+<div class="show-more">
+    <a href="/shop/search?q={{q}}">Show all result</a>
+</div>
+
+
