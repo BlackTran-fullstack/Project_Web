@@ -1,17 +1,22 @@
 const Products = require("../models/Products");
+const Categories = require("../models/Categories");
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
 
 class ShopController {
     // [GET] /shop
     shop(req, res, next) {
-        Products.find({})
-            .then((products) => {
-                res.render("shop", {
-                    products: mutipleMongooseToObject(products),
-                });
-            })
-            .catch(next);
+        Promise.all([
+            Products.find({}),
+            Categories.find({})
+        ])
+        .then(([products, categories]) => {
+            res.render("shop", {
+                products: mutipleMongooseToObject(products),
+                categories: mutipleMongooseToObject(categories),
+            });
+        })
+        .catch(next);
     }
 
     // [GET] /shop/:slug

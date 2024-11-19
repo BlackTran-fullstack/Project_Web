@@ -9,6 +9,9 @@ const Products = new Schema({
     long_description: { type: String },
     slug: { type: String },
     createdAt: { type: Date, default: Date.now },
+    categoriesId: { type: Schema.Types.ObjectId, ref: "Categories" },
+    rate: { type: Number, default: 0 },
+    imagePath: { type: String },
 });
 
 module.exports = mongoose.model("Products", Products);
