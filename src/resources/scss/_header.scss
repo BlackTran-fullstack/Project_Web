@@ -22,6 +22,7 @@
 #header .navbar-menu {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     width: 33%;
 }
@@ -35,6 +36,65 @@
 #header .navbar-icons {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     width: 19%;
+
+    position: relative;
+}
+
+#header .fa-user {
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+#header .dropdown-menu {
+    display: none;
+
+    border-radius: 5px;
+
+    background: #fff;
+    position: absolute;
+    top: 100%;
+    left: -10px;
+    transform: translateY(20px);
+}
+
+#header #user-dropdown.show {
+    display: block;
+}
+
+#header .dropdown-menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+
+    height: 40px;
+    padding: 10px;
+
+    border-radius: 5px;
+
+    color: #000;
+    font-weight: 500;
+
+    transition: 0.3s ease;
+}
+
+#header .dropdown-menu .dropdown-item:hover {
+    background: #eccc80;
+    transform: scale(1.05);
+}
+
+#header .dropdown-menu .fa-solid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+
+    color: #fff;
+    background: #b88e2f;
 }

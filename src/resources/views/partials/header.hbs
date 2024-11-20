@@ -18,10 +18,21 @@
         </ul>
 
         <div class="navbar-icons">
-            <a href="/login" class="user"><img
-                    src="/img/profile.svg"
-                    alt="Profile"
-                /></a>
+            {{#if user}}
+                <i class="fa-solid fa-user" onclick="toggle()"></i>
+                <div id="user-dropdown" class="dropdown-menu">
+                    <form action="/logout?_method=DELETE" method="POST">
+                        <button class="dropdown-item"><i
+                                class="fa-solid fa-arrow-right-from-bracket"
+                            ></i>Log out</button>
+                    </form>
+                </div>
+            {{else}}
+                <a href="/login" class="user"><img
+                        src="/img/profile.svg"
+                        alt="Profile"
+                    /></a>
+            {{/if}}
             <a href="#!" class="search"><img
                     src="/img/search.svg"
                     alt="Search"
@@ -37,3 +48,5 @@
         </div>
     </nav>
 </header>
+
+<script src="/script/header.js"></script>

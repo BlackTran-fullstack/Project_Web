@@ -14,10 +14,12 @@
         <div class="register-container">
             <h2 class="sub-title">Create an account</h2>
 
-            <form id="register-form">
+            <form id="register-form" action="/register" method="POST">
                 <div class="input-group form-email">
                     <input
                         type="email"
+                        id="email"
+                        name="email"
                         placeholder="Enter your email"
                         required
                     />
@@ -28,6 +30,8 @@
                 <div class="input-group form-password">
                     <input
                         type="password"
+                        id="password"
+                        name="password"
                         placeholder="Create password"
                         required
                     />
@@ -44,6 +48,8 @@
                 <div class="input-group form-password">
                     <input
                         type="password"
+                        id="confirm_password"
+                        name="confirm_password"
                         placeholder="Confirm password"
                         required
                     />
@@ -56,9 +62,9 @@
                         </div>
                     </div>
                 </div>
-            </form>
 
-            <button class="button register-btn" type="submit">REGISTER NOW</button>
+                <button class="button register-btn" type="submit">REGISTER NOW</button>
+            </form>
 
             <p class="register-login">Already have an account?
                 <a href="/login" class="login-link">Login Here</a></p>
