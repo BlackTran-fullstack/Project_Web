@@ -13,7 +13,7 @@
     <div class="shop-toolbar">
         <div class="toolbar-content">
             <div class="toolbar-left">
-                <button class="filter-btn">
+                <button class="filter-btn" onclick="filter_toggle()">
                     <img src="/img/filter.svg" alt="" />
                     <p>Filter</p>
                 </button>
@@ -39,16 +39,28 @@
 
                 <div class="toolbar-sort">
                     <p class="sort-by">Sort by</p>
-                    <select id="sort-by">
+                    <select id="sort-by" onchange="applyFilters()">
                         <option value="default">Default</option>
-                        <option value="popularity">Popularity</option>
-                        <option value="rating">Rating</option>
-                        <option value="price">Price</option>
+                        <option value="stock_0">Decrease Stock</option>
+                        <option value="stock_1">Increase Stock</option>
+                        <option value="rating_0">Decrease Rating</option>
+                        <option value="rating_1">Increase Rating</option>
+                        <option value="price_0">Decrease Price</option>
+                        <option value="price_1">Increase Price</option>
                     </select>
                 </div>
             </div>
-
         </div>
+
+        <div id="filter-selected">
+            <select id="categories" onchange="applyFilters()">
+                <option value="all" selected>All</option>
+                {{#each categories}}
+                    <option value="{{this._id}}">{{this.name}}</option>
+                {{/each}}
+            </select>
+        </div>
+
     </div>
 
     <div class="products">
@@ -59,7 +71,7 @@
                         <div class="product-card">
                             <a href="#!" class="product-btn">
                                 <img
-                                    src="/img/inspiration_bedroom.jpg"
+                                    src="{{this.imagePath}}"
                                     alt="{{this.name}}"
                                     class="product-image"
                                 />
@@ -75,6 +87,22 @@
                                         class="product-price"
                                         data-price="{{this.price}}"
                                     >{{this.price}}</p>
+
+                                    <div class="rating_stock">
+                                        <p
+                                            class="product-rating"
+                                            data-rating="{{this.rating}}"
+                                            >{{this.rate}} 
+                                            <img src="/img/star_full.svg"/> 
+                                        </p>
+
+                                        <p
+                                            class="product-stock"
+                                            data-stock="{{this.stock}}"
+                                            >
+                                            {{this.stock}} in stock
+                                        </p>
+                                    </div>
                                 </div>
                             </a>
                         </div>

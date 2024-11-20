@@ -38,10 +38,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
+    flex-direction: column;
     width: 100%;
     height: 100px;
-
     background: #f9f1e7;
 }
 
@@ -49,7 +48,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     width: calc(100% - 200px);
 }
 
@@ -57,7 +55,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     width: 36%;
 }
 
@@ -80,6 +77,16 @@
     display: flex;
     justify-content: space-between;
     text-align: center;
+}
+
+#shop #filter-selected {
+    display: none;
+}
+
+#shop #filter-selected #categories {
+    background-color: #fff;
+    font-size: 1.7rem;
+    width: 30rem;
 }
 
 #shop .toolbar-content .toolbar-show {
@@ -106,7 +113,7 @@
 }
 
 #shop .toolbar-content #sort-by {
-    width: 100px;
+    width: 200px;
     height: 55px;
     margin-left: 17px;
 
@@ -139,23 +146,24 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 32px;
-
-    margin-top: 32px;
+    background-color: #fff;
+    padding: 30px 20px;
 }
 
 #shop .list-products .product {
     background: #f4f5f7;
-
+    height: 400px;
     position: relative;
 }
 
 #shop .list-products .product-image {
     width: 100%;
-
+    height: 65%;
     object-fit: cover;
 }
 
 #shop .list-products .product-info {
+    height: 35%;
     padding: 16px 0 30px 16px;
 }
 
@@ -170,8 +178,7 @@
 #shop .product-info .product-desc {
     width: 80%;
     margin-top: 8px;
-
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     line-height: 1.5;
 
     color: #898989;
@@ -179,11 +186,25 @@
 
 #shop .product-info .product-price {
     margin-top: 8px;
-
     font-size: 2rem;
     font-weight: 600;
-
     color: #3a3a3a;
+}
+
+#shop .product-info .rating_stock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+#shop .product-info .product-rating,
+#shop .product-info .product-stock {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    margin-top: 8px;
+    color: #898989;
 }
 
 #shop .products-content .products-btn {

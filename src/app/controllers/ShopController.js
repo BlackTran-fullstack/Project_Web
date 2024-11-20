@@ -1,15 +1,17 @@
 const Products = require("../models/Products");
+const Categories = require("../models/Categories");
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
 
 class ShopController {
     // [GET] /shop
     shop(req, res, next) {
-        Products.find({})
-            .then((products) => {
+        Promise.all([Products.find({}), Categories.find({})])
+            .then(([products, categories]) => {
                 res.render("shop", {
                     products: mutipleMongooseToObject(products),
-                    user: mongooseToObject(req.user), //
+                    categories: mutipleMongooseToObject(categories),
+                    user: mongooseToObject(req.user),
                 });
             })
             .catch(next);
@@ -41,24 +43,25 @@ class ShopController {
 
         if (!search) {
             Products.find({})
-            .then((products) => {
-                res.render("shop", {
-                    products: mutipleMongooseToObject(products),
-                });
-            })
-            .catch(next);
-        }
-        else{
+                .then((products) => {
+                    res.render("shop", {
+                        products: mutipleMongooseToObject(products),
+                        user: mongooseToObject(req.user),
+                    });
+                })
+                .catch(next);
+        } else {
             // Tìm kiếm sản phẩm theo tên
             Products.find({
                 $or: [
-                    { name: { $regex: search, $options: 'i' } }, // Tìm kiếm theo tên (không phân biệt chữ hoa/thường)
-                    { description: { $regex: search, $options: 'i' } } // Tìm kiếm theo mô tả
-                ]
+                    { name: { $regex: search, $options: "i" } }, // Tìm kiếm theo tên (không phân biệt chữ hoa/thường)
+                    { description: { $regex: search, $options: "i" } }, // Tìm kiếm theo mô tả
+                ],
             })
                 .then((products) => {
                     res.render("shop", {
                         products: mutipleMongooseToObject(products),
+                        user: mongooseToObject(req.user),
                     });
                     //res.json(products);
                 })

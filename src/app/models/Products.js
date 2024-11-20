@@ -9,6 +9,9 @@ const Products = new Schema(
         stock: { type: Number, default: 0 },
         long_description: { type: String },
         slug: { type: String },
+        categoriesId: { type: Schema.Types.ObjectId, ref: "Categories" },
+        rate: { type: Number, default: 0 },
+        imagePath: { type: String },
     },
     {
         timestamps: true,

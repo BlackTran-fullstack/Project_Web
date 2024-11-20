@@ -146,18 +146,19 @@
 
 #home .list-products .product {
     background: #f4f5f7;
-
+    height: 400px;
     position: relative;
 }
 
 #home .list-products .product-image {
     width: 100%;
-
-    object-fit: cover;
+    height: 65%;
+    object-fit: contain;
 }
 
 #home .list-products .product-info {
     padding: 16px 0 30px 16px;
+    height: 35%;
 }
 
 #home .product-info .product-name {

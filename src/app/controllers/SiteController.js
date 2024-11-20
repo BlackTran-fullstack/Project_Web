@@ -37,7 +37,10 @@ class SiteController {
         const search = req.query.q;
 
         if (!search) {
-            return res.render("search", { products: [] });
+            return res.render("search", {
+                products: [],
+                user: mongooseToObject(req.user),
+            });
         } else {
             // Tìm kiếm sản phẩm theo tên
             Products.find({
@@ -51,6 +54,7 @@ class SiteController {
                     res.render("search", {
                         products: mutipleMongooseToObject(products),
                         q: search,
+                        user: mongooseToObject(req.user),
                     });
                     //res.json(products);
                 })
