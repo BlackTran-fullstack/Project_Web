@@ -79,11 +79,11 @@
     text-align: center;
 }
 
-#shop #filter-selected{
+#shop #filter-selected {
     display: none;
 }
 
-#shop #filter-selected #categories{
+#shop #filter-selected #categories {
     background-color: #fff;
     font-size: 1.7rem;
     width: 30rem;
@@ -159,7 +159,7 @@
 #shop .list-products .product-image {
     width: 100%;
     height: 65%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 #shop .list-products .product-info {
@@ -193,7 +193,8 @@
     flex-direction: row;
 }
 
-#shop .product-info .product-rating, #shop .product-info .product-stock {
+#shop .product-info .product-rating,
+#shop .product-info .product-stock {
     display: flex;
     align-items: center;
     font-size: 1.2rem;
