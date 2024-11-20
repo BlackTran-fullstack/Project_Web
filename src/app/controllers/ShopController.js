@@ -34,6 +34,37 @@ class ShopController {
             })
             .catch(next);
     }
+
+    // [GET] /shop/search
+    search(req, res, next) {
+        const search = req.query.q;
+
+        if (!search) {
+            Products.find({})
+            .then((products) => {
+                res.render("shop", {
+                    products: mutipleMongooseToObject(products),
+                });
+            })
+            .catch(next);
+        }
+        else{
+            // Tìm kiếm sản phẩm theo tên
+            Products.find({
+                $or: [
+                    { name: { $regex: search, $options: 'i' } }, // Tìm kiếm theo tên (không phân biệt chữ hoa/thường)
+                    { description: { $regex: search, $options: 'i' } } // Tìm kiếm theo mô tả
+                ]
+            })
+                .then((products) => {
+                    res.render("shop", {
+                        products: mutipleMongooseToObject(products),
+                    });
+                    //res.json(products);
+                })
+                .catch(next);
+        }
+    }
 }
 
 module.exports = new ShopController();
