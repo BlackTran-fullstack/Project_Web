@@ -9,6 +9,7 @@ class ShopController {
             .then((products) => {
                 res.render("shop", {
                     products: mutipleMongooseToObject(products),
+                    user: mongooseToObject(req.user), //
                 });
             })
             .catch(next);
@@ -28,6 +29,7 @@ class ShopController {
                 res.render("singleProduct.hbs", {
                     product: mongooseToObject(product),
                     products: mutipleMongooseToObject(products),
+                    user: mongooseToObject(req.user), //
                 });
             })
             .catch(next);

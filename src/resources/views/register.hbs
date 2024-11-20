@@ -25,6 +25,8 @@
                     />
 
                     <i class="fa-solid fa-envelope"></i>
+
+                    <span class="form-message"></span>
                 </div>
 
                 <div class="input-group form-password">
@@ -66,8 +68,16 @@
                 <button class="button register-btn" type="submit">REGISTER NOW</button>
             </form>
 
+            {{!  }}
+            <div id="error-message" class="error-message" style="display:none;">
+                <p>Passwords do not match!</p>
+            </div>
+            {{!  }}
+
             <p class="register-login">Already have an account?
                 <a href="/login" class="login-link">Login Here</a></p>
         </div>
     </div>
 </main>
+
+<script src="/script/register.js"></script>

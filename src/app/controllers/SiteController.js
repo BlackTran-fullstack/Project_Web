@@ -34,17 +34,53 @@ class SiteController {
     }
 
     // [GET] /login
-    login(req, res, next) {
-        res.render("login");
+    login(req, res) {
+        let rememberedEmail = "";
+        const token = req.cookies.rememberMe;
+
+        if (token) {
+            try {
+                // Giải mã JWT để lấy email
+                const decoded = jwt.verify(token, "secret-key"); // Sử dụng "secret-key" đã dùng để mã hóa
+                rememberedEmail = decoded.email; // Lấy email từ payload
+            } catch (err) {
+                console.error("Invalid token:", err);
+            }
+        }
+
+        res.render("login", { rememberedEmail });
     }
 
     // [POST] /login
     loginUser(req, res, next) {
-        passport.authenticate("local", {
-            successRedirect: "/",
-            failureRedirect: "/login",
-            failureFlash: true,
-        })(req, res, next); // Gọi hàm xác thực
+        passport.authenticate("local", (err, user, info) => {
+            if (err) return next(err);
+            if (!user) {
+                req.flash("error", info.message);
+                return res.redirect("/login");
+            }
+
+            req.logIn(user, (err) => {
+                if (err) return next(err);
+
+                // Nếu chọn "Remember Me"
+                if (req.body.rememberMe) {
+                    const token = jwt.sign(
+                        { email: user.email },
+                        "secret-key",
+                        {
+                            expiresIn: "7d",
+                        }
+                    );
+                    res.cookie("rememberMe", token, {
+                        httpOnly: true,
+                        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 ngày
+                    });
+                }
+
+                res.redirect("/");
+            });
+        })(req, res, next);
     }
 
     // [GET] /register

@@ -16,12 +16,6 @@
 
             <p class="title-form">Insert your account information:</p>
 
-            {{#if messages.error}}
-                <div class="alert alert-danger">
-                    {{messages.error}}
-                </div>
-            {{/if}}
-
             <form id="login-form" action="/login" method="POST">
                 <div class="input-group form-email">
                     <input
@@ -29,6 +23,7 @@
                         id="email"
                         name="email"
                         placeholder="Enter your email"
+                        value="{{rememberedEmail}}"
                         required
                     />
 
@@ -69,8 +64,18 @@
                 <button class="button login-btn" type="submit">LOGIN NOW</button>
             </form>
 
+            {{!  }}
+            {{#if messages.error}}
+                <div id="error-message" class="alert alert-danger">
+                    {{messages.error}}
+                </div>
+            {{/if}}
+            {{!  }}
+
             <p class="login-register">Don't have an account?
                 <a href="/register" class="register-link">Register Here</a></p>
         </div>
     </div>
 </main>
+
+<script src="/script/login.js"></script>
