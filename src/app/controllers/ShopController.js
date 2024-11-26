@@ -2,16 +2,37 @@ const Products = require("../models/Products");
 const Categories = require("../models/Categories");
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
+const paginatedResults = require("../../middlewares/paginated");
 
 class ShopController {
     // [GET] /shop
+    // shop(req, res, next) {
+    //     Promise.all([Products.find({}), Categories.find({})])
+    //         .then(([products, categories]) => {
+    //             res.render("shop", {
+    //                 products: mutipleMongooseToObject(products),
+    //                 categories: mutipleMongooseToObject(categories),
+    //                 user: mongooseToObject(req.user),
+    //             });
+    //         })
+    //         .catch(next);
+    // }
+
+    // [GET] /shop
     shop(req, res, next) {
-        Promise.all([Products.find({}), Categories.find({})])
-            .then(([products, categories]) => {
+        // Truy vấn danh mục song song với middleware phân trang sản phẩm
+        Categories.find({})
+            .lean()
+            .then((categories) => {
+                const paginatedProducts = res.paginatedResults; // Lấy kết quả từ middleware
                 res.render("shop", {
-                    products: mutipleMongooseToObject(products),
-                    categories: mutipleMongooseToObject(categories),
+                    products: mutipleMongooseToObject(
+                        paginatedProducts.results
+                    ), // Sản phẩm đã phân trang
+                    categories: mutipleMongooseToObject(categories), // Danh mục đầy đủ
                     user: mongooseToObject(req.user),
+                    nextPage: paginatedProducts.next, // Thông tin trang tiếp theo
+                    previousPage: paginatedProducts.previous, // Thông tin trang trước đó
                 });
             })
             .catch(next);
