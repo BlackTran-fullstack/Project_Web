@@ -49,7 +49,7 @@ class SiteController {
                     { description: { $regex: search, $options: "i" } }, // Tìm kiếm theo mô tả
                 ],
             })
-                .limit(4)
+                
                 .then((products) => {
                     res.render("search", {
                         products: mutipleMongooseToObject(products),
