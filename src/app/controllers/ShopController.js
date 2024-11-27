@@ -6,36 +6,25 @@ const paginatedResults = require("../../middlewares/paginated");
 
 class ShopController {
     // [GET] /shop
-    // shop(req, res, next) {
-    //     Promise.all([Products.find({}), Categories.find({})])
-    //         .then(([products, categories]) => {
-    //             res.render("shop", {
-    //                 products: mutipleMongooseToObject(products),
-    //                 categories: mutipleMongooseToObject(categories),
-    //                 user: mongooseToObject(req.user),
-    //             });
-    //         })
-    //         .catch(next);
-    // }
-
-    // [GET] /shop
     shop(req, res, next) {
-        // Truy vấn danh mục song song với middleware phân trang sản phẩm
-        Categories.find({})
-            .lean()
-            .then((categories) => {
-                const paginatedProducts = res.paginatedResults; // Lấy kết quả từ middleware
+        Promise.all([Products.find({}), Categories.find({})])
+            .then(([products, categories]) => {
                 res.render("shop", {
-                    products: mutipleMongooseToObject(
-                        paginatedProducts.results
-                    ), // Sản phẩm đã phân trang
-                    categories: mutipleMongooseToObject(categories), // Danh mục đầy đủ
+                    products: mutipleMongooseToObject(products),
+                    categories: mutipleMongooseToObject(categories),
                     user: mongooseToObject(req.user),
-                    nextPage: paginatedProducts.next, // Thông tin trang tiếp theo
-                    previousPage: paginatedProducts.previous, // Thông tin trang trước đó
                 });
             })
             .catch(next);
+    }
+
+    // [GET] /shop/api/products
+    getPaginatedProducts(req, res, next) {
+        if (res.paginatedResults) {
+            res.json(res.paginatedResults);
+        } else {
+            res.status(500).json({ message: "Pagination results not found" });
+        }
     }
 
     // [GET] /shop/:slug
@@ -52,7 +41,7 @@ class ShopController {
                 res.render("singleProduct.hbs", {
                     product: mongooseToObject(product),
                     products: mutipleMongooseToObject(products),
-                    user: mongooseToObject(req.user), //
+                    user: mongooseToObject(req.user),
                 });
             })
             .catch(next);
