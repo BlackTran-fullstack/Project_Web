@@ -27,8 +27,8 @@ router.post(
 
 router.delete("/logout", siteController.logout);
 
-router.get("/", siteController.home);
-
 router.get("/search", siteController.search);
+
+router.get("/", siteController.home);
 
 module.exports = router;

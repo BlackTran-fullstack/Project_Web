@@ -2,6 +2,7 @@ const Products = require("../models/Products");
 const Categories = require("../models/Categories");
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
+const paginatedResults = require("../../middlewares/paginated");
 
 class ShopController {
     // [GET] /shop
@@ -15,6 +16,15 @@ class ShopController {
                 });
             })
             .catch(next);
+    }
+
+    // [GET] /shop/api/products
+    getPaginatedProducts(req, res, next) {
+        if (res.paginatedResults) {
+            res.json(res.paginatedResults);
+        } else {
+            res.status(500).json({ message: "Pagination results not found" });
+        }
     }
 
     // [GET] /shop/:slug
@@ -31,7 +41,7 @@ class ShopController {
                 res.render("singleProduct.hbs", {
                     product: mongooseToObject(product),
                     products: mutipleMongooseToObject(products),
-                    user: mongooseToObject(req.user), //
+                    user: mongooseToObject(req.user),
                 });
             })
             .catch(next);
