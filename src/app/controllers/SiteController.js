@@ -35,6 +35,7 @@ class SiteController {
 
     search(req, res, next) {
         const search = req.query.q;
+        const showAll = req.query.showAll === "true";
 
         if (!search) {
             return res.render("search", {
@@ -51,8 +52,10 @@ class SiteController {
             })
                 
                 .then((products) => {
+                    const result = showAll ? products : products.slice(0, 4);
                     res.render("search", {
-                        products: mutipleMongooseToObject(products),
+                        products: mutipleMongooseToObject(result),
+                        showAll, // Gửi trạng thái showAll để hiển thị nút "Show All Result"
                         q: search,
                         user: mongooseToObject(req.user),
                     });
