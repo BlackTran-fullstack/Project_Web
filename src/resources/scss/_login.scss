@@ -34,6 +34,10 @@
     color: #000;
 }
 
+#login .login-body {
+    position: relative;
+}
+
 #login .login-body .login-container {
     width: 40%;
     padding: 50px 0;
@@ -67,14 +71,6 @@
 
     font-size: 1.3rem;
 }
-
-//
-#login #error-message {
-    margin-top: 10px;
-    text-align: center;
-    color: red;
-}
-//
 
 #login .login-container #login-form {
     margin-top: 15px;

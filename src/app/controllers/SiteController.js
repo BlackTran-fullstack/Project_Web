@@ -114,7 +114,7 @@ class SiteController {
 
     // [GET] /register
     register(req, res, next) {
-        res.render("register");
+        res.render("register", { error: req.flash("error") });
     }
 
     // [POST] /register

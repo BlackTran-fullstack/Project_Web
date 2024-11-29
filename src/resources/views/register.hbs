@@ -11,6 +11,29 @@
     </div>
 
     <div class="register-body">
+        <div
+            id="error-message-font-end"
+            class="error-message"
+            style="display:none;"
+        >
+            <img src="/img/error.svg" alt="" />
+
+            <div class="error-info">
+                <h2 class="error-title">Error</h2>
+                <p>Password does not match</p>
+            </div>
+        </div>
+
+        {{#if error}}
+            <div id="error-message" class="error-message">
+                <img src="/img/error.svg" alt="" />
+
+                <div class="error-info">
+                    <h2 class="error-title">Error</h2>
+                    <p>{{error}}</p>
+                </div>
+            </div>
+        {{/if}}
         <div class="register-container">
             <h2 class="sub-title">Create an account</h2>
 
@@ -67,12 +90,6 @@
 
                 <button class="button register-btn" type="submit">REGISTER NOW</button>
             </form>
-
-            {{!  }}
-            <div id="error-message" class="error-message" style="display:none;">
-                <p>Passwords do not match!</p>
-            </div>
-            {{!  }}
 
             <p class="register-login">Already have an account?
                 <a href="/login" class="login-link">Login Here</a></p>
