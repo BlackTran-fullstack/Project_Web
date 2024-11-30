@@ -11,6 +11,17 @@
     </div>
 
     <div class="login-body">
+
+        {{#if messages.error}}
+            <div id="error-message" class="error-message" style="display:none;">
+                <img src="/img/error.svg" alt="" />
+
+                <div class="error-info">
+                    <h2 class="error-title">Error</h2>
+                    <p>{{messages.error}}</p>
+                </div>
+            </div>
+        {{/if}}
         <div class="login-container">
             <h2 class="sub-title">Login</h2>
 
@@ -63,14 +74,6 @@
 
                 <button class="button login-btn" type="submit">LOGIN NOW</button>
             </form>
-
-            {{!  }}
-            {{#if messages.error}}
-                <div id="error-message" class="alert alert-danger">
-                    {{messages.error}}
-                </div>
-            {{/if}}
-            {{!  }}
 
             <p class="login-register">Don't have an account?
                 <a href="/register" class="register-link">Register Here</a></p>

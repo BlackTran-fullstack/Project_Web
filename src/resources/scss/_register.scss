@@ -34,6 +34,10 @@
     color: #000;
 }
 
+#register .register-body {
+    position: relative;
+}
+
 #register .register-body .register-container {
     width: 40%;
     padding: 50px 0;
@@ -69,11 +73,11 @@
 }
 
 //
-#register .error-message {
-    margin-top: 10px;
-    text-align: center;
-    color: red;
-}
+// #register .error-message {
+//     margin-top: 10px;
+//     text-align: center;
+//     color: red;
+// }
 //
 
 #register .register-container #register-form {

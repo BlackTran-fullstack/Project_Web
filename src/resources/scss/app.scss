@@ -39,6 +39,40 @@ select {
     border: none;
 }
 
+.error-message {
+    display: flex;
+    align-items: center;
+    column-gap: 9px;
+
+    width: 22%;
+    height: 68px;
+    border-radius: 6px;
+
+    background: #eb5757;
+
+    position: absolute;
+    top: 2%;
+    right: 2%;
+}
+
+.error-message img {
+    margin-left: 15px;
+}
+
+.error-message .error-title {
+    font-weight: 600;
+
+    color: #fff;
+}
+
+.error-message .error-title + p {
+    margin-top: 4px;
+
+    font-size: 1.4rem;
+
+    color: #fff;
+}
+
 @import "header";
 @import "login";
 @import "register";
