@@ -110,14 +110,11 @@
                     </div>
 
                     <div class="actions">
-                        <div class="quantity-selector">
-                            <button class="quantity-btn reduce">-</button>
-                            <p class="quantity">1</p>
-                            <button class="quantity-btn increase">+</button>
-                        </div>
-
-                        <button class="add-to-cart">Add To Cart</button>
-                        <button class="compare">+ Compare</button>
+                        <form action="/cart/add" method="POST">
+                            <input type="hidden" name="productId" value="{{product._id}}" />
+                            <input type="number" name="quantity" value="1" min="1" class="quantity-input" />
+                            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                        </form>
                     </div>
 
                     <div class="separation"></div>

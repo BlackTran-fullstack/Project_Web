@@ -29,6 +29,12 @@ router.delete("/logout", siteController.logout);
 
 router.get("/search", siteController.search);
 
+router.get("/cart", siteController.cart);
+
+router.post("/cart/add", siteController.addToCart);
+
+router.post("/cart/remove", siteController.removeFromCart);
+
 router.get("/", siteController.home);
 
 module.exports = router;

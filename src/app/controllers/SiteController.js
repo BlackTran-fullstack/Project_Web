@@ -20,6 +20,10 @@ initializePassport(
 );
 
 class SiteController {
+
+    
+
+
     // [GET] /
     home(req, res, next) {
         Products.find({})
@@ -169,6 +173,78 @@ class SiteController {
             return res.redirect("/");
         }
         next();
+    }
+
+    // [GET] /cart
+    cart(req, res) {
+        const cart = req.session.cart || [];
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        res.render("cart", {
+            cart: cart,
+            total: total,  // Truyền tổng vào view
+            user: req.user ? mongooseToObject(req.user) : null,
+        });
+    }
+    
+
+    // [POST] /cart/add
+    addToCart(req, res) {
+        const { productId, quantity } = req.body;
+        const quantityInt = parseInt(quantity, 10);  // Đảm bảo quantity là kiểu số
+
+        // Lấy thông tin sản phẩm từ database
+        Products.findById(productId)
+            .then((product) => {
+                if (!product) {
+                    return res.status(404).send("Product not found.");
+                }
+
+                // Khởi tạo giỏ hàng trong session nếu chưa có
+                if (!req.session.cart) {
+                    req.session.cart = [];
+                }
+
+                const cart = req.session.cart;
+
+                // Kiểm tra nếu sản phẩm đã có trong giỏ hàng
+                const existingItem = cart.find((item) => item.productId.toString() === productId);
+                if (existingItem) {
+                    // Cập nhật số lượng nếu sản phẩm đã có
+                    existingItem.quantity += quantityInt;
+                } else {
+                    // Thêm mới sản phẩm vào giỏ hàng
+                    cart.push({
+                        productId: productId,
+                        name: product.name,
+                        price: product.price,
+                        imagePath: product.imagePath,
+                        quantity: quantityInt,
+                    });
+                }
+
+                // Lưu lại giỏ hàng vào session
+                req.session.cart = cart;
+                res.redirect("/cart");
+            })
+            .catch((err) => {
+                console.error("Error adding to cart:", err);
+                res.status(500).send("Internal Server Error");
+            });
+    }
+
+    // [POST] /cart/remove
+    removeFromCart(req, res) {
+        const { productId } = req.body;
+
+        if (!req.session.cart) {
+            return res.redirect("/cart");
+        }
+
+        req.session.cart = req.session.cart.filter(
+            (item) => item.productId !== productId
+        );
+
+        res.redirect("/cart");
     }
 }
 
