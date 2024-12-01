@@ -1,0 +1,30 @@
+<main id="cartPage">
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+
+        {{#if cart.length}}
+            <ul class="cart-items">
+                {{#each cart}}
+                    <li class="cart-item">
+                        <img src="{{this.imagePath}}" alt="{{this.name}}" class="cart-item-image" />
+                        <div class="cart-item-info">
+                            <h2>{{this.name}}</h2>
+                            <p>Price: ${{this.price}}</p>
+                            <p>Quantity: {{this.quantity}}</p>
+                            <form action="/cart/remove" method="POST">
+                                <input type="hidden" name="productId" value="{{this.productId}}" />
+                                <button type="submit" class="remove-btn">Remove</button>
+                            </form>
+                        </div>
+                    </li>
+                {{/each}}
+            </ul>
+            <div class="cart-summary">
+                <p>Total: ${{total}}</p>  <!-- Hiển thị tổng -->
+                <a href="/checkout" class="checkout-btn">Checkout</a>
+            </div>
+        {{else}}
+            <p>Your cart is empty. <a href="/shop">Continue shopping</a></p>
+        {{/if}}
+    </div>
+</main>
