@@ -109,11 +109,16 @@
                         ></button>
                     </div>
 
-                    <div class="actions">
-                        <form action="/cart/add" method="POST">
+                    <div>
+                        <form class="actions" action="/cart/add" method="POST">
                             <input type="hidden" name="productId" value="{{product._id}}" />
-                            <input type="number" name="quantity" value="1" min="1" class="quantity-input" />
-                            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+                            <div class="quantity-selector">
+                                <button type="button" class="quantity-btn reduce">-</button>
+                                <input type="number" name="quantity" value="1" min="1" class="quantity" readonly />
+                                <button type="button" class="quantity-btn increase">+</button>
+                            </div>
+                            <button type="submit" class="add-to-cart">Add to Cart</button>
+                            
                         </form>
                     </div>
 
@@ -297,3 +302,5 @@
         </div>
     </div>
 </main>
+
+<script src="/script/singleProduct.js"></script>

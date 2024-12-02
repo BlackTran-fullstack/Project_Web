@@ -205,6 +205,21 @@
     border-radius: 10px;
 }
 
+.quantity-selector .quantity {
+    width: 50%;
+    text-align: center;
+    outline: none;
+    appearance: textfield;
+}
+
+.quantity-selector button {
+    flex: 1;
+    padding: 5px;
+    font-size: 16px;
+    background: none;
+    cursor: pointer;
+}
+
 #singleProduct .product-info .actions .add-to-cart {
     width: 35%;
     height: 100%;
@@ -213,6 +228,11 @@
     border-radius: 15px;
 
     font-size: 2rem;
+}
+
+#singleProduct .product-info .actions .add-to-cart:hover {
+    background-color: #f9f1e7;
+    color: #000;
 }
 
 #singleProduct .product-info .actions .compare {
