@@ -13,7 +13,7 @@
     <div class="shop-toolbar">
         <div class="toolbar-content">
             <div class="toolbar-left">
-                <button class="filter-btn" onclick="filter_toggle()">
+                <button class="filter-btn">
                     <img src="/img/filter.svg" alt="" />
                     <p>Filter</p>
                 </button>
@@ -51,16 +51,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="filter-selected">
-            <select id="categories" onchange="applyFilters()">
-                <option value="all" selected>All</option>
-                {{#each categories}}
-                    <option value="{{this._id}}">{{this.name}}</option>
-                {{/each}}
-            </select>
-        </div>
-
     </div>
 
     <div class="products">

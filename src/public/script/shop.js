@@ -36,8 +36,7 @@ function renderProducts(products) {
                                 />
 
                                 <div class="product-info">
-                                    <h3 class="product-name">${product.name
-            }</h3>
+                                    <h3 class="product-name">${product.name}</h3>
 
                                     <p
                                         class="product-desc"
