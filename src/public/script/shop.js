@@ -36,9 +36,8 @@ function renderProducts(products) {
                                 />
 
                                 <div class="product-info">
-                                    <h3 class="product-name">${
-                                        product.name
-                                    }</h3>
+                                    <h3 class="product-name">${product.name
+            }</h3>
 
                                     <p
                                         class="product-desc"
@@ -48,6 +47,21 @@ function renderProducts(products) {
                                         class="product-price"
                                         data-price="${product.price}"
                                     >${formatCurrency(product.price)}</p>
+                                    <div class="rating_stock">
+                                        <p
+                                            class="product-rating"
+                                            data-rating="${product.rating}"
+                                            >${product.rate} 
+                                            <img src="/img/star_full.svg"/> 
+                                        </p>
+
+                                        <p
+                                            class="product-stock"
+                                            data-stock="${product.stock}"
+                                            >
+                                            ${product.stock} in stock
+                                        </p>
+                                    </div>
                                 </div>
                             </a>
                         </div>

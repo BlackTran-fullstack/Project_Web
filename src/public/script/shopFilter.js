@@ -1,12 +1,43 @@
 function applyFilters() {
-    const category = document.getElementById('categories').value;
+    const category = document.querySelectorAll(".category-filter-item")
     const sortBy = document.getElementById('sort-by').value;
     const showCount = document.getElementById('show-count').value;
+    const minPrice = document.getElementById('min-price').value;
+    const maxPrice = document.getElementById('max-price').value;
+
+    console.log(minPrice);
 
     let query = {};
 
-    if (category !== 'all') {
-        query.category = category;
+    if (category) {
+        let selectedCategories = [];
+        let ifAll = false;
+
+        for(let i=0;i<category.length;i++)
+        {
+            if(category[i].checked)
+            {
+                selectedCategories.push(category[i].value);
+            }
+
+            if(category[i].checked && category[i].value === "all")
+            {
+                ifAll=true;
+                unCheckedAll(category);
+                break;
+            }
+        }
+
+        if(!ifAll)
+        {
+            if (selectedCategories.length) {
+                query.category = selectedCategories.join(',');
+            }
+        }
+        else 
+        {
+            query.category="all";
+        }
     }
 
     if (sortBy !== 'default') {
@@ -15,6 +46,14 @@ function applyFilters() {
 
     if (showCount) {
         query.limit = showCount;
+    }
+
+    if (minPrice) {
+        query.minPrice = minPrice;
+    }
+
+    if (maxPrice) {
+        query.maxPrice = maxPrice;
     }
 
     const queryString = new URLSearchParams(query).toString();
@@ -54,7 +93,7 @@ function updateProductList(products) {
                         <p
                             class="product-price"
                             data-price="${product.price}"
-                        >${product.price}</p>
+                        >${formatCurrency(product.price)}</p>
 
                         <div class="rating_stock">
                             <p
@@ -121,6 +160,14 @@ function filter_toggle(){
     else{
         filter.style.display = 'none';
     }
+}
+
+function unCheckedAll(categories)
+{
+    categories.forEach(category => {
+        if(category.value !== "all")
+            category.checked = false;
+    });
 }
 
 window.applyFilters = applyFilters;

@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const { engine } = require("express-handlebars");
 const app = express();
 const port = 3000;
+const mongoose = require('mongoose');
 
 const route = require("./routes");
 const db = require("./config/db");
@@ -65,12 +66,23 @@ app.set("views", path.join(__dirname, "resources", "views"));
 
 const Products = require("./app/models/Products");
 app.get('/api/products', async (req, res) => {
-    const { sort, category, limit } = req.query;
+    const { sort, category, limit, minPrice, maxPrice } = req.query;
+    console.log("request: ", req.query);
+    console.log("category: ", category);
     let sortCriteria = {};
     let query = {};
 
-    if (category) {
-        query.categoriesId = category;
+    if (category && category !== "all") {
+        const categoryArray = category.split(',').filter(id => mongoose.Types.ObjectId.isValid(id)).map(id => new mongoose.Types.ObjectId(id));
+        query.categoriesId = { $in: categoryArray };
+    }
+
+    if (minPrice) {
+        query.price = { ...query.price, $gte: parseFloat(minPrice) };
+    }
+
+    if (maxPrice) {
+        query.price = { ...query.price, $lte: parseFloat(maxPrice) };
     }
 
     switch (sort) {
