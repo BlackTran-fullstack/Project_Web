@@ -7,8 +7,6 @@ const products = require("../app/models/Products");
 
 router.get("/search", ShopController.search);
 
-
-
 router.get("/:slug", ShopController.singleProduct);
 
 router.get(
@@ -17,7 +15,6 @@ router.get(
     ShopController.getPaginatedProducts
 );
 
-// router.get("/", ShopController.shop);
 router.get("/", paginatedResults(products), ShopController.shop);
 
 module.exports = router;

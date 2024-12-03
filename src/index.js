@@ -62,9 +62,8 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources", "views"));
 
-
 const Products = require("./app/models/Products");
-app.get('/api/products', async (req, res) => {
+app.get("/api/products", async (req, res) => {
     const { sort, category, limit } = req.query;
     let sortCriteria = {};
     let query = {};
@@ -74,22 +73,22 @@ app.get('/api/products', async (req, res) => {
     }
 
     switch (sort) {
-        case 'stock_0':
+        case "stock_0":
             sortCriteria = { stock: -1 };
             break;
-        case 'stock_1':
+        case "stock_1":
             sortCriteria = { stock: 1 };
             break;
-        case 'rating_0':
+        case "rating_0":
             sortCriteria = { rate: -1 };
             break;
-        case 'rating_1':
+        case "rating_1":
             sortCriteria = { rate: 1 };
             break;
-        case 'price_0':
+        case "price_0":
             sortCriteria = { price: -1 };
             break;
-        case 'price_1':
+        case "price_1":
             sortCriteria = { price: 1 };
             break;
         default:
@@ -97,13 +96,15 @@ app.get('/api/products', async (req, res) => {
     }
 
     try {
-        const products = await Products.find(query).sort(sortCriteria).limit(parseInt(limit) || 0).exec();
+        const products = await Products.find(query)
+            .sort(sortCriteria)
+            .limit(parseInt(limit) || 0)
+            .exec();
         res.json(products);
     } catch (err) {
         res.status(500).send(err);
     }
 });
-
 
 // Routes init
 route(app);

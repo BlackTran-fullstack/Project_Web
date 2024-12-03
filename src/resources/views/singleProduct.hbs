@@ -110,13 +110,20 @@
                     </div>
 
                     <div class="actions">
+                        <input
+                            type="hidden"
+                            name="productId"
+                            data-id="{{product._id}}"
+                            class="product-id"
+                        />
+
                         <div class="quantity-selector">
                             <button class="quantity-btn reduce">-</button>
                             <p class="quantity">1</p>
                             <button class="quantity-btn increase">+</button>
                         </div>
 
-                        <button class="add-to-cart">Add To Cart</button>
+                        <button id="addToCart" class="add-to-cart">Add To Cart</button>
                         <button class="compare">+ Compare</button>
                     </div>
 
@@ -191,15 +198,9 @@
                 </div>
 
                 <div class="overview-picture">
-                    <img
-                        src="{{product.imagePath}}"
-                        alt="{{product.name}}"
-                    />
+                    <img src="{{product.imagePath}}" alt="{{product.name}}" />
 
-                    <img
-                        src="{{product.imagePath}}"
-                        alt="{{product.name}}"
-                    />
+                    <img src="{{product.imagePath}}" alt="{{product.name}}" />
                 </div>
             </div>
         </div>
@@ -300,3 +301,5 @@
         </div>
     </div>
 </main>
+
+<script src="/script/singleProduct.js"></script>

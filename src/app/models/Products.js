@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const Products = new Schema(
     {
+        _id: { type: Schema.Types.ObjectId },
         name: { type: String, required: true, default: "" },
         description: { type: String },
         price: { type: Number, required: true },
