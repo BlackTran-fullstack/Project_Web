@@ -1,11 +1,11 @@
 function applyFilters() {
     const category = document.querySelectorAll(".category-filter-item")
+    const brands = document.querySelectorAll(".brands-filter-item")
     const sortBy = document.getElementById('sort-by').value;
     const showCount = document.getElementById('show-count').value;
     const minPrice = document.getElementById('min-price').value;
     const maxPrice = document.getElementById('max-price').value;
 
-    console.log(minPrice);
 
     let query = {};
 
@@ -40,6 +40,37 @@ function applyFilters() {
         }
     }
 
+    if (brands) {
+        let selectedBrands = [];
+        let ifAll = false;
+
+        for(let i=0;i<brands.length;i++)
+        {
+            if(brands[i].checked)
+            {
+                selectedBrands.push(brands[i].value);
+            }
+
+            if(brands[i].checked && brands[i].value === "all")
+            {
+                ifAll=true;
+                unCheckedAll(brands);
+                break;
+            }
+        }
+
+        if(!ifAll)
+        {
+            if (selectedBrands.length) {
+                query.brand = selectedBrands.join(',');
+            }
+        }
+        else 
+        {
+            query.brand="all";
+        }
+    }
+
     if (sortBy !== 'default') {
         query.sort = sortBy;
     }
@@ -57,6 +88,7 @@ function applyFilters() {
     }
 
     const queryString = new URLSearchParams(query).toString();
+    console.log(queryString);
 
     fetch(`/api/products?${queryString}`)
         .then(response => response.json())
@@ -95,25 +127,27 @@ function updateProductList(products) {
                             data-price="${product.price}"
                         >${formatCurrency(product.price)}</p>
 
-                        <div class="rating_stock">
-                            <p
-                                class="product-rating"
-                                data-rating="${product.rating}"
-                                >${product.rate} 
-                                <img src="/img/star_full.svg"/> 
-                            </p>
-
-                            <p
-                                class="product-stock"
-                                data-stock="${product.stock}"
-                                >
-                                ${product.stock} in stock
-                            </p>
-                        </div>
+                        
                     </div>
                 </a>
             </div>
         `;
+
+        // <div class="rating_stock">
+        //                     <p
+        //                         class="product-rating"
+        //                         data-rating="${product.rating}"
+        //                         >${product.rate} 
+        //                         <img src="/img/star_full.svg"/> 
+        //                     </p>
+
+        //                     <p
+        //                         class="product-stock"
+        //                         data-stock="${product.stock}"
+        //                         >
+        //                         ${product.stock} in stock
+        //                     </p>
+        //                 </div>
 
         const productHover = document.createElement('div');
         productHover.className = 'product-hover';
@@ -162,11 +196,11 @@ function filter_toggle(){
     }
 }
 
-function unCheckedAll(categories)
+function unCheckedAll(objects)
 {
-    categories.forEach(category => {
-        if(category.value !== "all")
-            category.checked = false;
+    objects.forEach(object => {
+        if(object.value !== "all")
+            object.checked = false;
     });
 }
 

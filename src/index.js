@@ -76,15 +76,18 @@ app.set("views", path.join(__dirname, "resources", "views"));
 
 const Products = require("./app/models/Products");
 app.get('/api/products', async (req, res) => {
-    const { sort, category, limit, minPrice, maxPrice } = req.query;
-    console.log("request: ", req.query);
-    console.log("category: ", category);
+    const { sort, category, brand, limit, minPrice, maxPrice } = req.query;
     let sortCriteria = {};
     let query = {};
 
     if (category && category !== "all") {
         const categoryArray = category.split(',').filter(id => mongoose.Types.ObjectId.isValid(id)).map(id => new mongoose.Types.ObjectId(id));
         query.categoriesId = { $in: categoryArray };
+    }
+
+    if (brand && brand !== "all") {
+        const brandArray = brand.split(',').filter(id => mongoose.Types.ObjectId.isValid(id)).map(id => new mongoose.Types.ObjectId(id));
+        query.brandsId = { $in: brandArray };
     }
 
     if (minPrice) {

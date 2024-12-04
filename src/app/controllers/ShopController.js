@@ -1,5 +1,6 @@
 const Products = require("../models/Products");
 const Categories = require("../models/Categories");
+const Brands = require("../models/Brands");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -8,11 +9,12 @@ const paginatedResults = require("../../middlewares/paginated");
 class ShopController {
     // [GET] /shop
     shop(req, res, next) {
-        Promise.all([Products.find({}), Categories.find({})])
-            .then(([products, categories]) => {
+        Promise.all([Products.find({}), Categories.find({}), Brands.find({})])
+            .then(([products, categories, brands]) => {
                 res.render("shop", {
                     products: mutipleMongooseToObject(products),
                     categories: mutipleMongooseToObject(categories),
+                    brands: mutipleMongooseToObject(brands),
                     user: mongooseToObject(req.user),
                 });
             })
