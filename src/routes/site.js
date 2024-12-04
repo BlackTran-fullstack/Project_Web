@@ -29,12 +29,11 @@ router.delete("/logout", siteController.logout);
 
 router.get("/search", siteController.search);
 
-//cart
-router.get("/cart", siteController.checkAuthenticated, siteController.cart);
-
-router.post("/cart/add", siteController.checkAuthenticated, siteController.addToCart);
-
-router.post("/cart/remove", siteController.checkAuthenticated, siteController.removeFromCart);
+router.get(
+    "/checkout",
+    siteController.checkAuthenticated,
+    siteController.checkout
+);
 
 router.get("/", siteController.home);
 

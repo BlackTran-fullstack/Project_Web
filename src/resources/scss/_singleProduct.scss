@@ -228,11 +228,15 @@
     border-radius: 15px;
 
     font-size: 2rem;
+
+    transition: 0.5s ease;
 }
 
 #singleProduct .product-info .actions .add-to-cart:hover {
-    background-color: #f9f1e7;
-    color: #000;
+    border: none;
+
+    background-color: #b88e2f;
+    color: #fff;
 }
 
 #singleProduct .product-info .actions .compare {

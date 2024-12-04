@@ -109,17 +109,22 @@
                         ></button>
                     </div>
 
-                    <div>
-                        <form class="actions" action="/cart/add" method="POST">
-                            <input type="hidden" name="productId" value="{{product._id}}" />
-                            <div class="quantity-selector">
-                                <button type="button" class="quantity-btn reduce">-</button>
-                                <input type="number" name="quantity" value="1" min="1" class="quantity" readonly />
-                                <button type="button" class="quantity-btn increase">+</button>
-                            </div>
-                            <button type="submit" class="add-to-cart">Add to Cart</button>
-                            
-                        </form>
+                    <div class="actions">
+                        <input
+                            type="hidden"
+                            name="productId"
+                            data-id="{{product._id}}"
+                            class="product-id"
+                        />
+
+                        <div class="quantity-selector">
+                            <button class="quantity-btn reduce">-</button>
+                            <p class="quantity">1</p>
+                            <button class="quantity-btn increase">+</button>
+                        </div>
+
+                        <button id="addToCart" class="add-to-cart">Add To Cart</button>
+                        <button class="compare">+ Compare</button>
                     </div>
 
                     <div class="separation"></div>
@@ -193,15 +198,9 @@
                 </div>
 
                 <div class="overview-picture">
-                    <img
-                        src="{{product.imagePath}}"
-                        alt="{{product.name}}"
-                    />
+                    <img src="{{product.imagePath}}" alt="{{product.name}}" />
 
-                    <img
-                        src="{{product.imagePath}}"
-                        alt="{{product.name}}"
-                    />
+                    <img src="{{product.imagePath}}" alt="{{product.name}}" />
                 </div>
             </div>
         </div>

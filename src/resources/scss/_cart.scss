@@ -1,4 +1,4 @@
-#cartPage .cart-header{
+#cartPage .cart-header {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,35 +34,33 @@
     color: #000;
 }
 
-
-#cartPage .cart-container{
+#cartPage .cart-container {
     margin: 72px 100px;
     display: flex;
     justify-content: space-between;
 
-    .header{
+    .header {
         height: 55px;
         font-size: 1.5rem;
         font-weight: 500;
-        background-color: #F9F1E7;
+        background-color: #f9f1e7;
         text-align: center;
     }
 
-    .cart-detail{
+    .cart-detail {
         width: 70%;
         display: flex;
         justify-content: center; /* Căn giữa theo chiều ngang */
         align-items: center; /* Căn giữa theo chiều dọc */
 
-        .list-items{
-            
+        .list-items {
             text-align: center;
 
-            .cart-item-image{
+            .cart-item-image {
                 width: 100px;
                 height: 100px;
                 border-radius: 5px;
-                img{
+                img {
                     width: 100%;
                     height: 100%;
                     object-fit: cover;
@@ -75,64 +73,63 @@
                 vertical-align: middle; /* Căn giữa nội dung theo chiều dọc */
             }
 
-            .price, .name{
-                color: #9F9F9F;
-                font-weight: 500;
+            .product-price:not(.product-subtotal),
+            .name {
+                color: #9f9f9f;
             }
-
-            
         }
     }
 
-    .cart-total{
+    .cart-total {
         width: 30%;
         margin-left: 20px;
-        background-color: #F9F1E7;
+        background-color: #f9f1e7;
         display: flex;
         flex-direction: column;
         align-items: center;
         align-self: start;
-        
 
-        .header{
+        .header {
             margin-top: 20px;
             font-size: 3rem;
             font-weight: 600;
             text-align: center;
         }
 
-        .total-price{
+        .total-price {
             font-size: 1.6rem;
 
-            .label{
+            .label {
                 font-weight: 500;
             }
 
-            .sub-total{
+            .sub-total {
                 margin-top: 30px;
                 display: flex;
+                align-items: baseline;
                 gap: 20px;
 
-                p{
-                    font-weight: 500;
-                    color: #9F9F9F;
+                p {
+                    line-height: 1.5;
+                    color: #9f9f9f;
                 }
             }
 
-            .total{
+            .total {
                 margin-top: 30px;
                 display: flex;
                 justify-content: space-between;
+                align-items: baseline;
 
-                p{
+                p {
                     font-size: 2rem;
                     font-weight: 500;
-                    color: #B88E2F;
+                    color: #b88e2f;
                 }
             }
         }
 
-        .checkout-btn{
+        .checkout-btn {
             margin-top: 42px;
             margin-bottom: 80px;
             padding: 20px 40px;
