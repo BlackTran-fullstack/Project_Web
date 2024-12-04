@@ -1,5 +1,6 @@
 const Products = require("../models/Products");
 const Users = require("../models/Users");
+const Cart = require("../models/Cart");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -50,7 +51,7 @@ class SiteController {
                     { description: { $regex: search, $options: "i" } }, // Tìm kiếm theo mô tả
                 ],
             })
-                
+
                 .then((products) => {
                     const result = showAll ? products : products.slice(0, 4);
                     res.render("search", {
@@ -160,7 +161,7 @@ class SiteController {
         if (req.isAuthenticated()) {
             return next();
         }
-        res.redirect("/login");
+        return res.redirect("/login");
     }
 
     // Middleware: Kiểm tra chưa đăng nhập
@@ -169,6 +170,45 @@ class SiteController {
             return res.redirect("/");
         }
         next();
+    }
+
+    async checkout(req, res, next) {
+        try {
+            const userId = req.user.id;
+            const cartItems = await Cart.find({ userId }).populate("productId");
+
+            const cart = cartItems
+                .map((item) => {
+                    if (!item.productId) {
+                        console.error(
+                            `Product not found for cart item with ID ${item._id}`
+                        );
+                        return null; // Tránh việc truy cập vào thuộc tính undefined
+                    }
+                    const subtotal = item.productId.price * item.quantity;
+                    return {
+                        name: item.productId.name,
+                        price: item.productId.price,
+                        quantity: item.quantity,
+                        subtotal,
+                    };
+                })
+                .filter((item) => item !== null); // Lọc bỏ các giá trị null nếu có lỗi ở sản phẩm
+
+            const total = cart.reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0
+            );
+
+            res.render("checkout", {
+                cart,
+                total,
+                user: mongooseToObject(req.user),
+            });
+        } catch (error) {
+            console.error("Error retrieving cart:", error);
+            res.status(500).send("Internal Server Error");
+        }
     }
 }
 

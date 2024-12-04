@@ -29,6 +29,12 @@ router.delete("/logout", siteController.logout);
 
 router.get("/search", siteController.search);
 
+router.get(
+    "/checkout",
+    siteController.checkAuthenticated,
+    siteController.checkout
+);
+
 router.get("/", siteController.home);
 
 module.exports = router;

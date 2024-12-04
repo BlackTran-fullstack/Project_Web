@@ -4,7 +4,7 @@
     background: #fff;
 
     position: sticky;
-    top: -20px;
+    top: 0;
     z-index: 1;
 }
 
@@ -14,8 +14,7 @@
     align-items: center;
 
     max-width: calc(100% - 154px);
-    padding-top: 30px;
-    padding-bottom: 10px;
+    padding: 20px 0;
     margin: auto;
 }
 

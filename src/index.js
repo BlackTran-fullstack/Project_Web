@@ -17,8 +17,18 @@ const passport = require("passport");
 const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 
+const handlebars = require('handlebars');
+
 // Connect to Database
 db.connect();
+
+// Định nghĩa helper 'reduce'
+handlebars.registerHelper('reduce', function(array, options) {
+    return array.reduce((acc, current) => {
+        acc.push(options.fn(current)); // Lặp qua từng phần tử và áp dụng block
+        return acc;
+    }, []);
+});
 
 app.use(express.static(path.join(__dirname, "public")));
 

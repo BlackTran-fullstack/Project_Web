@@ -1,0 +1,116 @@
+<main id="cartPage">
+    <div class="cart-header">
+        <div class="cart-introduce">
+            <h1 class="cart-title">Cart</h1>
+            <div class="cart-breadcrumb">
+                <a href="/">Home</a>
+                <img src="/img/arrow_right.svg" alt="" />
+                <p>Cart</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-container">
+        <div class="cart-detail">
+            <table class="list-items" style="width: 100%;">
+                <tr class="header">
+                    <th></th>
+                    <th>Product</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+                {{#each cart}}
+                    <tr data-product-id="{{this.productId}}">
+                        <td><img
+                                src="{{this.imagePath}}"
+                                alt="{{this.name}}"
+                                class="cart-item-image"
+                            /></td>
+                        <td class="name">{{this.name}}</td>
+                        <td
+                            class="product-price"
+                            data-price="{{this.price}}"
+                        >{{this.price}}</td>
+                        <td class="quantity">{{this.quantity}}</td>
+                        <td
+                            class="product-price product-subtotal"
+                            data-price="{{this.subtotal}}"
+                        >{{this.subtotal}}</td>
+                        <td>
+                            <button
+                                type="button"
+                                class="remove-btn"
+                                data-product-id="{{this.productId}}"
+                            >
+                                <img src="/img/remove.svg" alt="Remove" />
+                            </button>
+                        </td>
+                    </tr>
+                {{/each}}
+            </table>
+        </div>
+
+        <div class="cart-total">
+            <h2 class="header">Cart Totals</h2>
+            <div class="total-price">
+                <div class="sub-total">
+                    <h3 class="label">Subtotal</h3>
+                    <div>
+                        {{#each cart}}
+                            <p
+                                class="product-price product-subtotal"
+                                data-price="{{this.subtotal}}"
+                                data-product-id="{{this.productId}}"
+                            >{{this.subtotal}}</p>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="total">
+                    <h3 class="label">Total</h3>
+                    <p
+                        class="product-price product-total"
+                        data-price="{{total}}"
+                    >{{total}}</p>
+                </div>
+            </div>
+            <a href="/checkout" class="checkout-btn">Check Out</a>
+        </div>
+    </div>
+
+    <div class="shop-services">
+        <div class="services-content">
+            <div class="service">
+                <img src="/img/trophy_icon.svg" alt="" class="service-icon" />
+                <div class="service-info">
+                    <h3>High Quality</h3>
+                    <p>crafted from top materials</p>
+                </div>
+            </div>
+            <div class="service">
+                <img src="/img/warranty_icon.svg" alt="" class="service-icon" />
+                <div class="service-info">
+                    <h3>Warranty Protection</h3>
+                    <p>Over 2 years</p>
+                </div>
+            </div>
+            <div class="service">
+                <img src="/img/shipping_icon.svg" alt="" class="service-icon" />
+                <div class="service-info">
+                    <h3>Free Shipping</h3>
+                    <p>Order over 150 $</p>
+                </div>
+            </div>
+            <div class="service">
+                <img src="/img/support_icon.svg" alt="" class="service-icon" />
+                <div class="service-info">
+                    <h3>24 / 7 Support</h3>
+                    <p>Dedicated support</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="/script/cart.js"></script>

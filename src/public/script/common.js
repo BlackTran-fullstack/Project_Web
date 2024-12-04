@@ -39,13 +39,20 @@ document.querySelectorAll(".hide_show_password").forEach((toggle) => {
     });
 });
 
-// Đảm bảo rằng thông báo lỗi được hiển thị trong 2 giây
 if (document.getElementById("error-message")) {
     const errorMessage = document.getElementById("error-message");
-    errorMessage.style.display = "flex"; // Hiển thị thông báo lỗi
+
+    // Hiển thị thông báo lỗi
+    errorMessage.style.display = "flex";
+    setTimeout(() => {
+        errorMessage.style.opacity = 1; // Tăng dần độ mờ lên 1 (hiển thị rõ ràng)
+    }, 10); // Thêm độ trễ nhỏ để kích hoạt transition
 
     // Ẩn thông báo sau 2 giây
-    setTimeout(function () {
-        errorMessage.style.display = "none";
-    }, 2000); // 2000ms = 2 giây
+    setTimeout(() => {
+        errorMessage.style.opacity = 0; // Giảm độ mờ về 0
+        setTimeout(() => {
+            errorMessage.style.display = "none"; // Ẩn hoàn toàn sau khi hiệu ứng kết thúc
+        }, 500); // Phải chờ thời gian của transition (0.5s)
+    }, 2000); // Ẩn sau 2 giây
 }
