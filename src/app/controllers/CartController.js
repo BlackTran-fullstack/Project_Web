@@ -56,6 +56,13 @@ class CartController {
             const userId = req.user.id; //Lay thong tin user da dang nhap
             const quantityInt = parseInt(quantity, 10);
 
+            if (isNaN(quantityInt) || quantityInt <= 0) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid quantity",
+                });
+            }
+
             const product = await Products.findById(productId);
 
             if (!product) {
@@ -99,16 +106,63 @@ class CartController {
             const { productId } = req.body;
             const userId = req.user.id;
 
+            if (!productId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Product ID is required",
+                });
+            }
+
             const result = await Cart.findOneAndDelete({ userId, productId });
 
             if (!result) {
-                return res.status(404).send("Item not found in cart.");
+                return res.status(404).json({
+                    success: false,
+                    message: "Item not found in cart",
+                });
             }
 
-            res.redirect("/cart");
+            // Tính lại tổng tiền sau khi xóa sản phẩm
+            const cartItems = await Cart.find({ userId }).populate("productId");
+
+            // Kiểm tra sự tồn tại của item.productId trước khi truy cập các thuộc tính của nó
+            const cart = cartItems
+                .map((item) => {
+                    if (!item.productId) {
+                        console.error(
+                            `Product not found for cart item with ID ${item._id}`
+                        );
+                        return null; // Tránh việc truy cập vào thuộc tính undefined
+                    }
+                    const subtotal = item.productId.price * item.quantity;
+                    return {
+                        productId: item.productId._id,
+                        name: item.productId.name,
+                        price: item.productId.price,
+                        imagePath: item.productId.imagePath,
+                        quantity: item.quantity,
+                        subtotal,
+                    };
+                })
+                .filter((item) => item !== null); // Lọc bỏ các giá trị null nếu có lỗi ở sản phẩm
+
+            const total = cart.reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0
+            );
+
+            res.status(200).json({
+                success: true,
+                message: "Item removed from cart successfully",
+                removedItem: result,
+                newTotal: total,
+            });
         } catch (error) {
             console.error("Error removing from cart:", error);
-            res.status(500).send("Internal Server Error");
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error",
+            });
         }
     }
 }

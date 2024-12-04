@@ -1,51 +1,55 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const cartTable = document.querySelector(".cart-detail");
+    const cartTable = document.querySelector(".list-items");
 
-    if (cartTable) {
-        cartTable.addEventListener("click", async (event) => {
-            const target = event.target;
+    cartTable.addEventListener("click", async (e) => {
+        if (e.target.closest(".remove-btn")) {
+            const button = e.target.closest(".remove-btn");
+            const productId = button.dataset.productId;
 
-            // Kiểm tra nếu nhấn vào nút "Remove"
-            if (target.closest(".remove-btn")) {
-                const removeBtn = target.closest(".remove-btn");
-                const productId = removeBtn.getAttribute("data-product-id");
+            try {
+                const res = await fetch("/cart/remove", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ productId }),
+                });
 
-                if (productId) {
-                    // Tìm và ẩn dòng sản phẩm ngay lập tức
-                    const productRow = document.querySelector(
-                        `tr[data-product-id="${productId}"]`
-                    );
+                const result = await res.json();
 
-                    if (productRow) {
-                        productRow.style.display = "none"; // Ẩn dòng sản phẩm
-                    }
+                if (result.success) {
+                    const row = button.closest("tr");
+                    row.remove();
 
-                    try {
-                        // Gửi yêu cầu xoá đến server
-                        const response = await fetch("/cart/remove", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                            },
-                            body: JSON.stringify({ productId }),
-                        });
+                    removeSubtotal(productId);
 
-                        if (!response.ok) {
-                            // Nếu server phản hồi lỗi, hiển thị lại dòng sản phẩm
-                            if (productRow) {
-                                productRow.style.display = ""; // Hiện lại dòng sản phẩm
-                            }
-                            console.error("Error: Unable to remove product.");
-                        }
-                    } catch (error) {
-                        // Nếu có lỗi khi gửi yêu cầu, hiện lại dòng sản phẩm
-                        if (productRow) {
-                            productRow.style.display = ""; // Hiện lại dòng sản phẩm
-                        }
-                        console.error("Error removing product:", error);
-                    }
+                    updateCartTotals(result.newTotal);
+                } else {
+                    alert(result.message || "The product cannot be deleted");
                 }
+            } catch (error) {
+                console.error("Error:", error);
+                alert("An error occurred, please try again!");
             }
-        });
+        }
+    });
+
+    function removeSubtotal(productId) {
+        const subtotalElement = document.querySelector(
+            `.product-price.product-subtotal[data-product-id="${productId}"]`
+        );
+        if (subtotalElement) {
+            subtotalElement.remove();
+        }
+    }
+
+    function updateCartTotals(newTotal) {
+        const totalElement = document.querySelector(
+            ".product-price.product-total"
+        );
+        if (totalElement) {
+            totalElement.textContent = formatCurrency(newTotal);
+            totalElement.dataset.price = newTotal;
+        }
     }
 });

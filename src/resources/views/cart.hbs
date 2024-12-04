@@ -39,16 +39,13 @@
                             data-price="{{this.subtotal}}"
                         >{{this.subtotal}}</td>
                         <td>
-                            <form action="/cart/remove" method="POST">
-                                <input
-                                    type="hidden"
-                                    name="productId"
-                                    value="{{this.productId}}"
-                                />
-                                <button type="submit" class="remove-btn">
-                                    <img src="/img/remove.svg" alt="Remove" />
-                                </button>
-                            </form>
+                            <button
+                                type="button"
+                                class="remove-btn"
+                                data-product-id="{{this.productId}}"
+                            >
+                                <img src="/img/remove.svg" alt="Remove" />
+                            </button>
                         </td>
                     </tr>
                 {{/each}}
@@ -65,6 +62,7 @@
                             <p
                                 class="product-price product-subtotal"
                                 data-price="{{this.subtotal}}"
+                                data-product-id="{{this.productId}}"
                             >{{this.subtotal}}</p>
                         {{/each}}
                     </div>
