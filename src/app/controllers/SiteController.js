@@ -172,6 +172,7 @@ class SiteController {
         next();
     }
 
+    // [GET] /checkout
     async checkout(req, res, next) {
         try {
             const userId = req.user.id;

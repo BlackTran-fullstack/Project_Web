@@ -12,6 +12,7 @@ const Products = new Schema(
         categoriesId: { type: Schema.Types.ObjectId, ref: "Categories" },
         rate: { type: Number, default: 0 },
         imagePath: { type: String },
+        brandsId: { type: Schema.Types.ObjectId, ref: "Brands" },
     },
     {
         timestamps: true,

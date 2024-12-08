@@ -1,11 +1,26 @@
 const productsContainer = document.querySelector(".list-products");
 const paginationContainer = document.querySelector(".shop-pagination");
+let currentFilters = {
+    categories: [],
+    brands: [],
+    priceMin: 0,
+    priceMax: 20000000,
+};
 
 // Hàm tải dữ liệu từ API
 async function loadProducts(page = 1, limit = 8) {
     try {
+        const queryParams = new URLSearchParams({
+            page,
+            limit,
+            categories: currentFilters.categories.join(","),
+            brands: currentFilters.brands.join(","),
+            priceMin: currentFilters.priceMin,
+            priceMax: currentFilters.priceMax,
+        });
+
         const response = await fetch(
-            `/shop/api/products?page=${page}&limit=${limit}`
+            `/shop/api/products?${queryParams.toString()}`
         );
         const data = await response.json();
 
@@ -20,6 +35,34 @@ async function loadProducts(page = 1, limit = 8) {
     } catch (error) {
         console.error("Error fetching products:", error);
     }
+}
+
+function applyFilters() {
+    const selectedCategories = Array.from(
+        document.querySelectorAll(
+            ".filter-category input[type='checkbox']:checked"
+        )
+    ).map((checkbox) => checkbox.value);
+
+    const selectedBrands = Array.from(
+        document.querySelectorAll(
+            ".filter-brand input[type='checkbox']:checked"
+        )
+    ).map((checkbox) => checkbox.value);
+
+    const priceMin = 0;
+    const priceMax =
+        parseInt(document.getElementById("price").value) ||
+        currentFilters.priceMax;
+
+    currentFilters = {
+        categories: selectedCategories,
+        brands: selectedBrands,
+        priceMin,
+        priceMax,
+    };
+
+    loadProducts(1);
 }
 
 // Hàm hiển thị sản phẩm
@@ -117,6 +160,17 @@ function renderPagination(previous, current, next, totalPages) {
         nextButton.addEventListener("click", () => loadProducts(next.page));
         paginationContainer.appendChild(nextButton);
     }
+}
+
+function updatePrice(value) {
+    document.getElementById("price-value").textContent = `${formatCurrency(
+        value
+    )}`;
+}
+
+function filter_toggle() {
+    const filterSidebar = document.getElementById("filter-sidebar");
+    filterSidebar.classList.toggle("active");
 }
 
 loadProducts();

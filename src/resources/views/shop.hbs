@@ -51,82 +51,76 @@
                 </div>
             </div>
         </div>
-
-        <div id="filter-selected">
-            <select id="categories" onchange="applyFilters()">
-                <option value="all" selected>All</option>
-                {{#each categories}}
-                    <option value="{{this._id}}">{{this.name}}</option>
-                {{/each}}
-            </select>
-        </div>
-
     </div>
 
-    <div class="products">
-        <div class="products-content">
-            <ul class="list-products">
-                {{!-- {{#each products}}
-                    <li class="product">
-                        <div class="product-card">
-                            <a href="#!" class="product-btn">
-                                <img
-                                    src="{{this.imagePath}}"
-                                    alt="{{this.name}}"
-                                    class="product-image"
-                                />
+    <div class="shop-container">
+        <div class="filter-sidebar" id="filter-sidebar">
+            <div class="filter-options filter-category">
+                <h3>Categories</h3>
 
-                                <div class="product-info">
-                                    <h3 class="product-name">{{this.name}}</h3>
+                {{#each categories}}
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="{{this._id}}"
+                            name="{{this._id}}"
+                            value="{{this._id}}"
+                            onchange="applyFilters()"
+                        />
+                        <span>{{this.name}}</span>
+                    </label>
+                {{/each}}
+            </div>
 
-                                    <p
-                                        class="product-desc"
-                                    >{{this.description}}</p>
+            <div class="separate"></div>
 
-                                    <p
-                                        class="product-price"
-                                        data-price="{{this.price}}"
-                                    >{{this.price}}</p>
-                                </div>
-                            </a>
-                        </div>
+            <div class="filter-options filter-brand">
+                <h3>Brands</h3>
 
-                        <div class="product-hover">
-                            <div class="product-actions">
-                                <a
-                                    href="/shop/{{this.slug}}"
-                                    class="button cart-btn"
-                                >View details</a>
+                {{#each brands}}
+                    <label>
+                        <input
+                            type="checkbox"
+                            id="{{this._id}}"
+                            name="{{this._id}}"
+                            value="{{this._id}}"
+                            onchange="applyFilters()"
+                        />
+                        <span>{{this.name}}</span>
+                    </label>
+                {{/each}}
+            </div>
 
-                                <div class="actions">
-                                    <a href="#!" class="action share">
-                                        <img src="/img/share.svg" alt="" />
-                                        <p class="action-name">Share</p>
-                                    </a>
+            <div class="separate"></div>
 
-                                    <a href="#!" class="action compare">
-                                        <img src="/img/compare.svg" alt="" />
-                                        <p class="action-name">Compare</p>
-                                    </a>
+            <div class="filter-options">
+                <div class="option-header">
+                    <h3>Price</h3>
 
-                                    <a href="#!" class="action like">
-                                        <img src="/img/like.svg" alt="" />
-                                        <p class="action-name">Like</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                {{/each}} --}}
-            </ul>
+                    <span id="price-value">Rp 0</span>
+                </div>
+                <input
+                    type="range"
+                    id="price"
+                    name="price"
+                    min="0"
+                    max="20000000"
+                    value="0"
+                    oninput="updatePrice(this.value)"
+                    onchange="applyFilters()"
+                />
+            </div>
+        </div>
+
+        <div class="products">
+            <div class="products-content">
+                <ul class="list-products">
+                </ul>
+            </div>
         </div>
     </div>
 
     <div class="shop-pagination">
-        {{! <button class="page active">1</button>
-        <button class="page">2</button>
-        <button class="page">3</button>
-        <button class="page">Next</button> }}
     </div>
 
     <div class="shop-services">
