@@ -88,7 +88,7 @@ function renderPagination(previous, current, next, totalPages) {
         const prevButton = document.createElement("button");
         prevButton.textContent = "Previous";
         prevButton.classList.add("page", "page-in-de");
-        prevButton.addEventListener("click", () => loadProducts(previous.page));
+        prevButton.addEventListener("click", () => applyFilters(previous.page));
         paginationContainer.appendChild(prevButton);
     }
 
@@ -103,7 +103,7 @@ function renderPagination(previous, current, next, totalPages) {
         if (page === current) {
             pageButton.classList.add("active"); // Đánh dấu trang hiện tại
         }
-        pageButton.addEventListener("click", () => loadProducts(page));
+        pageButton.addEventListener("click", () => applyFilters(page));
         paginationContainer.appendChild(pageButton);
     }
 
@@ -112,7 +112,7 @@ function renderPagination(previous, current, next, totalPages) {
         const nextButton = document.createElement("button");
         nextButton.textContent = "Next";
         nextButton.classList.add("page", "page-in-de");
-        nextButton.addEventListener("click", () => loadProducts(next.page));
+        nextButton.addEventListener("click", () => applyFilters(next.page));
         paginationContainer.appendChild(nextButton);
     }
 }

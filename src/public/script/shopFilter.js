@@ -1,4 +1,4 @@
-function applyFilters() {
+function applyFilters(page) {
     const category = document.querySelectorAll(".category-filter-item")
     const brands = document.querySelectorAll(".brands-filter-item")
     const sortBy = document.getElementById('sort-by').value;
@@ -6,8 +6,16 @@ function applyFilters() {
     const minPrice = document.getElementById('min-price').value;
     const maxPrice = document.getElementById('max-price').value;
 
-
     let query = {};
+
+    if(!page)
+    {
+        query.page = 1;
+    }
+    else
+    {
+        query.page = page;
+    }
 
     if (category) {
         let selectedCategories = [];
@@ -94,17 +102,61 @@ function applyFilters() {
         .then(response => response.json())
         .then(products => {
             updateProductList(products);
+            renderPagination(
+                products.previousPage,
+                products.currentPage, 
+                products.nextPage, 
+                products.totalPages
+            );
         })
         .catch(error => {
             console.error('Error fetching products:', error);
         });
 }
 
+function renderPagination(previous, current, next, totalPages) {
+    paginationContainer.innerHTML = ""; // Xóa nội dung cũ
+
+    // Nút "Previous"
+    if (previous) {
+        const prevButton = document.createElement("button");
+        prevButton.textContent = "Previous";
+        prevButton.classList.add("page", "page-in-de");
+        prevButton.addEventListener("click", () => applyFilters(previous));
+        paginationContainer.appendChild(prevButton);
+    }
+
+    // Hiển thị các trang liên tiếp (tối đa 3 trang)
+    const startPage = Math.max(1, current - 1); // Bắt đầu hiển thị từ trang hiện tại - 1
+    const endPage = Math.min(startPage + 2, totalPages); // Chỉ hiển thị tối đa 3 trang
+
+    for (let page = startPage; page <= endPage; page++) {
+        const pageButton = document.createElement("button");
+        pageButton.textContent = page;
+        pageButton.classList.add("page");
+        if (page === current) {
+            pageButton.classList.add("active"); // Đánh dấu trang hiện tại
+        }
+        pageButton.addEventListener("click", () => applyFilters(page));
+        paginationContainer.appendChild(pageButton);
+    }
+
+    // Nút "Next"
+    if (next) {
+        const nextButton = document.createElement("button");
+        nextButton.textContent = "Next";
+        nextButton.classList.add("page", "page-in-de");
+        nextButton.addEventListener("click", () => applyFilters(next));
+        paginationContainer.appendChild(nextButton);
+    }
+}
+
+
 function updateProductList(products) {
     const productList = document.querySelector('.list-products');
     productList.innerHTML = ''; // Clear the current product list
 
-    products.forEach(product => {
+    products.products.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
         productCard.innerHTML = `
@@ -132,22 +184,6 @@ function updateProductList(products) {
                 </a>
             </div>
         `;
-
-        // <div class="rating_stock">
-        //                     <p
-        //                         class="product-rating"
-        //                         data-rating="${product.rating}"
-        //                         >${product.rate} 
-        //                         <img src="/img/star_full.svg"/> 
-        //                     </p>
-
-        //                     <p
-        //                         class="product-stock"
-        //                         data-stock="${product.stock}"
-        //                         >
-        //                         ${product.stock} in stock
-        //                     </p>
-        //                 </div>
 
         const productHover = document.createElement('div');
         productHover.className = 'product-hover';

@@ -75,8 +75,9 @@ app.set("views", path.join(__dirname, "resources", "views"));
 
 
 const Products = require("./app/models/Products");
+// Endpoint to fetch products with filters and pagination
 app.get('/api/products', async (req, res) => {
-    const { sort, category, brand, limit, minPrice, maxPrice } = req.query;
+    const { sort, category, brand, limit, minPrice, maxPrice, page } = req.query;
     let sortCriteria = {};
     let query = {};
 
@@ -97,6 +98,10 @@ app.get('/api/products', async (req, res) => {
     if (maxPrice) {
         query.price = { ...query.price, $lte: parseFloat(maxPrice) };
     }
+
+    const itemsPerPage = parseInt(limit) || 10;
+    const currentPage = parseInt(page) || 1;
+    const skip = (currentPage - 1) * itemsPerPage;
 
     switch (sort) {
         case 'stock_0':
@@ -121,14 +126,23 @@ app.get('/api/products', async (req, res) => {
             sortCriteria = {};
     }
 
+    console.log(query);
+
     try {
-        const products = await Products.find(query).sort(sortCriteria).limit(parseInt(limit) || 0).exec();
-        res.json(products);
+        const totalProducts = await Products.countDocuments(query);
+        const products = await Products.find(query).sort(sortCriteria).skip(skip).limit(itemsPerPage).exec();
+        res.json({
+            products,
+            totalProducts,
+            previousPage: currentPage > 1 ? currentPage - 1 : null,
+            currentPage,
+            nextPage: currentPage < Math.ceil(totalProducts / itemsPerPage) ? currentPage + 1 : null,
+            totalPages: Math.ceil(totalProducts / itemsPerPage)
+        });
     } catch (err) {
         res.status(500).send(err);
     }
 });
-
 
 // Routes init
 route(app);
