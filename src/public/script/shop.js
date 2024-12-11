@@ -1,13 +1,31 @@
 const productsContainer = document.querySelector(".list-products");
 const paginationContainer = document.querySelector(".shop-pagination");
+let currentFilters = {
+    categories: [],
+    brands: [],
+    priceMin: 0,
+    priceMax: 20000000,
+};
 
 // Hàm tải dữ liệu từ API
 async function loadProducts(page = 1, limit = 8) {
     try {
+        const queryParams = new URLSearchParams({
+            page,
+            limit,
+            categories: currentFilters.categories.join(","),
+            brands: currentFilters.brands.join(","),
+            priceMin: currentFilters.priceMin,
+            priceMax: currentFilters.priceMax,
+        });
+
         const response = await fetch(
-            `/shop/api/products?page=${page}&limit=${limit}`
+            `/shop/api/products?${queryParams.toString()}`
         );
         const data = await response.json();
+
+        console.log(data);
+        console.log(data.priceMin);
 
         // Xử lý hiển thị sản phẩm
         renderProducts(data.results);
@@ -20,6 +38,36 @@ async function loadProducts(page = 1, limit = 8) {
     } catch (error) {
         console.error("Error fetching products:", error);
     }
+}
+
+function applyFilters() {
+    const selectedCategories = Array.from(
+        document.querySelectorAll(
+            ".filter-category input[type='checkbox']:checked"
+        )
+    ).map((checkbox) => checkbox.value);
+
+    const selectedBrands = Array.from(
+        document.querySelectorAll(
+            ".filter-brand input[type='checkbox']:checked"
+        )
+    ).map((checkbox) => checkbox.value);
+
+    const priceMin = 0;
+    const priceMaxInput = document.getElementById("price").value;
+    const priceMax =
+        parseInt(priceMaxInput) === 0 || priceMaxInput === ""
+            ? 20000000 // Đặt lại giá trị mặc định
+            : parseInt(priceMaxInput);
+
+    currentFilters = {
+        categories: selectedCategories,
+        brands: selectedBrands,
+        priceMin,
+        priceMax,
+    };
+
+    loadProducts(1);
 }
 
 // Hàm hiển thị sản phẩm
@@ -36,7 +84,9 @@ function renderProducts(products) {
                                 />
 
                                 <div class="product-info">
-                                    <h3 class="product-name">${product.name}</h3>
+                                    <h3 class="product-name">${
+                                        product.name
+                                    }</h3>
 
                                     <p
                                         class="product-desc"
@@ -88,7 +138,7 @@ function renderPagination(previous, current, next, totalPages) {
         const prevButton = document.createElement("button");
         prevButton.textContent = "Previous";
         prevButton.classList.add("page", "page-in-de");
-        prevButton.addEventListener("click", () => applyFilters(previous.page));
+        prevButton.addEventListener("click", () => loadProducts(previous.page));
         paginationContainer.appendChild(prevButton);
     }
 
@@ -103,7 +153,7 @@ function renderPagination(previous, current, next, totalPages) {
         if (page === current) {
             pageButton.classList.add("active"); // Đánh dấu trang hiện tại
         }
-        pageButton.addEventListener("click", () => applyFilters(page));
+        pageButton.addEventListener("click", () => loadProducts(page));
         paginationContainer.appendChild(pageButton);
     }
 
@@ -112,9 +162,20 @@ function renderPagination(previous, current, next, totalPages) {
         const nextButton = document.createElement("button");
         nextButton.textContent = "Next";
         nextButton.classList.add("page", "page-in-de");
-        nextButton.addEventListener("click", () => applyFilters(next.page));
+        nextButton.addEventListener("click", () => loadProducts(next.page));
         paginationContainer.appendChild(nextButton);
     }
+}
+
+function updatePrice(value) {
+    document.getElementById("price-value").textContent = `${formatCurrency(
+        value
+    )}`;
+}
+
+function filter_toggle() {
+    const filterSidebar = document.getElementById("filter-sidebar");
+    filterSidebar.classList.toggle("active");
 }
 
 loadProducts();

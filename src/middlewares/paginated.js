@@ -1,16 +1,31 @@
 function paginatedResults(model) {
     return async (req, res, next) => {
-        const page = parseInt(req.query.page) || 1; // Mặc định là trang 1 nếu không được truyền
-        const limit = parseInt(req.query.limit) || 16; // Mặc định hiển thị 16 mục nếu không được truyền
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
 
         const startIndex = (page - 1) * limit; // Vị trí bắt đầu
         const endIndex = page * limit; // Vị trí kết thúc
+
+        const filters = {};
+
+        if (req.query.categories) {
+            filters.categoriesId = { $in: req.query.categories.split(",") };
+        }
+        if (req.query.brands) {
+            filters.brandsId = { $in: req.query.brands.split(",") };
+        }
+        if (req.query.priceMin && req.query.priceMax) {
+            filters.price = {
+                $gte: parseInt(req.query.priceMin),
+                $lte: parseInt(req.query.priceMax),
+            };
+        }
 
         const results = {};
 
         try {
             // Lấy tổng số lượng tài liệu trong collection
-            const totalDocuments = await model.countDocuments().exec();
+            const totalDocuments = await model.countDocuments(filters).exec();
 
             // Tính tổng số trang
             const totalPages = Math.ceil(totalDocuments / limit);
@@ -38,7 +53,7 @@ function paginatedResults(model) {
 
             // Truy vấn dữ liệu theo trang
             results.results = await model
-                .find()
+                .find(filters)
                 .limit(limit)
                 .skip(startIndex)
                 .exec();

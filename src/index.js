@@ -7,7 +7,6 @@ const morgan = require("morgan");
 const { engine } = require("express-handlebars");
 const app = express();
 const port = 3000;
-const mongoose = require('mongoose');
 
 const route = require("./routes");
 const db = require("./config/db");
@@ -17,13 +16,13 @@ const passport = require("passport");
 const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
 
-const handlebars = require('handlebars');
+const handlebars = require("handlebars");
 
 // Connect to Database
 db.connect();
 
 // Định nghĩa helper 'reduce'
-handlebars.registerHelper('reduce', function(array, options) {
+handlebars.registerHelper("reduce", function (array, options) {
     return array.reduce((acc, current) => {
         acc.push(options.fn(current)); // Lặp qua từng phần tử và áp dụng block
         return acc;
@@ -73,72 +72,45 @@ app.engine(
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources", "views"));
 
-
 const Products = require("./app/models/Products");
-// Endpoint to fetch products with filters and pagination
-app.get('/api/products', async (req, res) => {
-    const { sort, category, brand, limit, minPrice, maxPrice, page } = req.query;
+app.get("/api/products", async (req, res) => {
+    const { sort, category, limit } = req.query;
     let sortCriteria = {};
     let query = {};
 
-    if (category && category !== "all") {
-        const categoryArray = category.split(',').filter(id => mongoose.Types.ObjectId.isValid(id)).map(id => new mongoose.Types.ObjectId(id));
-        query.categoriesId = { $in: categoryArray };
+    if (category) {
+        query.categoriesId = category;
     }
-
-    if (brand && brand !== "all") {
-        const brandArray = brand.split(',').filter(id => mongoose.Types.ObjectId.isValid(id)).map(id => new mongoose.Types.ObjectId(id));
-        query.brandsId = { $in: brandArray };
-    }
-
-    if (minPrice) {
-        query.price = { ...query.price, $gte: parseFloat(minPrice) };
-    }
-
-    if (maxPrice) {
-        query.price = { ...query.price, $lte: parseFloat(maxPrice) };
-    }
-
-    const itemsPerPage = parseInt(limit) || 10;
-    const currentPage = parseInt(page) || 1;
-    const skip = (currentPage - 1) * itemsPerPage;
 
     switch (sort) {
-        case 'stock_0':
+        case "stock_0":
             sortCriteria = { stock: -1 };
             break;
-        case 'stock_1':
+        case "stock_1":
             sortCriteria = { stock: 1 };
             break;
-        case 'rating_0':
+        case "rating_0":
             sortCriteria = { rate: -1 };
             break;
-        case 'rating_1':
+        case "rating_1":
             sortCriteria = { rate: 1 };
             break;
-        case 'price_0':
+        case "price_0":
             sortCriteria = { price: -1 };
             break;
-        case 'price_1':
+        case "price_1":
             sortCriteria = { price: 1 };
             break;
         default:
             sortCriteria = {};
     }
 
-    console.log(query);
-
     try {
-        const totalProducts = await Products.countDocuments(query);
-        const products = await Products.find(query).sort(sortCriteria).skip(skip).limit(itemsPerPage).exec();
-        res.json({
-            products,
-            totalProducts,
-            previousPage: currentPage > 1 ? currentPage - 1 : null,
-            currentPage,
-            nextPage: currentPage < Math.ceil(totalProducts / itemsPerPage) ? currentPage + 1 : null,
-            totalPages: Math.ceil(totalProducts / itemsPerPage)
-        });
+        const products = await Products.find(query)
+            .sort(sortCriteria)
+            .limit(parseInt(limit) || 0)
+            .exec();
+        res.json(products);
     } catch (err) {
         res.status(500).send(err);
     }

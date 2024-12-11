@@ -13,7 +13,7 @@
     <div class="shop-toolbar">
         <div class="toolbar-content">
             <div class="toolbar-left">
-                <button class="filter-btn">
+                <button class="filter-btn" onclick="filter_toggle()">
                     <img src="/img/filter.svg" alt="" />
                     <p>Filter</p>
                 </button>
@@ -34,15 +34,15 @@
             <div class="toolbar-right">
                 <div class="toolbar-show">
                     <p class="show-count">Show</p>
-                    <input type="number" id="show-count" value="8" min="1" onchange="applyFilters()"/>
+                    <input type="number" id="show-count" value="8" min="1" />
                 </div>
 
                 <div class="toolbar-sort">
                     <p class="sort-by">Sort by</p>
                     <select id="sort-by" onchange="applyFilters()">
                         <option value="default">Default</option>
-                        {{!-- <option value="stock_0">Decrease Stock</option>
-                        <option value="stock_1">Increase Stock</option> --}}
+                        <option value="stock_0">Decrease Stock</option>
+                        <option value="stock_1">Increase Stock</option>
                         <option value="rating_0">Decrease Rating</option>
                         <option value="rating_1">Increase Rating</option>
                         <option value="price_0">Decrease Price</option>
@@ -53,112 +53,74 @@
         </div>
     </div>
 
-    <div class="products">
-        <div class="filter_container">
-            <div class="categories_filter">
-                <h3 style="margin: 15px 0;">Categories</h3>
-                <label>
-                    <input class="category-filter-item" type="checkbox" value="all" name="all" onchange="applyFilters()"/>
-                    All
-                </label>
+    <div class="shop-container">
+        <div class="filter-sidebar" id="filter-sidebar">
+            <div class="filter-options filter-category">
+                <h3>Categories</h3>
 
                 {{#each categories}}
                     <label>
-                        <input class="category-filter-item" value="{{this._id}}" type="checkbox" name="{{this._id}}" onchange="applyFilters()"/>
-                        {{this.name}}
+                        <input
+                            type="checkbox"
+                            id="{{this._id}}"
+                            name="{{this._id}}"
+                            value="{{this._id}}"
+                            onchange="applyFilters()"
+                        />
+                        <span>{{this.name}}</span>
                     </label>
-                    
                 {{/each}}
             </div>
 
-            <div class="categories_filter">
-                <h3 style="margin: 15px 0;">Brands</h3>
-                <label>
-                    <input class="brands-filter-item" type="checkbox" value="all" name="all" onchange="applyFilters()"/>
-                    All
-                </label>
+            <div class="separate"></div>
+
+            <div class="filter-options filter-brand">
+                <h3>Brands</h3>
 
                 {{#each brands}}
                     <label>
-                        <input class="brands-filter-item" value="{{this._id}}" type="checkbox" name="{{this._id}}" onchange="applyFilters()"/>
-                        {{this.name}}
+                        <input
+                            type="checkbox"
+                            id="{{this._id}}"
+                            name="{{this._id}}"
+                            value="{{this._id}}"
+                            onchange="applyFilters()"
+                        />
+                        <span>{{this.name}}</span>
                     </label>
-                    
                 {{/each}}
             </div>
 
-            <div class="price-filter">
-                <h3 style="margin: 15px 0;">Price Range</h3>
-                <label for="min-price">Min Price:</label>
-                <input type="number" id="min-price" name="min-price" value="0" onchange="applyFilters()"/>
-                <label for="max-price">Max Price:</label>
-                <input type="number" id="max-price" name="max-price" value="1000000000" onchange="applyFilters()"/>
+            <div class="separate"></div>
+
+            <div class="filter-options">
+                <div class="option-header">
+                    <h3>Price</h3>
+
+                    <span id="price-value">Rp 0</span>
+                </div>
+                <input
+                    type="range"
+                    id="price"
+                    name="price"
+                    min="0"
+                    max="20000000"
+                    value="0"
+                    oninput="updatePrice(this.value)"
+                    onchange="applyFilters()"
+                />
             </div>
         </div>
 
-        <div class="products-content">
-            <ul class="list-products">
-                {{!-- {{#each products}}
-                    <li class="product">
-                        <div class="product-card">
-                            <a href="#!" class="product-btn">
-                                <img
-                                    src="{{this.imagePath}}"
-                                    alt="{{this.name}}"
-                                    class="product-image"
-                                />
-
-                                <div class="product-info">
-                                    <h3 class="product-name">{{this.name}}</h3>
-
-                                    <p
-                                        class="product-desc"
-                                    >{{this.description}}</p>
-
-                                    <p
-                                        class="product-price"
-                                        data-price="{{this.price}}"
-                                    >{{this.price}}</p>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="product-hover">
-                            <div class="product-actions">
-                                <a
-                                    href="/shop/{{this.slug}}"
-                                    class="button cart-btn"
-                                >View details</a>
-
-                                <div class="actions">
-                                    <a href="#!" class="action share">
-                                        <img src="/img/share.svg" alt="" />
-                                        <p class="action-name">Share</p>
-                                    </a>
-
-                                    <a href="#!" class="action compare">
-                                        <img src="/img/compare.svg" alt="" />
-                                        <p class="action-name">Compare</p>
-                                    </a>
-
-                                    <a href="#!" class="action like">
-                                        <img src="/img/like.svg" alt="" />
-                                        <p class="action-name">Like</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                {{/each}} --}}
-            </ul>
+        <div class="products">
+            <div class="products-content">
+                <ul class="list-products">
+                </ul>
+            </div>
         </div>
     </div>
 
     <div class="shop-pagination">
-        {{! <button class="page active">1</button>
-        <button class="page">2</button>
-        <button class="page">3</button>
-        <button class="page">Next</button> }}
     </div>
 
     <div class="shop-services">
