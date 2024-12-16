@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     removeSubtotal(productId);
 
                     updateCartTotals(result.newTotal);
+
+                    updateCartCount();
                 } else {
                     alert(result.message || "The product cannot be deleted");
                 }

@@ -4,16 +4,16 @@
 
         <ul class="navbar-menu">
             <li>
-                <a href="/">Home</a>
+                <a href="/" class="nav-item" data-page="home">Home</a>
             </li>
             <li>
-                <a href="/shop">Shop</a>
+                <a href="/shop" class="nav-item" data-page="shop">Shop</a>
             </li>
             <li>
-                <a href="#!">About</a>
+                <a href="#!" class="nav-item" data-page="about">About</a>
             </li>
             <li>
-                <a href="#!">Contact</a>
+                <a href="#!" class="nav-item" data-page="contact">Contact</a>
             </li>
         </ul>
 
@@ -44,7 +44,9 @@
             <a href="/cart" class="shopping-cart"><img
                     src="/img/cart.svg"
                     alt="Cart"
-                /></a>
+                />
+                <span class="quantity-in-cart">{{totalQuantity}}</span>
+            </a>
         </div>
     </nav>
 </header>

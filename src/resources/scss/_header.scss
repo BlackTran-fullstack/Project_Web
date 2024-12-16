@@ -30,6 +30,16 @@
     font-weight: 500;
 
     color: #000;
+
+    transition: 0.2s ease;
+}
+
+#header .navbar-menu a:hover {
+    color: #b88e2f;
+}
+
+#header .navbar-menu .active {
+    color: #b88e2f;
 }
 
 #header .navbar-icons {
@@ -96,4 +106,26 @@
 
     color: #fff;
     background: #b88e2f;
+}
+
+#header .shopping-cart {
+    position: relative;
+}
+
+#header .shopping-cart .quantity-in-cart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 25px;
+    height: 25px;
+
+    border-radius: 50%;
+
+    background: #b88e2f;
+    color: #fff;
+
+    position: absolute;
+    top: -20px;
+    right: -19px;
 }

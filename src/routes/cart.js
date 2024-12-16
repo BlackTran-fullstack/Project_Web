@@ -16,6 +16,8 @@ router.post(
     CartController.removeFromCart
 );
 
+router.get("/summary", CartController.cartSummary);
+
 router.get("/", SiteController.checkAuthenticated, CartController.cart);
 
 module.exports = router;

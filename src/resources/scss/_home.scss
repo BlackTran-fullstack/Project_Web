@@ -196,6 +196,15 @@
     font-weight: 600;
 
     color: #b88e2f;
+
+    transition: all 0.5s ease;
+}
+
+#home .products-content .products-btn:hover {
+    border: none;
+
+    background: #b88e2f;
+    color: #fff;
 }
 
 #home .list-products .product-hover {
@@ -235,6 +244,13 @@
 
     color: #b88e2f;
     background: #fff;
+
+    transition: all 0.5s ease;
+}
+
+#home .product-hover .cart-btn:hover {
+    background: #b88e2f;
+    color: #fff;
 }
 
 #home .product-hover .action {

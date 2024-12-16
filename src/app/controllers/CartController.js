@@ -165,6 +165,20 @@ class CartController {
             });
         }
     }
+
+    // [GET] /cart/summary
+    async cartSummary(req, res) {
+        try {
+            const userId = req.user.id;
+            const cartItems = await Cart.find({ userId });
+            const totalQuantity = cartItems.reduce((sum) => sum + 1, 0);
+
+            res.json({ totalQuantity });
+        } catch (error) {
+            console.error("Error retrieving cart summary:", error);
+            res.status(500).json({ totalQuantity: 0 });
+        }
+    }
 }
 
 module.exports = new CartController();
