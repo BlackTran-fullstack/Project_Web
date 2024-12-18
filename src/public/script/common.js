@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Show/hide password
 document.querySelectorAll(".hide_show_password").forEach((toggle) => {
     toggle.addEventListener("click", function () {
-        const passwordInput =
-            this.closest(".form-password").querySelector("input");
+        const passwordInput = this.parentElement.querySelector("input");
         const icon = this.querySelector("i");
 
         if (passwordInput.type === "password") {

@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const passport = require("passport");
 const initializePassport = require("../../middlewares/passport");
 const jwt = require("jsonwebtoken");
+const { body, validationResult } = require("express-validator");
 
 initializePassport(
     passport,
@@ -129,20 +130,27 @@ class SiteController {
             // Kiểm tra email đã tồn tại
             const existingUser = await Users.findOne({ email });
             if (existingUser) {
-                req.flash("error", "Email already exists");
-                return res.redirect("/register");
+                return res.status(400).json({
+                    success: false,
+                    errors: ["Email already exists."],
+                });
             }
 
             // Mã hóa mật khẩu và lưu người dùng mới
             const hashedPassword = await bcrypt.hash(password, 10);
             const user = new Users({ ...req.body, password: hashedPassword });
-
             await user.save();
-            res.redirect("/login");
+
+            res.status(200).json({
+                success: true,
+                message: "Registration successful.",
+            });
         } catch (error) {
             console.error("Error in registerUser:", error);
-            req.flash("error", "An error has occurred. Please try again.");
-            res.redirect("/register");
+            res.status(500).json({
+                success: false,
+                errors: ["Server error. Please try again later."],
+            });
         }
     }
 
