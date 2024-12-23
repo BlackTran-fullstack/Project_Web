@@ -35,6 +35,22 @@ router.get(
     siteController.checkout
 );
 
+router.get("/verify/:userId/:uniqueString", siteController.verifyEmail);
+
+router.get("/verified", siteController.verified);
+
+router.get("/forgot-password", siteController.forgotPassword);
+
+router.post("/forgot-password", siteController.forgotPasswordPost);
+
+router.get("/reset-code", siteController.resetCode);
+
+router.post("/reset-code", siteController.resetCodePost);
+
+router.get("/new-password", siteController.newPassword);
+
+router.post("/new-password", siteController.newPasswordPost);
+
 router.get("/", siteController.home);
 
 module.exports = router;
