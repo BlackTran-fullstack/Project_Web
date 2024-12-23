@@ -14,7 +14,7 @@ const userId = new URLSearchParams(window.location.search).get("userId");
 // Password Validation
 function createPassword() {
     const passwordPattern =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
     if (!passwordInput.value.match(passwordPattern)) {
         passwordForm.classList.add("invalid");
