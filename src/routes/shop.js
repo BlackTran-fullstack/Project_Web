@@ -7,8 +7,6 @@ const products = require("../app/models/Products");
 
 router.get("/search", ShopController.search);
 
-
-
 router.get("/:slug", ShopController.singleProduct);
 
 router.get(

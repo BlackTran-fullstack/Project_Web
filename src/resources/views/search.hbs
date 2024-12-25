@@ -80,12 +80,9 @@
         <!-- Nếu đang hiển thị tất cả thì không hiển thị nút -->
     {{else}}
         <div class="show-all">
-            <form method="GET" action="/search">
-                <input type="hidden" name="q" value="{{q}}" />
-                <input type="hidden" name="showAll" value="true" />
-                <button type="submit" class="btn-show-all">Show All Result</button>
-            </form>
+            <button type="button" class="btn-show-all" id="btn-show-all" data-query="{{q}}">Show All Result</button>
         </div>
     {{/if}}
 </div>
 
+<script src="/script/search.js"></script>
