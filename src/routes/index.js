@@ -1,8 +1,10 @@
 const siteRouter = require("./site");
 const shopRouter = require("./shop");
 const cartRouter = require("./cart");
+const authRouter = require("./auth");
 
 const cartSummary = require("../middlewares/cartSummary");
+const { use } = require("passport");
 
 function route(app) {
     app.use(cartSummary);
@@ -12,6 +14,8 @@ function route(app) {
     app.use("/shop", shopRouter);
 
     app.use("/cart", cartRouter);
+
+    app.use("/auth", authRouter);
 }
 
 module.exports = route;

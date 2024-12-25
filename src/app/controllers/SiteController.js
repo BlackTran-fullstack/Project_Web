@@ -421,10 +421,18 @@ class SiteController {
 
         try {
             const user = await Users.findOne({ email });
+
             if (!user) {
                 return res.status(400).json({
                     success: false,
                     errors: ["Email does not exist."],
+                });
+            }
+
+            if (user.googleId) {
+                return res.status(400).json({
+                    success: false,
+                    errors: ["Email associated with Google account."],
                 });
             }
 
