@@ -50,6 +50,7 @@ class ShopController {
             .catch(next);
     }
 
+    
     // [GET] /shop/search
     search(req, res, next) {
         const search = req.query.q;

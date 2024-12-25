@@ -142,6 +142,7 @@ class SiteController {
             .catch(next);
     }
 
+    // [GET] /search
     search(req, res, next) {
         const search = req.query.q;
         const showAll = req.query.showAll === "true";
@@ -173,6 +174,27 @@ class SiteController {
                 .catch(next);
         }
     }
+
+    // [GET] /search-ajax
+    searchAjax(req, res, next) {
+        const search = req.query.q;
+
+        if (!search) {
+            return res.json({ products: [] });
+        }
+
+        Products.find({
+            $or: [
+                { name: { $regex: search, $options: "i" } }, // Tìm kiếm theo tên
+                { description: { $regex: search, $options: "i" } }, // Tìm kiếm theo mô tả
+            ],
+        })
+            .then((products) => {
+                res.json({ products: mutipleMongooseToObject(products) });
+            })
+            .catch(next);
+    }
+
 
     // [GET] /login
     login(req, res) {
