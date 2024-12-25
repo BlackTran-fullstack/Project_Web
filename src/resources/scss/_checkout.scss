@@ -75,14 +75,14 @@
     margin-top: 36px;
 }
 
-#checkout .form-group label {
+#checkout label {
     display: block;
 
     font-weight: 500;
 }
 
 #checkout .form-group input,
-#checkout .form-group select {
+#checkout select {
     margin-top: 22px;
 
     width: 100%;
@@ -292,4 +292,26 @@
     font-weight: 500;
 
     color: #898989;
+}
+
+#checkout #deliveryMethodContainer{
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#checkout #deliveryMethodContainer p{
+    justify-content: center;
+    margin-top: 22px;
+}
+
+#checkout #required{
+    color: red;
+}
+
+#checkout #checkout-form{
+    display: flex;
+    flex-direction: row; 
 }

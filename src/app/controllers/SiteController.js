@@ -3,6 +3,9 @@ const Users = require("../models/Users");
 const Cart = require("../models/Cart");
 const UsersVerification = require("../models/UsersVerification");
 const PasswordReset = require("../models/PasswordReset");
+const DeliveryUnits = require("../models/DeliveryUnit");
+const PaymentMethods = require("../models/PaymentMethod");
+const Orders = require("../models/Order");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -581,7 +584,25 @@ class SiteController {
         try {
             const userId = req.user.id;
             const cartItems = await Cart.find({ userId }).populate("productId");
+            const deliveryUnits = await DeliveryUnits.find({}).sort({ Fee: 1 });
+            const paymentMethods = await PaymentMethods.find({});
 
+            // set delivery unit
+            const deliveryUnit = deliveryUnits.map((unit) => {
+                return {
+                    name: unit.Name,
+                    fee: unit.Fee,
+                };
+            });
+
+            // set payment method
+            const paymentMethod = paymentMethods.map((method) => {
+                return {
+                    name: method.Name,
+                };
+            });
+
+            // set cart
             const cart = cartItems
                 .map((item) => {
                     if (!item.productId) {
@@ -607,12 +628,73 @@ class SiteController {
 
             res.render("checkout", {
                 cart,
+                deliveryUnit,
                 total,
+                paymentMethod,
                 user: mongooseToObject(req.user),
             });
         } catch (error) {
             console.error("Error retrieving cart:", error);
             res.status(500).send("Internal Server Error");
+        }
+    }
+
+    // [POST] /checkout
+    async checkoutPost(req, res) {
+        try {
+            const userId = req.user.id;
+            const cartItems = await Cart.find({ userId }).populate("productId");
+            const deliveryUnit = await DeliveryUnits.find({Fee: req.body.deliveryUnit});
+
+            // set cart
+            const cart = cartItems
+                .map((item) => {
+                    if (!item.productId) {
+                        console.error(
+                            `Product not found for cart item with ID ${item._id}`
+                        );
+                        return null; // Tránh việc truy cập vào thuộc tính undefined
+                    }
+                    const subtotal = item.productId.price * item.quantity;
+                    return {
+                        name: item.productId.name,
+                        price: item.productId.price,
+                        quantity: item.quantity,
+                        subtotal,
+                    };
+                })
+                .filter((item) => item !== null); // Lọc bỏ các giá trị null nếu có lỗi ở sản phẩm
+
+            // Create order
+            const order = {
+                userId: userId,
+                products: cart,
+                total: total,
+                deliveryUnit: deliveryUnit.Name,
+                paymentMethod: req.body.paymentMethod,
+            };
+
+            const total = cart.reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0
+            ) + deliveryUnit.Fee;
+
+            // Clear cart
+            await Cart.deleteMany({ userId });
+
+            // Send order to database
+            await Orders.create(order);
+
+            res.status(200).json({
+                success: true,
+                message: "Order placed successfully.",
+            });
+        } catch (error) {
+            console.error("Error in checkoutPost:", error);
+            res.status(500).json({
+                success: false,
+                errors: ["Server error. Please try again later."],
+            });
         }
     }
 }
