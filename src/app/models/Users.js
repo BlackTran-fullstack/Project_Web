@@ -7,6 +7,12 @@ const Users = new Schema(
         email: { type: String, required: true, unique: true },
         password: { type: String },
         verified: { type: Boolean },
+        firstName: { type: String },  
+        lastName: { type: String },
+        country: { type: String },
+        streetAddress: { type: String },
+        city: { type: String },
+        phone: { type: String },
     },
     {
         timestamps: true,

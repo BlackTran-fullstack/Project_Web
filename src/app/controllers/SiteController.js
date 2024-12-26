@@ -645,6 +645,11 @@ class SiteController {
             res.status(500).send("Internal Server Error");
         }
     }
+
+    // [GET] /profile
+    profile(req, res) {
+        res.render("profile", { user: mongooseToObject(req.user) });
+    }
 }
 
 module.exports = new SiteController();

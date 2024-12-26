@@ -20,15 +20,16 @@
         <div class="navbar-icons">
             {{#if user}}
                 <i class="fa-solid fa-user" onclick="toggle()"></i>
+                
                 <div id="user-dropdown" class="dropdown-menu">
+                    <a href="/profile" class="dropdown-item"><i
+                        class="fa-solid fa-user"></i>Profile</a>
                     <form action="/logout?_method=DELETE" method="POST">
                         <button class="dropdown-item"><i
                                 class="fa-solid fa-arrow-right-from-bracket"
                             ></i>Log out</button>
                     </form>
-                    <button class="dropdown-item"><i
-                            class="fa-solid fa-user"
-                        ></i>User Profile</button>
+                    
                 </div>
             {{else}}
                 <a href="/login" class="user"><img

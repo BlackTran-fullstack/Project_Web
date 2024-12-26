@@ -1,0 +1,96 @@
+<main id="Profile">
+    <div class="shop-header">
+        <div class="shop-introduce">
+            <h1 class="shop-title">Profile</h1>
+
+            <div class="shop-breadcrumb">
+                <a href="/">Home</a>
+                <img src="/img/arrow_right.svg" alt="" />
+                <p>Profile</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="profile-content">
+        <div class="profile-info">
+            <div class="profile-info__avatar">
+                <img id="avatar-img" class="avatar" src="/img/userdefault.png" alt="avatar" />
+                <input type="file" id="avatar-input" name="avatar" accept="image/*" />
+            </div>
+            <div class="profile-info__detail">
+                <div class="name">
+                    <div class="form-group">
+                        <label for="first-name">First Name</label>
+                        <input
+                            type="text"
+                            id="first-name"
+                            name="first-name"
+                            value = "{{user.firstName}}"
+                            required
+                        />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="last-name">Last Name</label>
+                        <input
+                            type="text"
+                            id="last-name"
+                            name="last-name"
+                            value="{{user.lastName}}"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="street-address">Street address</label>
+                    <input
+                        type="text"
+                        id="street-address"
+                        name="street-address"
+                        value="{{user.streetAddress}}"
+                        required
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="city">Town / City</label>
+                    <input 
+                        type="text" 
+                        id="city" 
+                        name="city"
+                        value="{{user.city}}" 
+                        required 
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone"
+                        value="{{user.phone}}"
+                        required 
+                    />
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        value="{{user.email}}"
+                        required 
+                    />
+                </div>
+
+                <button class="update-btn" id="update-button" type="button">Update</button>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="/script/profile.js"></script>
