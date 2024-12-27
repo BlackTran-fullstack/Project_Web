@@ -25,6 +25,7 @@
                                     id="first-name"
                                     name="first-name"
                                     required
+                                    class="required"
                                 />
                             </div>
 
@@ -35,6 +36,7 @@
                                     id="last-name"
                                     name="last-name"
                                     required
+                                    class="required"
                                 />
                             </div>
                         </div>
@@ -50,7 +52,8 @@
 
                         <div class="form-group">
                             <label for="country">Country / Region</label>
-                            <select name="country" id="country" required>
+                            <select name="country" id="country" required
+                            class="required">
                                 <option value="USA">United States</option>
                                 <option value="VIE">Vietnam</option>
                             </select>
@@ -63,12 +66,13 @@
                                 id="street-address"
                                 name="street-address"
                                 required
+                                class="required"
                             />
                         </div>
 
                         <div class="form-group">
                             <label for="city">Town / City<span id="required">*</span></label>
-                            <input type="text" id="city" name="city" required />
+                            <input type="text" id="city" name="city" required class="required"/>
                         </div>
 
                         <div class="form-group">
@@ -78,17 +82,18 @@
                                 id="zip-code"
                                 name="zip-code"
                                 required
+                                class="required"
                             />
                         </div>
 
                         <div class="form-group">
                             <label for="phone">Phone<span id="required">*</span></label>
-                            <input type="tel" id="phone" name="phone" required />
+                            <input type="tel" id="phone" name="phone" required class="required" />
                         </div>
 
                         <div class="form-group">
                             <label for="email">Email address<span id="required">*</span></label>
-                            <input type="email" id="email" name="email" required />
+                            <input type="email" id="email" name="email" required  class="required"/>
                         </div>
 
                         <div class="form-group">
@@ -145,8 +150,8 @@
                             <label for="email">Delivery method</label>
 
                             <div id="deliveryMethodContainer">
-                                <select name="deliveryUnit" id="deliveryUnit" required>
-                                    <option value="{{0}}" selected disabled>Select delivery unit</option>
+                                <select name="deliveryUnit" id="deliveryUnit" required class="required">
+                                    <option value="" selected disabled>Select delivery unit</option>
                                     {{#each deliveryUnit}} 
                                         <option value="{{this.fee}}">{{this.name}}</option>
                                     {{/each}}
@@ -157,7 +162,7 @@
                             
 
                             <label for="email">Payment method</label>
-                            <select name="payment" id="payment" required>
+                            <select name="payment" id="payment" required class="required">
                                 <option value="" selected disabled>Select payment method</option>
                                 {{#each paymentMethod}}
                                     <option value="{{this.name}}">{{this.name}}</option>

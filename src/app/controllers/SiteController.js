@@ -3,9 +3,10 @@ const Users = require("../models/Users");
 const Cart = require("../models/Cart");
 const UsersVerification = require("../models/UsersVerification");
 const PasswordReset = require("../models/PasswordReset");
-const DeliveryUnits = require("../models/DeliveryUnit");
-const PaymentMethods = require("../models/PaymentMethod");
-const Orders = require("../models/Order");
+const DeliveryUnits = require("../models/DeliveryUnits");
+const PaymentMethods = require("../models/PaymentMethods");
+const Orders = require("../models/Orders");
+const OrderDetails = require("../models/OrderDetails");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -644,46 +645,57 @@ class SiteController {
         try {
             const userId = req.user.id;
             const cartItems = await Cart.find({ userId }).populate("productId");
-            const deliveryUnit = await DeliveryUnits.find({Fee: req.body.deliveryUnit});
+            const deliveryUnit = await DeliveryUnits.findOne({ Fee: req.body.deliveryFee });
 
-            // set cart
+            if (!deliveryUnit) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid delivery unit.",
+                });
+            }
+
+            // Set cart
             const cart = cartItems
                 .map((item) => {
                     if (!item.productId) {
-                        console.error(
-                            `Product not found for cart item with ID ${item._id}`
-                        );
-                        return null; // Tránh việc truy cập vào thuộc tính undefined
+                        console.error(`Product not found for cart item with ID ${item._id}`);
+                        return null; // Avoid accessing properties of undefined
                     }
-                    const subtotal = item.productId.price * item.quantity;
                     return {
-                        name: item.productId.name,
-                        price: item.productId.price,
+                        productId: item.productId,
                         quantity: item.quantity,
-                        subtotal,
                     };
                 })
-                .filter((item) => item !== null); // Lọc bỏ các giá trị null nếu có lỗi ở sản phẩm
+                .filter((item) => item !== null); // Filter out null values if there are errors with products
 
-            // Create order
-            const order = {
+            // Set total
+            const total = cart.reduce((sum, item) => sum + item.productId.price * item.quantity, 0) + deliveryUnit.Fee;
+
+            const order = new Orders({
                 userId: userId,
                 products: cart,
                 total: total,
-                deliveryUnit: deliveryUnit.Name,
-                paymentMethod: req.body.paymentMethod,
-            };
+                deliveryUnit: deliveryUnit.name, // Use delivery unit name
+                paymentMethod: req.body.paymentMethod, // Use payment method name
+                status: "PENDING",
+                createdAt: Date.now(),
+            });
 
-            const total = cart.reduce(
-                (sum, item) => sum + item.price * item.quantity,
-                0
-            ) + deliveryUnit.Fee;
+            // Save the order to generate the _id
+            await order.save();
+
+            // Save order details
+            for (const item of cart) {
+                const orderDetail = new OrderDetails({
+                    orderId: order._id,
+                    productId: item.productId,
+                    quantity: item.quantity,
+                });
+                await orderDetail.save();
+            }
 
             // Clear cart
             await Cart.deleteMany({ userId });
-
-            // Send order to database
-            await Orders.create(order);
 
             res.status(200).json({
                 success: true,
