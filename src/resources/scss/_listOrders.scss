@@ -1,0 +1,66 @@
+#listOrder {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#listOrder .listOrder-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#listOrder .listOrder-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#listOrder .sub-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#listOrder .listOrder-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#listOrder table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#listOrder th, #listOrder td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#listOrder th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+#listOrder tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#listOrder tr:hover {
+    background-color: #f1f1f1;
+}
+
+#listOrder a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+#listOrder a:hover {
+    text-decoration: underline;
+}

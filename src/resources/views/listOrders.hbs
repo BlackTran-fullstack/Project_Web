@@ -1,0 +1,32 @@
+<main id="listOrder">
+    <div class="listOrder-body">
+        <div class="listOrder-container">
+            <h2 class="sub-title">List Order</h2>
+
+            <div class="listOrder-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Order Status</th>
+                            <th>Order Total</th>
+                            <th>Order Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each orders}}
+                        <tr>
+                            <td>{{this._id}}</td>
+                            <td>{{this.createdAt}}</td>
+                            <td>{{this.status}}</td>
+                            <td>{{this.total}}</td>
+                            <td><a href="/list-orders/{{this._id}}">View</a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
