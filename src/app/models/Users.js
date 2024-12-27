@@ -13,6 +13,7 @@ const Users = new Schema(
         streetAddress: { type: String },
         city: { type: String },
         phone: { type: String },
+        avatar: { type: String },
     },
     {
         timestamps: true,

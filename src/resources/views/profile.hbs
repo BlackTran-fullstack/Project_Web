@@ -88,9 +88,35 @@
 
                 <button class="update-btn" id="update-button" type="button">Update</button>
 
+                <button class="update-btn" id="change-password-button" type="button">Change Password</button>
+
+                <!-- Overlay -->
+                <div id="password-overlay" class="overlay hidden">
+                    <div class="overlay-content">
+                        <h2 class="overlay-head">Change Password</h2>
+                        <form id="password-form">
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" name="current-password" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" name="new-password" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm-password">Confirm Password</label>
+                                <input type="password" id="confirm-password" name="confirm-password" required />
+                            </div>
+                            <button type="submit" class="change-btn">Change</button>
+                            <button type="button" id="close-overlay" class="cancel-btn">Cancel</button>
+                        </form>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
+
 </main>
 
 <script src="/script/profile.js"></script>
