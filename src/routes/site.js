@@ -36,6 +36,8 @@ router.get(
     siteController.checkout
 );
 
+router.post("/checkout", siteController.checkoutPost);
+
 router.get("/verify/:userId/:uniqueString", siteController.verifyEmail);
 
 router.get("/verified", siteController.verified);

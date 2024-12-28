@@ -66,6 +66,9 @@ app.engine(
     "hbs",
     engine({
         extname: ".hbs",
+        helpers: {
+            multiply: (a, b) => a * b
+        }
     })
 );
 

@@ -88,3 +88,95 @@ select {
 @import "forgotPassword";
 @import "resetCode";
 @import "newPassword";
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: "Poppins";
+}
+
+a {
+    text-decoration: none;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+input {
+    border: none;
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+select {
+    border: none;
+}
+
+.error-message {
+    display: flex;
+    align-items: center;
+    column-gap: 9px;
+
+    width: 22%;
+    height: 68px;
+    border-radius: 6px;
+
+    background: #eb5757;
+
+    position: absolute;
+    top: 2%;
+    right: 2%;
+
+    transition: opacity 0.5s ease;
+}
+
+.error-message img {
+    margin-left: 15px;
+}
+
+.error-message .error-title {
+    font-weight: 600;
+
+    color: #fff;
+}
+
+.error-message .error-title + p {
+    margin-top: 4px;
+
+    font-size: 1.4rem;
+
+    color: #fff;
+}
+
+@import "header";
+@import "login";
+@import "register";
+@import "home";
+@import "shop";
+@import "singleProduct";
+@import "footer";
+@import "search";
+@import "cart";
+@import "checkout";
+@import "forgotPassword";
+@import "resetCode";
+@import "newPassword";
+@import "listOrders";
+@import "orderDetail";

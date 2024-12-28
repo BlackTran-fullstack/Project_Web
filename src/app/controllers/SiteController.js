@@ -3,6 +3,10 @@ const Users = require("../models/Users");
 const Cart = require("../models/Cart");
 const UsersVerification = require("../models/UsersVerification");
 const PasswordReset = require("../models/PasswordReset");
+const DeliveryUnits = require("../models/DeliveryUnits");
+const PaymentMethods = require("../models/PaymentMethods");
+const Orders = require("../models/Orders");
+const OrderDetails = require("../models/OrderDetails");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -20,6 +24,7 @@ require("dotenv").config();
 // path for static verified page
 const path = require("path");
 const { stat } = require("fs");
+const mongoose = require("../../util/mongoose");
 
 // nodemailer stuff
 const transporter = nodemailer.createTransport({
@@ -611,7 +616,25 @@ class SiteController {
         try {
             const userId = req.user.id;
             const cartItems = await Cart.find({ userId }).populate("productId");
+            const deliveryUnits = await DeliveryUnits.find({}).sort({ Fee: 1 });
+            const paymentMethods = await PaymentMethods.find({});
 
+            // set delivery unit
+            const deliveryUnit = deliveryUnits.map((unit) => {
+                return {
+                    name: unit.Name,
+                    fee: unit.Fee,
+                };
+            });
+
+            // set payment method
+            const paymentMethod = paymentMethods.map((method) => {
+                return {
+                    name: method.Name,
+                };
+            });
+
+            // set cart
             const cart = cartItems
                 .map((item) => {
                     if (!item.productId) {
@@ -637,12 +660,90 @@ class SiteController {
 
             res.render("checkout", {
                 cart,
+                deliveryUnit,
                 total,
+                paymentMethod,
                 user: mongooseToObject(req.user),
             });
         } catch (error) {
             console.error("Error retrieving cart:", error);
             res.status(500).send("Internal Server Error");
+        }
+    }
+
+    // [POST] /checkout
+    async checkoutPost(req, res) {
+        try {
+            const userId = req.user.id;
+            const cartItems = await Cart.find({ userId }).populate("productId");
+            const deliveryUnit = await DeliveryUnits.findOne({
+                Fee: req.body.deliveryFee,
+            });
+
+            if (!deliveryUnit) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid delivery unit.",
+                });
+            }
+
+            // Set cart
+            const cart = cartItems
+                .map((item) => {
+                    if (!item.productId) {
+                        console.error(
+                            `Product not found for cart item with ID ${item._id}`
+                        );
+                        return null; // Avoid accessing properties of undefined
+                    }
+                    return {
+                        productId: item.productId,
+                        quantity: item.quantity,
+                    };
+                })
+                .filter((item) => item !== null); // Filter out null values if there are errors with products
+
+            // Set total
+            const total =
+                cart.reduce(
+                    (sum, item) => sum + item.productId.price * item.quantity,
+                    0
+                ) + deliveryUnit.Fee;
+
+            const order = new Orders({
+                userId: userId,
+                products: cart,
+                total: total,
+                deliveryUnit: deliveryUnit.name, // Use delivery unit name
+                paymentMethod: req.body.paymentMethod, // Use payment method name
+                status: "PENDING",
+                createdAt: Date.now(),
+            });
+
+            // Save the order to generate the _id
+            await order.save();
+
+            // Save order details
+            const orderDetails = cart.map((item) => ({
+                orderId: order._id,
+                productId: item.productId,
+                quantity: item.quantity,
+            }));
+            await OrderDetails.insertMany(orderDetails);
+
+            // Clear cart
+            await Cart.deleteMany({ userId });
+
+            res.status(200).json({
+                success: true,
+                message: "Order placed successfully.",
+            });
+        } catch (error) {
+            console.error("Error in checkoutPost:", error);
+            res.status(500).json({
+                success: false,
+                errors: ["Server error. Please try again later."],
+            });
         }
     }
 }
