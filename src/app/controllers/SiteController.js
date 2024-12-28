@@ -24,6 +24,7 @@ require("dotenv").config();
 // path for static verified page
 const path = require("path");
 const { stat } = require("fs");
+const mongoose = require("../../util/mongoose");
 
 // nodemailer stuff
 const transporter = nodemailer.createTransport({
@@ -645,7 +646,9 @@ class SiteController {
         try {
             const userId = req.user.id;
             const cartItems = await Cart.find({ userId }).populate("productId");
-            const deliveryUnit = await DeliveryUnits.findOne({ Fee: req.body.deliveryFee });
+            const deliveryUnit = await DeliveryUnits.findOne({
+                Fee: req.body.deliveryFee,
+            });
 
             if (!deliveryUnit) {
                 return res.status(400).json({
@@ -658,7 +661,9 @@ class SiteController {
             const cart = cartItems
                 .map((item) => {
                     if (!item.productId) {
-                        console.error(`Product not found for cart item with ID ${item._id}`);
+                        console.error(
+                            `Product not found for cart item with ID ${item._id}`
+                        );
                         return null; // Avoid accessing properties of undefined
                     }
                     return {
@@ -669,7 +674,11 @@ class SiteController {
                 .filter((item) => item !== null); // Filter out null values if there are errors with products
 
             // Set total
-            const total = cart.reduce((sum, item) => sum + item.productId.price * item.quantity, 0) + deliveryUnit.Fee;
+            const total =
+                cart.reduce(
+                    (sum, item) => sum + item.productId.price * item.quantity,
+                    0
+                ) + deliveryUnit.Fee;
 
             const order = new Orders({
                 userId: userId,
@@ -685,14 +694,12 @@ class SiteController {
             await order.save();
 
             // Save order details
-            for (const item of cart) {
-                const orderDetail = new OrderDetails({
-                    orderId: order._id,
-                    productId: item.productId,
-                    quantity: item.quantity,
-                });
-                await orderDetail.save();
-            }
+            const orderDetails = cart.map((item) => ({
+                orderId: order._id,
+                productId: item.productId,
+                quantity: item.quantity,
+            }));
+            await OrderDetails.insertMany(orderDetails);
 
             // Clear cart
             await Cart.deleteMany({ userId });
@@ -703,52 +710,6 @@ class SiteController {
             });
         } catch (error) {
             console.error("Error in checkoutPost:", error);
-            res.status(500).json({
-                success: false,
-                errors: ["Server error. Please try again later."],
-            });
-        }
-    }
-
-    // [GET] /list-orders
-    async listOrders(req, res) {
-        try {
-            const userId = req.user.id;
-            const orders = await Orders.find({ userId })
-            .sort({ createdAt: -1 })
-            res.render("listOrders", {
-                orders: mutipleMongooseToObject(orders),
-            });
-        } catch (error) {
-            console.error("Error in listOrders:", error);
-            res.status(500).json({
-                success: false,
-                errors: ["Server error. Please try again later."],
-            });
-        }
-    }
-
-    // [GET] /list-orders/:orderId
-    async orderDetails(req, res) {
-        try {
-            const orderId = req.params.orderId;
-            const orderDetails = await OrderDetails.find({ orderId });
-            let products = [];
-            for (const item of orderDetails) {
-                const product = await Products.findOne({ _id: item.productId });
-                console.log("product:", product);
-                products.push({
-                    name: product.name,
-                    price: product.price,
-                    quantity: item.quantity,
-                });
-            }
-            res.render("orderDetail", 
-            {
-                products: products,
-            });
-        } catch (error) {
-            console.error("Error in orderDetails:", error);
             res.status(500).json({
                 success: false,
                 errors: ["Server error. Please try again later."],

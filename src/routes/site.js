@@ -53,14 +53,6 @@ router.get("/new-password", siteController.newPassword);
 
 router.post("/new-password", siteController.newPasswordPost);
 
-router.get("/list-orders", 
-    siteController.checkAuthenticated, 
-    siteController.listOrders);
-
-router.get("/list-orders/:orderId",    
-    siteController.checkAuthenticated, 
-    siteController.orderDetails);
-
 router.get("/", siteController.home);
 
 module.exports = router;

@@ -1,4 +1,15 @@
 <main id="orderDetail">
+    <div class="orderDetail-header">
+        <div class="orderDetail-introduce">
+            <h1 class="orderDetail-title">Order Detail</h1>
+            <div class="orderDetail-breadcrumb">
+                <a href="/list-orders">List Orders</a>
+                <img src="/img/arrow_right.svg" alt="" />
+                <p>Order Detail</p>
+            </div>
+        </div>
+    </div>
+
     <div class="orderDetail-body">
         <div class="orderDetail-container">
             <h2 class="sub-title">Order Detail</h2>
@@ -15,15 +26,25 @@
                     </thead>
                     <tbody>
                         {{#each products}}
-                        <tr>
-                            <td >{{this.name}}</td>
-                            <td>{{this.quantity}}</td>
-                            <td>{{this.price}}</td>
-                            <td>{{multiply this.price this.quantity}}</td>
-                        </tr>
+                            <tr>
+                                <td>{{this.name}}</td>
+                                <td>{{this.quantity}}</td>
+                                <td
+                                    class="product-price"
+                                    data-price="{{this.price}}"
+                                >{{this.price}}</td>
+                                <td
+                                    class="product-price product-total"
+                                    data-price="{{multiply
+                                        this.price
+                                        this.quantity
+                                    }}"
+                                >{{multiply this.price this.quantity}}</td>
+                            </tr>
                         {{/each}}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+</main>

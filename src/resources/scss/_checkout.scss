@@ -59,6 +59,9 @@
 #checkout .billing-details .sub-title,
 #checkout .billing-details form {
     width: 75%;
+}
+
+#checkout .billing-details form {
     margin: auto;
 }
 
@@ -126,6 +129,28 @@
 #checkout .form-group textarea:focus {
     border: 2px solid #b88e2f;
     outline: none;
+}
+
+#checkout .form-group .error {
+    display: flex;
+    align-items: baseline;
+
+    margin-top: 6px;
+
+    font-size: 1.3rem;
+
+    color: #d93025;
+
+    display: none;
+}
+
+#checkout .form-group.invalid .error {
+    display: flex;
+}
+
+#checkout .form-group .error .fa-circle-exclamation {
+    margin-right: 6px;
+    font-size: 1.5rem;
 }
 
 #checkout .checkout-content .order-summary {
@@ -202,27 +227,12 @@
     background: #d9d9d9;
 }
 
-#checkout .order-summary-payment .payment-option {
-    display: flex;
-    align-items: baseline;
-    gap: 15px;
-
-    margin-bottom: 11px;
+#checkout .order-summary-payment label {
+    margin-top: 36px;
 }
 
-#checkout .order-summary-payment .payment-option span {
-    font-weight: 500;
-
-    color: #9f9f9f;
-}
-
-#checkout .order-summary-payment .payment-desc {
-    margin-bottom: 25px;
-
-    font-weight: 300;
-    line-height: 1.5;
-
-    color: #9f9f9f;
+#checkout .order-summary-payment p {
+    font-size: 1.4rem;
 }
 
 #checkout .order-summary-content .privacy-notice {
@@ -294,7 +304,7 @@
     color: #898989;
 }
 
-#checkout #deliveryMethodContainer{
+#checkout #deliveryMethodContainer {
     display: grid;
     grid-template-columns: 2fr 1fr;
     align-items: center;
@@ -302,16 +312,16 @@
     gap: 10px;
 }
 
-#checkout #deliveryMethodContainer p{
+#checkout #deliveryMethodContainer p {
     justify-content: center;
     margin-top: 22px;
 }
 
-#checkout #required{
+#checkout #required {
     color: red;
 }
 
-#checkout #checkout-form{
+#checkout #checkout-form {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
 }

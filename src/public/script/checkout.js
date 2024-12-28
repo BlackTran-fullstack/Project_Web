@@ -1,76 +1,83 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const placeOrderButton = document.querySelector('.place-order-btn'); // Select the place order button
+document.addEventListener("DOMContentLoaded", () => {
+    const checkoutForm = document.getElementById("checkout-form");
+    const deliveryUnit = document.getElementById("deliveryUnit"); // Select the delivery unit dropdown
+    const deliveryFee = document.getElementById("deliveryFee"); // Select the delivery fee
+    const paymentMethod = document.getElementById("payment"); // Select the payment method
+    const productTotal = document.querySelector(".product-total"); // Select the product total
+    const placeOrderButton = document.querySelector(".place-order-btn"); // Select the place order button
+    const phoneInput = document.getElementById("phone"); // Select the phone input
+    const emailInput = document.getElementById("email"); // Select the email input
+    const phoneForm = document.querySelector(".form-phone"); // Select the phone form
+    const emailForm = document.querySelector(".form-email"); // Select the email form
 
-    document.getElementById('deliveryUnit').addEventListener('change', function () {
-        const selectedOption = this.options[this.selectedIndex];
-        const temp_deliveryFee = selectedOption.value;
-        document.getElementById('deliveryFee').textContent = temp_deliveryFee;
-    });
+    document
+        .getElementById("deliveryUnit")
+        .addEventListener("change", function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const temp_deliveryFee = selectedOption.value;
 
-    placeOrderButton.addEventListener("click", (event) => {
-        const requiredFields = document.querySelectorAll('.required'); // Select all the required fields
-        
-        // Check if all the required fields are not filled
-        for (let i = 0; i < requiredFields.length; i++) {
-            if (requiredFields[i].value === '') {
-                alert('Please fill in all the required fields.');
-                return;
+            document.getElementById("deliveryFee").textContent =
+                formatCurrency(temp_deliveryFee);
+        });
+
+    const validatePhone = () => {
+        const phonePattern = /^[0-9]{10}$/;
+        if (!phoneInput.value.match(phonePattern)) {
+            phoneForm.classList.add("invalid");
+            return false;
+        }
+        phoneForm.classList.remove("invalid");
+        return true;
+    };
+
+    const validateEmail = () => {
+        const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+        if (!emailInput.value.match(emailPattern)) {
+            emailForm.classList.add("invalid");
+            return false;
+        }
+        emailForm.classList.remove("invalid");
+        return true;
+    };
+
+    phoneInput.addEventListener("keyup", validatePhone);
+    emailInput.addEventListener("keyup", validateEmail);
+
+    checkoutForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const isPhoneValid = validatePhone();
+        const isEmailValid = validateEmail();
+
+        if (isPhoneValid && isEmailValid) {
+            const formData = {
+                deliveryFee: deliveryUnit.value,
+                paymentMethod: paymentMethod.value,
+                productTotal: productTotal.textContent,
+                phone: phoneInput.value,
+                email: emailInput.value,
+            };
+
+            try {
+                const res = await fetch("/checkout", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const data = await res.json();
+
+                if (res.ok && data.success) {
+                    alert("Order placed successfully.");
+                    window.location.href = "/list-orders";
+                } else {
+                    alert("An error occurred. Please try again.");
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
         }
-
-        // Get the form values at the time of the button click
-        const deliveryFee = document.getElementById('deliveryUnit').value; // Get the delivery fee
-        const deliveryUnit = document.getElementById('deliveryUnit').options[document.getElementById('deliveryUnit').selectedIndex].text; // Get the delivery unit
-        const paymentMethod = document.getElementById("payment").value; // Get the payment method
-        const firstName = document.querySelector('#first-name').value; // Get the first name
-        const lastName = document.querySelector('#last-name').value; // Get the last name
-        const companyName = document.querySelector('#company-name').value; // Get the company name
-        const country = document.querySelector('#country').value; // Get the country
-        const streetAddress = document.querySelector('#street-address').value; // Get the street address
-        const townCity = document.querySelector('#city').value; // Get the town/city
-        const zipCode = document.querySelector('#zip-code').value; // Get the zip code
-        const phone = document.querySelector('#phone').value; // Get the phone number
-        const email = document.querySelector('#email').value; // Get the email
-        const additionalInformation = document.querySelector('#additional-info').value; // Get the additional information
-
-        // Create an object to store the form data
-        const data = {
-            deliveryFee,
-            deliveryUnit,
-            paymentMethod,
-            firstName,
-            lastName,
-            companyName,
-            country,
-            streetAddress,
-            townCity,
-            zipCode,
-            phone,
-            email,
-            additionalInformation,
-        };
-
-        alert('Form data will be sent to the server: ' + JSON.stringify(data));
-
-        // fetch() POST request
-        fetch('/checkout', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.success) {
-                    alert('Order placed successfully.');
-                    window.location.href = '/';
-                } else {
-                    alert('An error occurred. Please try again.');
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
     });
 });
