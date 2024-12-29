@@ -211,6 +211,16 @@ class SiteController {
             res.status(500).send("Internal Server Error");
         }
     }
+
+    // [GET] /about
+    about(req, res) {
+        res.render("about", { user: mongooseToObject(req.user) });
+    }
+
+    // [GET] /contact
+    contact(req, res) {
+        res.render("contact", { user: mongooseToObject(req.user) });
+    }
 }
 
 module.exports = new SiteController();

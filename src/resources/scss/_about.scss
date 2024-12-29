@@ -1,0 +1,108 @@
+#about {
+
+    .shop-header {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        width: 100%;
+        height: 316px;
+    
+        background-image: url(/img/background.jpg);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: bottom center;
+
+        .shop-title {
+            font-size: 4.8rem;
+            font-weight: 500;
+    
+            text-align: center;
+        }
+
+        .shop-breadcrumb {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+    
+            margin-top: 20px;
+    
+            a {
+                font-weight: 500;
+    
+                color: #000;
+            }
+        }
+    }
+
+    .about-us-container {
+        padding: 4rem;
+    
+        .about-us, .our-mission {
+            text-align: center;
+            margin: 0 auto;
+            max-width: 1200px;
+            margin-bottom: 5rem;
+    
+            .heading {
+                font-weight: 600;
+                font-size: 3.6rem;
+                margin-bottom: 3rem;
+            }
+    
+            .description {
+                opacity: 0.8;
+                margin: 0 auto;
+                text-align: justify;
+                line-height: 1.5;
+                max-width: 800px;
+    
+                & + .description {
+                    margin-top: 1.6rem;
+                }
+            }
+        }
+    
+        .our-mission {
+            margin-top: 3rem;
+        }
+    }
+
+    .shop-services {
+        margin-top: 85px;
+        background: #faf3ea;
+
+        .services-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+    
+            max-width: calc(100% - 106px);
+            padding: 100px 0;
+            margin: auto;
+        }
+
+        .service {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-info h3 {
+            font-size: 2.5rem;
+            font-weight: 600;
+    
+            color: #242424;
+        }
+
+        .service-info p {
+            margin-top: 2px;
+    
+            font-size: 2rem;
+            font-weight: 500;
+    
+            color: #898989;
+        }
+    }
+}

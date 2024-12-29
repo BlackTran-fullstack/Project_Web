@@ -35,6 +35,10 @@ router.get(
     siteController.checkout
 );
 
+router.get("/about", siteController.about);
+
+router.get("/contact", siteController.contact);
+
 router.get("/", siteController.home);
 
 module.exports = router;
