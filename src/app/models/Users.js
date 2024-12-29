@@ -7,6 +7,17 @@ const Users = new Schema(
         email: { type: String, required: true, unique: true },
         password: { type: String },
         verified: { type: Boolean },
+        firstName: { type: String },
+        lastName: { type: String },
+        country: { type: String },
+        address: { type: String },
+        city: { type: String },
+        phone: { type: String },
+        avatar: {
+            type: String,
+            default:
+                "https://latarfaitdjumzdjmqxd.supabase.co/storage/v1/object/public/images/avatars/userdefault.png",
+        },
     },
     {
         timestamps: true,

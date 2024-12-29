@@ -27,7 +27,10 @@ router.post(
 
 router.delete("/logout", siteController.logout);
 
+// router.get("/profile", siteController.checkAuthenticated, siteController.profile);
+
 router.get("/search", siteController.search);
+
 router.get("/search-ajax", siteController.searchAjax); // Route cho AJAX
 
 router.get(

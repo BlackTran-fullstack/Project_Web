@@ -200,7 +200,6 @@ class SiteController {
             .catch(next);
     }
 
-
     // [GET] /login
     login(req, res) {
         let rememberedEmail = "";
@@ -669,6 +668,11 @@ class SiteController {
             console.error("Error retrieving cart:", error);
             res.status(500).send("Internal Server Error");
         }
+    }
+
+    // [GET] /profile
+    profile(req, res) {
+        res.render("profile", { user: mongooseToObject(req.user) });
     }
 
     // [POST] /checkout

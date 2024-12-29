@@ -2,6 +2,7 @@ const siteRouter = require("./site");
 const shopRouter = require("./shop");
 const cartRouter = require("./cart");
 const authRouter = require("./auth");
+const profileRouter = require("./profile");
 const ordersRouter = require("./orders");
 
 const cartSummary = require("../middlewares/cartSummary");
@@ -17,6 +18,8 @@ function route(app) {
     app.use("/cart", cartRouter);
 
     app.use("/auth", authRouter);
+
+    app.use("/profile", profileRouter);
 
     app.use("/list-orders", ordersRouter);
 }

@@ -19,16 +19,35 @@
 
         <div class="navbar-icons">
             {{#if user}}
-                <i class="fa-solid fa-user" onclick="toggle()"></i>
-                <div id="user-dropdown" class="dropdown-menu">
-                    <form action="/logout?_method=DELETE" method="POST">
-                        <button class="dropdown-item"><i
-                                class="fa-solid fa-arrow-right-from-bracket"
-                            ></i>Log out</button>
-                    </form>
-                    <button class="dropdown-item"><i
-                            class="fa-solid fa-user"
-                        ></i>User Profile</button>
+                <div class="profile-dropdown">
+                    <i class="fa-solid fa-user" onclick="toggle()"></i>
+
+                    <ul
+                        id="user-dropdown"
+                        class="dropdown-menu profile-dropdown-list"
+                    >
+                        <li class="profile-dropdown-list-item">
+                            <a href="/profile" class="dropdown-item"><i
+                                    class="fa-solid fa-user"
+                                ></i>Profile</a>
+                        </li>
+
+                        <li class="profile-dropdown-list-item">
+                            <a href="/list-orders" class="dropdown-item"><i
+                                    class="fa-solid fa-box"
+                                ></i>Orders</a>
+                        </li>
+
+                        <hr />
+
+                        <li class="profile-dropdown-list-item">
+                            <form action="/logout?_method=DELETE" method="POST">
+                                <button class="dropdown-item"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"
+                                    ></i>Log out</button>
+                            </form>
+                        </li>
+                    </ul>
                 </div>
             {{else}}
                 <a href="/login" class="user"><img

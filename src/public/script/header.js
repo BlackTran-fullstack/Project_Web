@@ -28,6 +28,25 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function toggle() {
-    const dropdown = document.getElementById("user-dropdown");
-    dropdown.classList.toggle("show");
+    // Lấy phần tử dropdown menu bằng id
+    const dropdownMenu = document.getElementById("user-dropdown");
+
+    // Kiểm tra và thêm/xóa lớp 'show' để bật/tắt menu
+    if (dropdownMenu) {
+        dropdownMenu.classList.toggle("show");
+    }
 }
+
+document.addEventListener("click", (event) => {
+    const dropdownMenu = document.getElementById("user-dropdown");
+    const userIcon = document.querySelector(".fa-user"); // Biểu tượng người dùng
+
+    // Kiểm tra nếu nhấp ngoài menu và biểu tượng
+    if (
+        dropdownMenu &&
+        !dropdownMenu.contains(event.target) &&
+        !userIcon.contains(event.target)
+    ) {
+        dropdownMenu.classList.remove("show");
+    }
+});
