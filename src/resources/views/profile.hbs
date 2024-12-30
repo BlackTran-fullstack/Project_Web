@@ -106,17 +106,25 @@
                     </span>
                 </div>
 
-                <button
-                    class="update-btn"
-                    id="change-password-button"
-                    type="button"
-                >Change Password</button>
+                {{#if user.googleId}}
+                    <button
+                        class="update-btn"
+                        id="update-button"
+                        type="button"
+                    >Update</button>
+                {{else}}
+                    <button
+                        class="update-btn"
+                        id="change-password-button"
+                        type="button"
+                    >Change Password</button>
 
-                <button
-                    class="update-btn"
-                    id="update-button"
-                    type="button"
-                >Update</button>
+                    <button
+                        class="update-btn"
+                        id="update-button"
+                        type="button"
+                    >Update</button>
+                {{/if}}
 
                 <!-- Overlay -->
                 <div id="password-overlay" class="overlay hidden">

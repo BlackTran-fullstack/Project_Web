@@ -34,23 +34,38 @@ class ShopController {
     singleProduct(req, res, next) {
         const slug = req.params.slug;
 
-        // Thực hiện hai truy vấn song song
-        Promise.all([
-            Products.findOne({ slug: slug }), // Tìm sản phẩm chính theo slug
-            Products.find({}).limit(4), // Lấy toàn bộ danh sách sản phẩm (hoặc có thể lọc theo nhu cầu)
-        ])
-            .then(([product, products]) => {
-                // Render view với cả sản phẩm chính và danh sách sản phẩm
-                res.render("singleProduct.hbs", {
-                    product: mongooseToObject(product),
-                    products: mutipleMongooseToObject(products),
-                    user: mongooseToObject(req.user),
-                });
+        // Tìm sản phẩm chính theo slug
+        Products.findOne({ slug: slug })
+            .populate("categoriesId") // Populate danh mục
+            .populate("brandsId") // Populate thương hiệu
+            .then((product) => {
+                if (!product) {
+                    return res.status(404).send("Product not found!");
+                }
+
+                // Truy vấn các sản phẩm liên quan
+                Products.find({
+                    $or: [
+                        { categoriesId: product.categoriesId._id }, // Sản phẩm cùng danh mục
+                        { brandsId: product.brandsId._id }, // Sản phẩm cùng thương hiệu
+                    ],
+                    _id: { $ne: product._id }, // Loại trừ sản phẩm hiện tại
+                })
+                    .limit(4) // Giới hạn 4 sản phẩm liên quan
+                    .then((relatedProducts) => {
+                        res.render("singleProduct.hbs", {
+                            product: mongooseToObject(product), // Sản phẩm chính
+                            categories: mongooseToObject(product.categoriesId), // Danh mục
+                            brands: mongooseToObject(product.brandsId), // Thương hiệu
+                            products: mutipleMongooseToObject(relatedProducts), // Sản phẩm liên quan
+                            user: mongooseToObject(req.user), // Người dùng
+                        });
+                    })
+                    .catch(next);
             })
             .catch(next);
     }
 
-    
     // [GET] /shop/search
     search(req, res, next) {
         const search = req.query.q;
