@@ -23,6 +23,32 @@ function paginatedResults(model) {
 
         const results = {};
 
+        const sortBy = req.query.sortBy;
+        let sortCriteria = {};
+
+        switch (sortBy) {
+            case "stock_0":
+                sortCriteria = { stock: -1 };
+                break;
+            case "stock_1":
+                sortCriteria = { stock: 1 };
+                break;
+            case "rating_0":
+                sortCriteria = { rate: -1 };
+                break;
+            case "rating_1":
+                sortCriteria = { rate: 1 };
+                break;
+            case "price_0":
+                sortCriteria = { price: -1 };
+                break;
+            case "price_1":
+                sortCriteria = { price: 1 };
+                break;
+            default:
+                sortCriteria = {};
+        }
+
         try {
             // Lấy tổng số lượng tài liệu trong collection
             const totalDocuments = await model.countDocuments(filters).exec();
@@ -56,6 +82,7 @@ function paginatedResults(model) {
                 .find(filters)
                 .limit(limit)
                 .skip(startIndex)
+                .sort(sortCriteria)
                 .exec();
 
             // Gắn kết quả vào response

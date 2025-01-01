@@ -17,15 +17,13 @@ async function loadProducts(page = 1, limit = 8) {
             brands: currentFilters.brands.join(","),
             priceMin: currentFilters.priceMin,
             priceMax: currentFilters.priceMax,
+            sortBy: currentFilters.sortBy,
         });
 
         const response = await fetch(
             `/shop/api/products?${queryParams.toString()}`
         );
         const data = await response.json();
-
-        console.log(data);
-        console.log(data.priceMin);
 
         // Xử lý hiển thị sản phẩm
         renderProducts(data.results);
@@ -60,14 +58,18 @@ function applyFilters() {
             ? 20000000 // Đặt lại giá trị mặc định
             : parseInt(priceMaxInput);
 
+    const limit = document.getElementById("show-count").value;
+    const sortBy = document.getElementById("sort-by").value; 
+
     currentFilters = {
         categories: selectedCategories,
         brands: selectedBrands,
         priceMin,
         priceMax,
+        sortBy,
     };
 
-    loadProducts(1);
+    loadProducts(1, limit);
 }
 
 // Hàm hiển thị sản phẩm
