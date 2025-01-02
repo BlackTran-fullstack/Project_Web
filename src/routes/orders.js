@@ -12,4 +12,6 @@ router.get(
 
 router.get("/", siteController.checkAuthenticated, OrdersController.listOrders);
 
+router.get("/detail/:orderdetailId", OrdersController.orderDetail);
+
 module.exports = router;

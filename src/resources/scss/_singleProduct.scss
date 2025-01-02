@@ -506,3 +506,98 @@
 
     color: #b88e2f;
 }
+
+#singleProduct .heading .tab {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px;
+    border-bottom: 2px solid transparent;
+}
+
+#singleProduct .heading .tab.active {
+    border-bottom: 2px solid #000;
+}
+
+#singleProduct .tab-content {
+    display: none;
+}
+
+#singleProduct .tab-content.active {
+    display: block;
+}
+
+#singleProduct .productReviews {
+    margin-top: 20px;
+}
+
+#singleProduct .feedback-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+#singleProduct .feedback-item-container {
+    margin-right: 15px;
+}
+
+#singleProduct .feedback-item-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#singleProduct .feedback-content {
+    flex: 1;
+}
+
+#singleProduct .feedback-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#singleProduct .feedback-content-header-left {
+    display: flex;
+    align-items: center;
+}
+
+#singleProduct .feedback-content-header-left h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+#singleProduct .feedback-rating {
+    display: flex;
+    align-items: center;
+}
+
+#singleProduct .feedback-rating img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+#singleProduct .feedback-rating p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#singleProduct .feedback-content-body {
+    margin-top: 10px;
+}
+
+#singleProduct .feedback-content-body p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}

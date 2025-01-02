@@ -77,4 +77,21 @@ document.addEventListener("DOMContentLoaded", () => {
             addToCartBtn.textContent = "Add to Cart";
         }
     });
+
+    const tabs = document.querySelectorAll('.heading .tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-tab');
+
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+
+            // Add active class to the clicked tab and corresponding content
+            tab.classList.add('active');
+            document.getElementById(target).classList.add('active');
+        });
+    });
 });

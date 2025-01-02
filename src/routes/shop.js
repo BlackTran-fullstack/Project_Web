@@ -15,6 +15,8 @@ router.get(
     ShopController.getPaginatedProducts
 );
 
+router.get("/api/get-slug/:productId", ShopController.getSlugByProductId);
+
 // router.get("/", ShopController.shop);
 router.get("/", paginatedResults(products), ShopController.shop);
 

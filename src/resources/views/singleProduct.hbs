@@ -188,13 +188,55 @@
         <div class="singleProduct-content">
             <div class="overview-content">
                 <div class="heading">
-                    <h2 class="tab active">Description</h2>
-                    <h2 class="tab">Additional Information</h2>
-                    <h2 class="tab">Reviews [5]</h2>
+                    <h2 class="tab active" data-tab="description">Description</h2>
+                    <h2 class="tab" data-tab="additional-info">Additional Information</h2>
+                    <h2 class="tab" data-tab="reviews">Reviews [{{feedbacksCount}}]</h2>
                 </div>
 
-                <div class="overview-body">
-                    <p>{{product.long_description}}</p>
+                <div class="tab-content active" id="description">
+                    <div class="overview-body">
+                        <p>{{product.long_description}}</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="additional-info">
+                    <div class="overview-body">
+                        <p>{{product.additional_info}}</p>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="reviews">
+                    <div class="overview-body">
+                            <div class="productReviews-body">
+        <div class="productReviews-container">
+            <h2 class="sub-title">Product Reviews</h2>
+
+            <div class="productReviews">
+                {{#each feedbacks}}
+                    <div class="feedback-item">
+                        <div class="feedback-item-container">
+                            <img src="{{this.user.avatar}}"/>
+                        </div>
+                        <div class="feedback-content">
+                            <div class="feedback-content-header">
+                                <div class="feedback-content-header-left">
+                                    <h3>{{this.user.email}}</h3>
+                                    <div class="feedback-rating">
+                                        <img src="/img/star_full.svg" alt="" />
+                                        <p>{{this.rating}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="feedback-content-body">
+                                <p>{{this.message}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+                    </div>
                 </div>
 
                 <div class="overview-picture">

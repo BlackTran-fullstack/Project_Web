@@ -1,6 +1,8 @@
 const Products = require("../models/Products");
 const Categories = require("../models/Categories");
 const Brands = require("../models/Brands");
+const Feedbacks = require("../models/Feedbacks");
+const Users = require("../models/Users");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -31,8 +33,22 @@ class ShopController {
     }
 
     // [GET] /shop/:slug
-    singleProduct(req, res, next) {
+    async singleProduct(req, res, next) {
         const slug = req.params.slug;
+
+        const product = await Products.findOne({ slug: slug });
+
+        const feedbacks = await Feedbacks.find({ productId: product._id });
+        const feedbacksObject = mutipleMongooseToObject(feedbacks);
+        const feedbacksCount = feedbacks.length;
+
+        for (const feedback of feedbacksObject) {
+            const user = await Users.findById(feedback.userId);
+            const userObject = mongooseToObject(user);
+            // Ẩn mật khẩu
+            userObject.password = "********";
+            feedback.user = userObject;
+        }
 
         // Tìm sản phẩm chính theo slug
         Products.findOne({ slug: slug })
@@ -59,6 +75,8 @@ class ShopController {
                             brands: mongooseToObject(product.brandsId), // Thương hiệu
                             products: mutipleMongooseToObject(relatedProducts), // Sản phẩm liên quan
                             user: mongooseToObject(req.user), // Người dùng
+                            feedbacks: feedbacksObject, // Đánh giá
+                            feedbacksCount: feedbacksCount, // Số lượng đánh giá
                         });
                     })
                     .catch(next);
@@ -95,6 +113,24 @@ class ShopController {
                     //res.json(products);
                 })
                 .catch(next);
+        }
+    }
+
+    // [GET] /api/get-slug/:productId
+    async getSlugByProductId(req, res, next) {
+        const productId = req.params.productId;
+
+        try {
+            const product = await Products.findById(productId);
+
+            if (!product) {
+                return res.status(404).json({ message: "Product not found!" });
+            }
+
+            res.status(200).json({ slug: product.slug });
+        } catch (error) {
+            console.error("Error in getSlugByProductId:", error);
+            next(error);
         }
     }
 }
