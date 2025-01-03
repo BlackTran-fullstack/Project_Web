@@ -3,6 +3,8 @@ const Categories = require("../models/Categories");
 const Brands = require("../models/Brands");
 const Feedbacks = require("../models/Feedbacks");
 const Users = require("../models/Users");
+const Orders = require("../models/Orders");
+const OrderDetails = require("../models/OrderDetails");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -50,6 +52,23 @@ class ShopController {
             feedback.user = userObject;
         }
 
+        const userId = req.user ? req.user._id : null;
+
+        let orders = await Orders.find({ userId });
+        if (!userId)
+        {
+            orders = [];
+        }
+        const orderIds = orders.map(order => order._id);
+
+        const orderDetail = await OrderDetails.findOne({ orderId: { $in: orderIds }, productId: product._id, isReview: false });
+
+        let isReviewed = orderDetail ? false : true;
+
+        if (!userId) {
+            isReviewed = true;
+        }
+
         // Tìm sản phẩm chính theo slug
         Products.findOne({ slug: slug })
             .populate("categoriesId") // Populate danh mục
@@ -77,11 +96,47 @@ class ShopController {
                             user: mongooseToObject(req.user), // Người dùng
                             feedbacks: feedbacksObject, // Đánh giá
                             feedbacksCount: feedbacksCount, // Số lượng đánh giá
+                            isReviewed: isReviewed, // Đã đánh giá
+                            orderDetailId: orderDetail ? orderDetail._id : null, // Chi tiết đơn hàng
                         });
                     })
                     .catch(next);
             })
             .catch(next);
+    }
+
+    // [POST] /shop/postFeedback
+    async postFeedback(req, res, next) {
+        const { rating, feedback, productId, userId, orderDetailsId } = req.body;
+
+        try {
+            const feedbackData = {
+                rating: rating,
+                message: feedback,
+                productId,
+                userId,
+            };
+
+            const feedbackSave = new Feedbacks(feedbackData);
+            await feedbackSave.save();
+
+            const orderDetail = await OrderDetails.findById(orderDetailsId);
+
+            if (!orderDetail) {
+                throw new Error('OrderDetail not found');
+            }
+
+            const result = await OrderDetails.updateOne({orderId: orderDetail.orderId, productId: orderDetail.productId}, { $set: { isReview: true } });
+
+            if (!result) {
+                throw new Error('Failed to update orderDetail');
+            }
+
+            res.json({ success: true });
+        } catch (error) {
+            console.error("Error in postFeedback:", error);
+            res.json({ success: false, message: error.message });
+        }
     }
 
     // [GET] /shop/search

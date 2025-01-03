@@ -17,62 +17,29 @@
             <div class="singleProduct-info">
                 <div class="product-image">
                     <ul class="image-gallery">
-                        <li class="thumbnail"><img
-                                src="{{product.imagePath}}"
-                                alt="{{product.name}}"
-                            /></li>
-                        <li class="thumbnail"><img
-                                src="{{product.imagePath}}"
-                                alt="{{product.name}}"
-                            /></li>
-                        <li class="thumbnail"><img
-                                src="{{product.imagePath}}"
-                                alt="{{product.name}}"
-                            /></li>
-                        <li class="thumbnail"><img
-                                src="{{product.imagePath}}"
-                                alt="{{product.name}}"
-                            /></li>
+                        <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
+                        <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
+                        <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
+                        <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
                     </ul>
 
                     <div class="main-image">
-                        <img
-                            src="{{product.imagePath}}"
-                            alt="{{product.name}}"
-                        />
+                        <img src="{{product.imagePath}}" alt="{{product.name}}" />
                     </div>
                 </div>
 
                 <div class="product-info">
                     <div class="product-title">{{product.name}}</div>
 
-                    <div
-                        class="product-price"
-                        data-price="{{product.price}}"
-                    >{{product.price}}</div>
+                    <div class="product-price" data-price="{{product.price}}">{{product.price}}</div>
 
                     <div class="reviews">
                         <ul class="stars">
-                            <li class="star"><img
-                                    src="/img/star_full.svg"
-                                    alt=""
-                                /></li>
-                            <li class="star"><img
-                                    src="/img/star_full.svg"
-                                    alt=""
-                                /></li>
-                            <li class="star"><img
-                                    src="/img/star_full.svg"
-                                    alt=""
-                                /></li>
-                            <li class="star"><img
-                                    src="/img/star_full.svg"
-                                    alt=""
-                                /></li>
-                            <li class="star"><img
-                                    src="/img/star_half.svg"
-                                    alt=""
-                                /></li>
+                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
+                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
+                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
+                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
+                            <li class="star"><img src="/img/star_half.svg" alt="" /></li>
                         </ul>
 
                         <div class="partition"></div>
@@ -95,27 +62,13 @@
                     <div class="color-options">
                         <p class="color-title">Color</p>
 
-                        <button
-                            class="color"
-                            style="background: #816DFA;"
-                        ></button>
-                        <button
-                            class="color"
-                            style="background: #000000;"
-                        ></button>
-                        <button
-                            class="color"
-                            style="background: #B88E2F;"
-                        ></button>
+                        <button class="color" style="background: #816DFA;"></button>
+                        <button class="color" style="background: #000000;"></button>
+                        <button class="color" style="background: #B88E2F;"></button>
                     </div>
 
                     <div class="actions">
-                        <input
-                            type="hidden"
-                            name="productId"
-                            data-id="{{product._id}}"
-                            class="product-id"
-                        />
+                        <input type="hidden" name="productId" data-id="{{product._id}}" class="product-id" />
 
                         <div class="quantity-selector">
                             <button class="quantity-btn reduce">-</button>
@@ -164,18 +117,9 @@
                             </div>
 
                             <div class="info social">
-                                <a href="#!"><img
-                                        src="/img/facebook.svg"
-                                        alt="Facebook"
-                                    /></a>
-                                <a href="#!"><img
-                                        src="/img/linkedIn.svg"
-                                        alt="LinkedIn"
-                                    /></a>
-                                <a href="#!"><img
-                                        src="/img/twitter.svg"
-                                        alt="Twitter"
-                                    /></a>
+                                <a href="#!"><img src="/img/facebook.svg" alt="Facebook" /></a>
+                                <a href="#!"><img src="/img/linkedIn.svg" alt="LinkedIn" /></a>
+                                <a href="#!"><img src="/img/twitter.svg" alt="Twitter" /></a>
                             </div>
                         </div>
                     </div>
@@ -207,35 +151,54 @@
 
                 <div class="tab-content" id="reviews">
                     <div class="overview-body">
-                            <div class="productReviews-body">
-        <div class="productReviews-container">
-            <h2 class="sub-title">Product Reviews</h2>
+                        <div class="productReviews-body">
+                            <div class="productReviews-container">
+                                <h2 class="sub-title">Product Reviews</h2>
+                                <div id="dialog" class="dialog {{#if isReviewed}}hidden{{/if}}">
+                                    <div class="dialog-content">
+                                        <div class="feedback-container">
+                                            <h3>Leave your feedback here</h3>
+                                            <div class="star-wrapper">
+                                                <span class="fas fa-star s1" value="1"></span>
+                                                <span class="fas fa-star s2" value="2"></span>
+                                                <span class="fas fa-star s3" value="3"></span>
+                                                <span class="fas fa-star s4" value="4"></span>
+                                                <span class="fas fa-star s5" value="5"></span>
+                                            </div>
 
-            <div class="productReviews">
-                {{#each feedbacks}}
-                    <div class="feedback-item">
-                        <div class="feedback-item-container">
-                            <img src="{{this.user.avatar}}"/>
-                        </div>
-                        <div class="feedback-content">
-                            <div class="feedback-content-header">
-                                <div class="feedback-content-header-left">
-                                    <h3>{{this.user.email}}</h3>
-                                    <div class="feedback-rating">
-                                        <img src="/img/star_full.svg" alt="" />
-                                        <p>{{this.rating}}</p>
+                                            <textarea type="text" placeholder="Leave your feedback here"
+                                                class="feedback-text"></textarea>
+                                            <div class="submit-feedback-container">
+                                                <p class="submit-feedback" data-product_user-id="{{product._id}},{{user._id}},{{orderDetailId}}">Submit</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="feedback-content-body">
-                                <p>{{this.message}}</p>
+                                <div class="productReviews">
+                                    {{#each feedbacks}}
+                                    <div class="feedback-item">
+                                        <div class="feedback-item-container">
+                                            <img src="{{this.user.avatar}}" />
+                                        </div>
+                                        <div class="feedback-content">
+                                            <div class="feedback-content-header">
+                                                <div class="feedback-content-header-left">
+                                                    <h3>{{this.user.email}}</h3>
+                                                    <div class="feedback-rating">
+                                                        <img src="/img/star_full.svg" alt="" />
+                                                        <p>{{this.rating}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="feedback-content-body">
+                                                <p>{{this.message}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/each}}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                {{/each}}
-            </div>
-        </div>
-    </div>
                     </div>
                 </div>
 
@@ -257,82 +220,44 @@
                     <div class="products-content">
                         <ul class="list-products">
                             {{#each products}}
-                                <li class="product">
-                                    <div class="product-card">
-                                        <a href="#!" class="product-btn">
-                                            <img
-                                                src="{{this.imagePath}}"
-                                                alt="{{this.name}}"
-                                                class="product-image"
-                                            />
+                            <li class="product">
+                                <div class="product-card">
+                                    <a href="#!" class="product-btn">
+                                        <img src="{{this.imagePath}}" alt="{{this.name}}" class="product-image" />
 
-                                            <div class="product-info">
-                                                <h3
-                                                    class="product-name"
-                                                >{{this.name}}</h3>
+                                        <div class="product-info">
+                                            <h3 class="product-name">{{this.name}}</h3>
 
-                                                <p
-                                                    class="product-desc"
-                                                >{{this.description}}</p>
+                                            <p class="product-desc">{{this.description}}</p>
 
-                                                <p
-                                                    class="product-price"
-                                                    data-price="{{this.price}}"
-                                                >{{this.price}}</p>
-                                            </div>
-                                        </a>
-                                    </div>
+                                            <p class="product-price" data-price="{{this.price}}">{{this.price}}</p>
+                                        </div>
+                                    </a>
+                                </div>
 
-                                    <div class="product-hover">
-                                        <div class="product-actions">
-                                            <a
-                                                href="/shop/{{this.slug}}"
-                                                class="button cart-btn"
-                                            >View details</a>
+                                <div class="product-hover">
+                                    <div class="product-actions">
+                                        <a href="/shop/{{this.slug}}" class="button cart-btn">View details</a>
 
-                                            <div class="actions">
-                                                <a
-                                                    href="#!"
-                                                    class="action share"
-                                                >
-                                                    <img
-                                                        src="/img/share.svg"
-                                                        alt=""
-                                                    />
-                                                    <p
-                                                        class="action-name"
-                                                    >Share</p>
-                                                </a>
+                                        <div class="actions">
+                                            <a href="#!" class="action share">
+                                                <img src="/img/share.svg" alt="" />
+                                                <p class="action-name">Share</p>
+                                            </a>
 
-                                                <a
-                                                    href="#!"
-                                                    class="action compare"
-                                                >
-                                                    <img
-                                                        src="/img/compare.svg"
-                                                        alt=""
-                                                    />
-                                                    <p
-                                                        class="action-name"
-                                                    >Compare</p>
-                                                </a>
+                                            <a href="#!" class="action compare">
+                                                <img src="/img/compare.svg" alt="" />
+                                                <p class="action-name">Compare</p>
+                                            </a>
 
-                                                <a
-                                                    href="#!"
-                                                    class="action like"
-                                                >
-                                                    <img
-                                                        src="/img/like.svg"
-                                                        alt=""
-                                                    />
-                                                    <p
-                                                        class="action-name"
-                                                    >Like</p>
-                                                </a>
-                                            </div>
+                                            <a href="#!" class="action like">
+                                                <img src="/img/like.svg" alt="" />
+                                                <p class="action-name">Like</p>
+                                            </a>
                                         </div>
                                     </div>
-                                </li>
+                                </div>
+                            </li>
                             {{/each}}
                         </ul>
 

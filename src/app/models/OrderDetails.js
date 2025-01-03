@@ -12,7 +12,8 @@ const Schema = mongoose.Schema;
 const OrderDetails = new Schema({
     orderId: { type: Schema.Types.ObjectId, ref: "Orders" },
     productId: { type: Schema.Types.ObjectId, ref: "Products" },
-    quantity: { type: Number }
+    quantity: { type: Number },
+    isReview: { type: Boolean, default: false },
 });
 
 
