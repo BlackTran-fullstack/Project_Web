@@ -302,6 +302,13 @@
 
     color: #b88e2f;
     background: #fff;
+
+    transition: all 0.3s ease;
+}
+
+#shop .product-hover .cart-btn:hover {
+    color: #fff;
+    background: #b88e2f;
 }
 
 #shop .product-hover .action {

@@ -11,45 +11,54 @@
     </div>
 
     <div class="cart-container">
-        <div class="cart-detail">
-            <table class="list-items" style="width: 100%;">
-                <tr class="header">
-                    <th></th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Subtotal</th>
-                    <th></th>
-                </tr>
-                {{#each cart}}
-                    <tr data-product-id="{{this.productId}}">
-                        <td><img
-                                src="{{this.imagePath}}"
-                                alt="{{this.name}}"
-                                class="cart-item-image"
-                            /></td>
-                        <td class="name">{{this.name}}</td>
-                        <td
-                            class="product-price"
-                            data-price="{{this.price}}"
-                        >{{this.price}}</td>
-                        <td class="quantity">{{this.quantity}}</td>
-                        <td
-                            class="product-price product-subtotal"
-                            data-price="{{this.subtotal}}"
-                        >{{this.subtotal}}</td>
-                        <td>
-                            <button
-                                type="button"
-                                class="remove-btn"
-                                data-product-id="{{this.productId}}"
-                            >
-                                <img src="/img/remove.svg" alt="Remove" />
-                            </button>
-                        </td>
-                    </tr>
-                {{/each}}
-            </table>
+        <div class="cart-content">
+            <div class="cart-detail">
+                <table class="list-items" style="width: 100%;">
+                    <thead>
+                        <tr class="header">
+                            <th></th>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Subtotal</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{!-- {{#each cart}}
+                            <tr data-product-id="{{this.productId}}">
+                                <td><img
+                                        src="{{this.imagePath}}"
+                                        alt="{{this.name}}"
+                                        class="cart-item-image"
+                                    /></td>
+                                <td class="name">{{this.name}}</td>
+                                <td
+                                    class="product-price"
+                                    data-price="{{this.price}}"
+                                >{{this.price}}</td>
+                                <td class="quantity">{{this.quantity}}</td>
+                                <td
+                                    class="product-price product-subtotal"
+                                    data-price="{{this.subtotal}}"
+                                >{{this.subtotal}}</td>
+                                <td>
+                                    <button
+                                        type="button"
+                                        class="remove-btn"
+                                        data-product-id="{{this.productId}}"
+                                    >
+                                        <img src="/img/remove.svg" alt="Remove" />
+                                    </button>
+                                </td>
+                            </tr>
+                        {{/each}} --}}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+            </div>
         </div>
 
         <div class="cart-total">

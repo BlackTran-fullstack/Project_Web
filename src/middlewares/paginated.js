@@ -6,7 +6,7 @@ function paginatedResults(model) {
         const startIndex = (page - 1) * limit; // Vị trí bắt đầu
         const endIndex = page * limit; // Vị trí kết thúc
 
-        const filters = {};
+        const filters = req.filters || {};
 
         if (req.query.categories) {
             filters.categoriesId = { $in: req.query.categories.split(",") };

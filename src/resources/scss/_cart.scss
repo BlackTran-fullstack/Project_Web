@@ -47,8 +47,52 @@
         text-align: center;
     }
 
-    .cart-detail {
+    .cart-content {
         width: 70%;
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: end;
+            gap: 20px;
+            margin-top: 20px;
+
+            .current-page {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                width: 60px;
+                height: 60px;
+
+                border-radius: 10px;
+
+                font-size: 2rem;
+
+                color: #fff;
+                background: #b88e2f;
+            }
+
+            button {
+                width: 98px;
+                height: 60px;
+
+                border-radius: 10px;
+
+                font-size: 2rem;
+
+                background: #f9f1e7;
+            }
+
+            button:hover {
+                color: #fff;
+                background: #b88e2f;
+            }
+        }
+    }
+
+    .cart-detail {
+        width: 100%;
         display: flex;
         justify-content: center; /* Căn giữa theo chiều ngang */
         align-items: center; /* Căn giữa theo chiều dọc */
@@ -139,6 +183,19 @@
             color: #000000;
             border-radius: 20px;
             cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            border-color: #b88e2f;
+
+            background: #b88e2f;
+            color: #ffffff;
+        }
+
+        .checkout-btn.disabled {
+            pointer-events: none;
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     }
 }
