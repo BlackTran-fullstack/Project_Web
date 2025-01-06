@@ -27,7 +27,11 @@ router.post(
 
 router.delete("/logout", siteController.logout);
 
+// router.get("/profile", siteController.checkAuthenticated, siteController.profile);
+
 router.get("/search", siteController.search);
+
+router.get("/search-ajax", siteController.searchAjax); // Route cho AJAX
 
 router.get(
     "/checkout",
@@ -38,6 +42,24 @@ router.get(
 router.get("/about", siteController.about);
 
 router.get("/contact", siteController.contact);
+
+router.post("/checkout", siteController.checkoutPost);
+
+router.get("/verify/:userId/:uniqueString", siteController.verifyEmail);
+
+router.get("/verified", siteController.verified);
+
+router.get("/forgot-password", siteController.forgotPassword);
+
+router.post("/forgot-password", siteController.forgotPasswordPost);
+
+router.get("/reset-code", siteController.resetCode);
+
+router.post("/reset-code", siteController.resetCodePost);
+
+router.get("/new-password", siteController.newPassword);
+
+router.post("/new-password", siteController.newPasswordPost);
 
 router.get("/", siteController.home);
 

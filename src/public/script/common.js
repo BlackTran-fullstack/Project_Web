@@ -23,8 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // Show/hide password
 document.querySelectorAll(".hide_show_password").forEach((toggle) => {
     toggle.addEventListener("click", function () {
-        const passwordInput =
-            this.closest(".form-password").querySelector("input");
+        const passwordInput = this.parentElement.querySelector("input");
         const icon = this.querySelector("i");
 
         if (passwordInput.type === "password") {
@@ -56,3 +55,22 @@ if (document.getElementById("error-message")) {
         }, 500); // Phải chờ thời gian của transition (0.5s)
     }, 2000); // Ẩn sau 2 giây
 }
+
+function updateCartCount() {
+    fetch("/cart/summary")
+        .then((res) => res.json())
+        .then((data) => {
+            const cartCountElement =
+                document.querySelector(".quantity-in-cart");
+            cartCountElement.textContent = data.totalQuantity;
+        })
+        .catch((error) => console.error("Error updating cart count:", error));
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    window.addEventListener("pageshow", (event) => {
+        if (event.persisted) {
+            updateCartCount();
+        }
+    });
+});

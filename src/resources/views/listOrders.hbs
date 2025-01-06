@@ -1,0 +1,56 @@
+<main id="listOrder">
+    <div class="listOrder-header">
+        <div class="listOrder-introduce">
+            <h1 class="listOrder-title">List Orders</h1>
+            <div class="listOrder-breadcrumb">
+                <a href="/">Home</a>
+                <img src="/img/arrow_right.svg" alt="" />
+                <p>List Orders</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="listOrder-body">
+        <div class="listOrder-container">
+            <h2 class="sub-title">List Orders</h2>
+
+            <div class="listOrder-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Order Date</th>
+                            <th>Order Status</th>
+                            <th>Order Total</th>
+                            <th>Order Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each orders}}
+                            <tr>
+                                <td>{{this._id}}</td>
+                                <td>{{this.createdAt}}</td>
+                                <td>
+                                    <div class="status">
+                                        <div
+                                            class="status-circle
+                                                {{this.status}}"
+                                        ></div>
+                                        <span>{{this.status}}</span>
+                                    </div>
+                                </td>
+                                <td
+                                    class="product-price product-total"
+                                    data-price="{{this.total}}"
+                                >{{this.total}}</td>
+                                <td><a
+                                        href="/list-orders/{{this._id}}"
+                                    >View</a></td>
+                            </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>

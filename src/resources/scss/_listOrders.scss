@@ -1,0 +1,124 @@
+#listOrder .listOrder-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 316px;
+
+    background-image: url(/img/background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+}
+
+#listOrder .listOrder-header .listOrder-title {
+    font-size: 4.8rem;
+    font-weight: 500;
+
+    text-align: center;
+}
+
+#listOrder .listOrder-header .listOrder-breadcrumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 20px;
+}
+
+#listOrder .listOrder-breadcrumb a {
+    font-weight: 500;
+
+    color: #000;
+}
+
+#listOrder .listOrder-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    padding: 50px 0;
+}
+
+#listOrder .listOrder-container {
+    width: 100%;
+    max-width: calc(100% - 204px);
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#listOrder .sub-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#listOrder .listOrder-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#listOrder table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#listOrder th,
+#listOrder td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#listOrder th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+#listOrder tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#listOrder tr:hover {
+    background-color: #f1f1f1;
+}
+
+#listOrder .status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#listOrder .status .status-circle {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+#listOrder .status .status-circle.pending {
+    background-color: #f39c12;
+}
+
+#listOrder td:last-child {
+    text-align: center;
+}
+
+#listOrder a {
+    color: #3498db;
+    text-decoration: none;
+
+    transition: all 0.3s ease;
+}
+
+#listOrder td a:hover {
+    text-decoration: underline;
+
+    color: #b88e2f;
+}

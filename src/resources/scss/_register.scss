@@ -72,26 +72,20 @@
     font-size: 1.3rem;
 }
 
-//
-// #register .error-message {
-//     margin-top: 10px;
-//     text-align: center;
-//     color: red;
-// }
-//
-
 #register .register-container #register-form {
     margin-top: 15px;
 }
 
-#register #register-form .input-group {
+#register #register-form .group {
     width: 88%;
     margin: auto;
+}
 
+#register #register-form .input-group {
     position: relative;
 }
 
-#register #register-form .fa-solid {
+#register #register-form .input-group i {
     font-size: 2rem;
 
     color: #cbcbcb;
@@ -120,6 +114,10 @@
     transition: all 0.2s ease;
 }
 
+#register #register-form .invalid input {
+    border-color: #d93025;
+}
+
 #register #register-form input:focus {
     border-color: #b88e2f;
 }
@@ -144,7 +142,8 @@
     left: 48px;
 }
 
-#register #register-form .form-password {
+#register #register-form .form-password,
+#register #register-form .form-confirm-password {
     margin-top: 30px;
 }
 
@@ -153,6 +152,32 @@
     top: 50%;
     transform: translateY(-50%);
     right: 10%;
+}
+
+#register #register-form .error {
+    display: flex;
+    align-items: baseline;
+
+    margin-top: 6px;
+
+    font-size: 1.3rem;
+
+    color: #d93025;
+
+    display: none;
+}
+
+#register #register-form .invalid .error {
+    display: flex;
+}
+
+#register #register-form .error .fa-circle-exclamation {
+    margin-right: 6px;
+    font-size: 1.5rem;
+}
+
+#register #register-form .error .error-text {
+    line-height: 1.5;
 }
 
 #register .register-container .register-btn {

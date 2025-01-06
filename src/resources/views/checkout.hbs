@@ -12,82 +12,104 @@
 
     <div class="checkout-page">
         <div class="checkout-content">
-            <div class="billing-details">
-                <h2 class="sub-title">Billing details</h2>
+            <form id="checkout-form">
+                <div class="billing-details">
+                    <h2 class="sub-title">Billing details</h2>
 
-                <form>
                     <div class="name">
                         <div class="form-group">
-                            <label for="first-name">First Name</label>
+                            <label for="first-name">First Name<span
+                                    id="required"
+                                >*</span></label>
                             <input
                                 type="text"
                                 id="first-name"
                                 name="first-name"
+                                value="{{user.firstName}}"
                                 required
+                                class="required"
                             />
                         </div>
 
                         <div class="form-group">
-                            <label for="last-name">Last Name</label>
+                            <label for="last-name">Last Name<span
+                                    id="required"
+                                >*</span></label>
                             <input
                                 type="text"
                                 id="last-name"
                                 name="last-name"
+                                value="{{user.lastName}}"
                                 required
+                                class="required"
                             />
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="company-name">Company Name (Optional)</label>
+                        <label for="street-address">Address<span
+                                id="required"
+                            >*</span></label>
                         <input
                             type="text"
-                            id="company-name"
-                            name="company-name"
-                        />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="country">Country / Region</label>
-                        <select name="country" id="country" required>
-                            <option value="USA">United States</option>
-                            <option value="VIE">Vietnam</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="street-address">Street address</label>
-                        <input
-                            type="text"
-                            id="street-address"
-                            name="street-address"
+                            id="address"
+                            name="address"
+                            value="{{user.address}}"
                             required
+                            class="required"
                         />
                     </div>
 
                     <div class="form-group">
-                        <label for="city">Town / City</label>
-                        <input type="text" id="city" name="city" required />
-                    </div>
-
-                    <div class="form-group">
-                        <label for="zip-code">ZIP code</label>
+                        <label for="city">Town / City<span
+                                id="required"
+                            >*</span></label>
                         <input
                             type="text"
-                            id="zip-code"
-                            name="zip-code"
+                            id="city"
+                            name="city"
+                            value="{{user.city}}"
                             required
+                            class="required"
                         />
                     </div>
 
-                    <div class="form-group">
-                        <label for="phone">Phone</label>
-                        <input type="tel" id="phone" name="phone" required />
+                    <div class="form-group form-phone">
+                        <label for="phone">Phone<span
+                                id="required"
+                            >*</span></label>
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            value="{{user.phone}}"
+                            required
+                            class="required"
+                        />
+
+                        <span class="error phone-error">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="error-text">Please enter a valid phone.</p>
+                        </span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Email address</label>
-                        <input type="email" id="email" name="email" required />
+                    <div class="form-group form-email">
+                        <label for="email">Email address<span
+                                id="required"
+                            >*</span></label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            value="{{user.email}}"
+                            required
+                            class="required"
+                        />
+
+                        <span class="error email-error">
+                            <i class="fa-solid fa-circle-exclamation"></i>
+                            <p class="error-text">Please enter a valid email.</p>
+                        </span>
                     </div>
 
                     <div class="form-group">
@@ -97,92 +119,116 @@
                             placeholder="Additional information"
                         ></textarea>
                     </div>
-                </form>
-            </div>
 
-            <div class="order-summary">
-                <div class="order-summary-content">
-                    <div class="order-summary-info">
-                        <div class="product">
-                            <h2 class="sub-title">Product</h2>
-
-                            {{#each cart}}
-                                <div class="product-info">
-                                    <p class="product-name">{{this.name}}</p>
-                                    <p class="product-quantity">X
-                                        <span
-                                            style="margin-right: 10px;"
-                                        ></span>
-                                        {{this.quantity}}</p>
-                                </div>
-                            {{/each}}
-
-                            <p class="total">Total</p>
-                        </div>
-
-                        <div class="subtotal">
-                            <h2 class="sub-title">Subtotal</h2>
-
-                            {{#each cart}}
-                                <p
-                                    class="product-price product-subtotal"
-                                    data-price="{{this.subtotal}}"
-                                >{{this.subtotal}}</p>
-                            {{/each}}
-
-                            <p
-                                class="product-price product-total"
-                                data-price="{{total}}"
-                            >{{total}}</p>
-                        </div>
-                    </div>
-
-                    <div class="separate"></div>
-
-                    <div class="order-summary-payment">
-                        <label>
-                            <div class="payment-option">
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="bank"
-                                    checked
-                                />
-
-                                <span>Direct Bank Transfer</span>
-                            </div>
-
-                            <p class="payment-desc">
-                                Make your payment directly into our bank
-                                account. Please use your Order ID as the payment
-                                reference. Your order will not be shipped until
-                                the funds have cleared in our account.
-                            </p>
-                        </label>
-
-                        <label>
-                            <div class="payment-option">
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    value="cod"
-                                />
-
-                                <span>Cash On Delivery</span>
-                            </div>
-                        </label>
-                    </div>
-
-                    <p class="privacy-notice">
-                        Your personal data will be used to support your
-                        experience throughout this website, to manage access to
-                        your account, and for other purposes described in our
-                        <b>privacy policy.</b>
-                    </p>
-
-                    <button class="button place-order-btn">Place order</button>
                 </div>
-            </div>
+
+                <div class="order-summary">
+                    <div class="order-summary-content">
+                        <div class="order-summary-info">
+                            <div class="product">
+                                <h2 class="sub-title">Product</h2>
+
+                                {{#each cart}}
+                                    <div class="product-info">
+                                        <p
+                                            class="product-name"
+                                        >{{this.name}}</p>
+                                        <p class="product-quantity">X
+                                            <span
+                                                style="margin-right: 10px;"
+                                            ></span>
+                                            {{this.quantity}}</p>
+                                    </div>
+                                {{/each}}
+
+                                <p class="total">Total</p>
+                            </div>
+
+                            <div class="subtotal">
+                                <h2 class="sub-title">Subtotal</h2>
+
+                                {{#each cart}}
+                                    <p
+                                        class="product-price product-subtotal"
+                                        data-price="{{this.subtotal}}"
+                                    >{{this.subtotal}}</p>
+                                {{/each}}
+
+                                <p
+                                    class="product-price product-total"
+                                    data-price="{{total}}"
+                                >{{total}}</p>
+                            </div>
+                        </div>
+
+                        <div class="separate"></div>
+
+                        <div class="order-summary-payment">
+
+                            <div class="delivery-method form-group">
+                                <label for="deliveryUnit">Delivery method</label>
+
+                                <div id="deliveryMethodContainer">
+                                    <select
+                                        name="deliveryUnit"
+                                        id="deliveryUnit"
+                                        required
+                                        class="required"
+                                    >
+                                        <option
+                                            value=""
+                                            selected
+                                            disabled
+                                        >Select delivery unit</option>
+                                        {{#each deliveryUnit}}
+                                            <option
+                                                value="{{this.fee}}"
+                                            >{{this.name}}</option>
+                                        {{/each}}
+                                    </select>
+
+                                    <p>
+                                        Delivery fee:
+                                        <span id="deliveryFee">0</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="payment-method form-group">
+                                <label for="payment">Payment method</label>
+
+                                <select
+                                    name="payment"
+                                    id="payment"
+                                    required
+                                    class="required"
+                                >
+                                    <option value="" selected disabled>Select
+                                        payment method</option>
+                                    {{#each paymentMethod}}
+                                        <option
+                                            value="{{this.name}}"
+                                        >{{this.name}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+
+                        <p class="privacy-notice">
+                            Your personal data will be used to support your
+                            experience throughout this website, to manage access
+                            to your account, and for other purposes described in
+                            our
+                            <b>privacy policy.</b>
+                        </p>
+
+                        <button
+                            class="button place-order-btn"
+                            type="submit"
+                        >Place order</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -219,3 +265,5 @@
         </div>
     </div>
 </main>
+
+<script src="/script/checkout.js"></script>

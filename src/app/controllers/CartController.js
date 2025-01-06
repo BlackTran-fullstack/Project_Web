@@ -49,6 +49,69 @@ class CartController {
         }
     }
 
+    // [GET] /cart/api/products
+    // getPaginatedCart(req, res, next) {
+    //     if (res.paginatedResults) {
+    //         res.json(res.paginatedResults);
+    //     } else {
+    //         res.status(500).json({ message: "Pagination results not found" });
+    //     }
+    // }
+
+    async getPaginatedCart(req, res, next) {
+        try {
+            const userId = req.user.id;
+
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 3;
+
+            const skip = (page - 1) * limit;
+
+            const cartItems = await Cart.find({ userId })
+                .populate("productId")
+                .skip(skip)
+                .limit(limit);
+
+            const totalItems = await Cart.countDocuments({ userId });
+            const totalPages = Math.ceil(totalItems / limit);
+
+            const cart = cartItems
+                .map((item) => {
+                    if (!item.productId) {
+                        console.error(
+                            `Product not found for cart item with ID ${item._id}`
+                        );
+                        return null;
+                    }
+                    const subtotal = item.productId.price * item.quantity;
+                    return {
+                        productId: item.productId._id,
+                        name: item.productId.name,
+                        price: item.productId.price,
+                        imagePath: item.productId.imagePath,
+                        quantity: item.quantity,
+                        subtotal,
+                    };
+                })
+                .filter((item) => item !== null);
+
+            const total = cart.reduce(
+                (sum, item) => sum + item.price * item.quantity,
+                0
+            );
+
+            res.json({
+                cart,
+                total,
+                page,
+                totalPages,
+            });
+        } catch (error) {
+            console.error("Error paginating cart:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
+    }
+
     // [POST] /cart/add
     async addToCart(req, res) {
         try {
@@ -163,6 +226,20 @@ class CartController {
                 success: false,
                 message: "Internal Server Error",
             });
+        }
+    }
+
+    // [GET] /cart/summary
+    async cartSummary(req, res) {
+        try {
+            const userId = req.user.id;
+            const cartItems = await Cart.find({ userId });
+            const totalQuantity = cartItems.reduce((sum) => sum + 1, 0);
+
+            res.json({ totalQuantity });
+        } catch (error) {
+            console.error("Error retrieving cart summary:", error);
+            res.status(500).json({ totalQuantity: 0 });
         }
     }
 }
