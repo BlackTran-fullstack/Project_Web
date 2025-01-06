@@ -36,6 +36,8 @@ class OrdersController {
                 const product = await Products.findOne({ _id: item.productId });
                 console.log("product:", product);
                 products.push({
+                    orderDetailId: item._id,
+                    id: product._id,
                     name: product.name,
                     price: product.price,
                     quantity: item.quantity,
@@ -47,6 +49,23 @@ class OrdersController {
             });
         } catch (error) {
             console.error("Error in orderDetails:", error);
+            res.status(500).json({
+                success: false,
+                errors: ["Server error. Please try again later."],
+            });
+        }
+    }
+
+    async orderDetail(req, res) {
+        try {
+            const orderdetailId = req.params.orderdetailId;
+            const orderDetail = await OrderDetails.findOne({ _id: orderdetailId });
+            res.render("orderDetail", {
+                orderDetail: mongooseToObject(orderDetail),
+            });
+        }
+        catch (error) {
+            console.error("Error in orderDetail:", error);
             res.status(500).json({
                 success: false,
                 errors: ["Server error. Please try again later."],

@@ -506,3 +506,202 @@
 
     color: #b88e2f;
 }
+
+#singleProduct .heading .tab {
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    padding: 10px;
+    border-bottom: 2px solid transparent;
+}
+
+#singleProduct .heading .tab.active {
+    border-bottom: 2px solid #000;
+}
+
+#singleProduct .tab-content {
+    display: none;
+}
+
+#singleProduct .tab-content.active {
+    display: block;
+}
+
+#singleProduct .productReviews {
+    margin-top: 20px;
+}
+
+#singleProduct .feedback-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+#singleProduct .feedback-item-container {
+    margin-right: 15px;
+}
+
+#singleProduct .feedback-item-container img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#singleProduct .feedback-content {
+    flex: 1;
+}
+
+#singleProduct .feedback-content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#singleProduct .feedback-content-header-left {
+    display: flex;
+    align-items: center;
+}
+
+#singleProduct .feedback-content-header-left h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+#singleProduct .feedback-rating {
+    display: flex;
+    align-items: center;
+}
+
+#singleProduct .feedback-rating img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}
+
+#singleProduct .feedback-rating p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+#singleProduct .feedback-content-body {
+    margin-top: 10px;
+}
+
+#singleProduct .feedback-content-body p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+#singleProduct .dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#singleProduct .dialog.hidden {
+    display: none;
+}
+
+#singleProduct .dialog-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+#singleProduct .feedback-container {
+    border-bottom: 2px solid #e2e2e2;
+}
+
+#singleProduct .star-wrapper {
+    direction: rtl;
+    display: flex;
+    align-items: start;
+}
+
+#singleProduct .star-wrapper span {
+    font-size: 2em;
+    color: #000;
+    text-decoration: none;
+    transition: all 0.5s;
+    margin: 4px;
+}
+
+#singleProduct .star-wrapper span:hover {
+    color: gold;
+    transform: scale(1.3);
+}
+
+#singleProduct .s1:hover~span {
+    color: gold;
+}
+
+#singleProduct .s2:hover~span {
+    color: gold;
+}
+
+#singleProduct .s3:hover~span {
+    color: gold;
+}
+
+#singleProduct .s4:hover~span {
+    color: gold;
+}
+
+#singleProduct .s5:hover~span {
+    color: gold;
+}
+
+#singleProduct .wraper {
+    position: absolute;
+    bottom: 30px;
+    right: 50px;
+}
+
+#singleProduct .feedback-text {
+    margin-top: 20px;
+    font-weight: 500;
+    font-size: 14px;
+    width: 100%;
+    height: 100px;
+    resize: none;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#singleProduct .feedback-container .submit-feedback-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#singleProduct .feedback-container .submit-feedback, 
+#singleProduct .feedback-container .cancel-feedback {
+    border-radius: 10px;
+    font-size: 20px;
+    border: 2px solid #000;
+    color: #fff !important;
+    padding: 5px;
+    font-weight: bold;
+    text-decoration: none;
+    background-color: #b88e2f;
+    margin: 5px;
+}
+
+#singleProduct .feedback-container .submit-feedback:hover, 
+#singleProduct .feedback-container .cancel-feedback:hover {
+    background-color: #c99f40;
+    cursor: pointer;
+}

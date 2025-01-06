@@ -77,4 +77,98 @@ document.addEventListener("DOMContentLoaded", () => {
             addToCartBtn.textContent = "Add to Cart";
         }
     });
+
+    const tabs = document.querySelectorAll('.heading .tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const target = tab.getAttribute('data-tab');
+
+            // Remove active class from all tabs and contents
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+
+            // Add active class to the clicked tab and corresponding content
+            tab.classList.add('active');
+            document.getElementById(target).classList.add('active');
+        });
+    });
+
+    const stars = document.querySelectorAll('.fa-star');
+    
+    stars.forEach((star) => {
+        star.addEventListener('click', starClick);
+    });
+
+    function starClick(event) {
+        const value = event.target.getAttribute('value');
+        stars.forEach((star) => {
+            star.style.color = 'black';
+        });
+        for (let i = stars.length; i >= value; i--) {
+            stars[i-1].style.color = 'gold';
+        }
+    }
+
+    const submitFeedbackButton = document.querySelector('.submit-feedback');
+    submitFeedbackButton.addEventListener('click', SubmitFeedback);
+
+    async function SubmitFeedback() {
+        let rating = 0;
+
+        for (let i = 0; i < stars.length; i++) {
+            if (stars[i].style.color === 'gold') {
+                rating = stars.length - i;
+                break;
+            }
+        }
+
+        const feedback = document.querySelector('.feedback-text').value;
+        const Ids = submitFeedbackButton.getAttribute('data-product_user-id');
+        const [productId, userId, orderDetailsId] = Ids.split(',');
+
+        const feedbackData = {
+            rating,
+            feedback,
+            productId,
+            userId,
+            orderDetailsId,
+        };
+
+        submitFeedbackButton.disabled = true;
+        submitFeedbackButton.textContent = "Submitting...";
+
+        try {
+            const response = await fetch('/shop/postFeedback', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(feedbackData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+
+            if (data.success) {
+                alert('Feedback submitted successfully.');
+                window.location.reload();
+            } else {
+                alert(data.message || 'Failed to submit feedback.');
+            }
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+            alert('An error occurred while submitting feedback.');
+        } finally {
+            submitFeedbackButton.disabled = false;
+            submitFeedbackButton.textContent = "Submit";
+            feedback.value = '';
+            const feedbackContainer = document.querySelector('.dialog-content');
+            feedbackContainer.classList.add('hidden');
+        }
+    }
 });

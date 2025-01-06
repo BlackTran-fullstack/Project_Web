@@ -1,6 +1,10 @@
 const Products = require("../models/Products");
 const Categories = require("../models/Categories");
 const Brands = require("../models/Brands");
+const Feedbacks = require("../models/Feedbacks");
+const Users = require("../models/Users");
+const Orders = require("../models/Orders");
+const OrderDetails = require("../models/OrderDetails");
 
 const { mutipleMongooseToObject } = require("../../util/mongoose");
 const { mongooseToObject } = require("../../util/mongoose");
@@ -31,8 +35,39 @@ class ShopController {
     }
 
     // [GET] /shop/:slug
-    singleProduct(req, res, next) {
+    async singleProduct(req, res, next) {
         const slug = req.params.slug;
+
+        const product = await Products.findOne({ slug: slug });
+
+        const feedbacks = await Feedbacks.find({ productId: product._id });
+        const feedbacksObject = mutipleMongooseToObject(feedbacks);
+        const feedbacksCount = feedbacks.length;
+
+        for (const feedback of feedbacksObject) {
+            const user = await Users.findById(feedback.userId);
+            const userObject = mongooseToObject(user);
+            // Ẩn mật khẩu
+            userObject.password = "********";
+            feedback.user = userObject;
+        }
+
+        const userId = req.user ? req.user._id : null;
+
+        let orders = await Orders.find({ userId });
+        if (!userId)
+        {
+            orders = [];
+        }
+        const orderIds = orders.map(order => order._id);
+
+        const orderDetail = await OrderDetails.findOne({ orderId: { $in: orderIds }, productId: product._id, isReview: false });
+
+        let isReviewed = orderDetail ? false : true;
+
+        if (!userId) {
+            isReviewed = true;
+        }
 
         // Tìm sản phẩm chính theo slug
         Products.findOne({ slug: slug })
@@ -59,11 +94,49 @@ class ShopController {
                             brands: mongooseToObject(product.brandsId), // Thương hiệu
                             products: mutipleMongooseToObject(relatedProducts), // Sản phẩm liên quan
                             user: mongooseToObject(req.user), // Người dùng
+                            feedbacks: feedbacksObject, // Đánh giá
+                            feedbacksCount: feedbacksCount, // Số lượng đánh giá
+                            isReviewed: isReviewed, // Đã đánh giá
+                            orderDetailId: orderDetail ? orderDetail._id : null, // Chi tiết đơn hàng
                         });
                     })
                     .catch(next);
             })
             .catch(next);
+    }
+
+    // [POST] /shop/postFeedback
+    async postFeedback(req, res, next) {
+        const { rating, feedback, productId, userId, orderDetailsId } = req.body;
+
+        try {
+            const feedbackData = {
+                rating: rating,
+                message: feedback,
+                productId,
+                userId,
+            };
+
+            const feedbackSave = new Feedbacks(feedbackData);
+            await feedbackSave.save();
+
+            const orderDetail = await OrderDetails.findById(orderDetailsId);
+
+            if (!orderDetail) {
+                throw new Error('OrderDetail not found');
+            }
+
+            const result = await OrderDetails.updateOne({orderId: orderDetail.orderId, productId: orderDetail.productId}, { $set: { isReview: true } });
+
+            if (!result) {
+                throw new Error('Failed to update orderDetail');
+            }
+
+            res.json({ success: true });
+        } catch (error) {
+            console.error("Error in postFeedback:", error);
+            res.json({ success: false, message: error.message });
+        }
     }
 
     // [GET] /shop/search
@@ -95,6 +168,24 @@ class ShopController {
                     //res.json(products);
                 })
                 .catch(next);
+        }
+    }
+
+    // [GET] /api/get-slug/:productId
+    async getSlugByProductId(req, res, next) {
+        const productId = req.params.productId;
+
+        try {
+            const product = await Products.findById(productId);
+
+            if (!product) {
+                return res.status(404).json({ message: "Product not found!" });
+            }
+
+            res.status(200).json({ slug: product.slug });
+        } catch (error) {
+            console.error("Error in getSlugByProductId:", error);
+            next(error);
         }
     }
 }
