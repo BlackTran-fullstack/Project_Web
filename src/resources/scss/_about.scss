@@ -3,63 +3,41 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     width: 100%;
-    height: 400px;
+    height: 316px;
+
     background-image: url(/img/background.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .shop-introduce {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      color: #fff;
-    }
+    background-position: bottom center;
 
     .shop-title {
-      font-size: 5rem;
-      font-weight: 700;
-      margin-bottom: 20px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      font-size: 4.8rem;
+      font-weight: 500;
+
+      text-align: center;
     }
 
     .shop-breadcrumb {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
 
-      a, p {
-        color: #fff;
-        font-size: 1.8rem;
-      }
+      margin-top: 20px;
 
       a {
         font-weight: 500;
-        transition: color 0.3s ease;
 
-        &:hover {
-          color: #ffd700;
-        }
+        color: #000;
       }
     }
   }
 
   .about-us-container {
     padding: 6rem 4rem;
-    background-color: #f9f9f9;
+    background-color: #fcf8f3;
 
     .about-us,
     .our-mission {
@@ -68,7 +46,7 @@
 
       .heading {
         font-weight: 700;
-        font-size: 4rem; 
+        font-size: 4rem;
         margin-bottom: 4rem;
         text-align: center;
         color: #333;
@@ -87,7 +65,7 @@
 
         .image-wrapper {
           flex: 1;
-          
+
           .about-image {
             width: 100%;
             height: auto;
@@ -138,7 +116,7 @@
 
           i {
             font-size: 4rem;
-            color: #ffd700;
+            color: #b88e2f;
             margin-bottom: 2rem;
           }
 
@@ -165,7 +143,7 @@
 
     .heading {
       font-weight: 700;
-      font-size: 4rem; 
+      font-size: 4rem;
       margin-bottom: 4rem;
       text-align: center;
       color: #333;
@@ -211,56 +189,39 @@
   }
 
   .shop-services {
+    margin-top: 85px;
     background: #faf3ea;
-    padding: 6rem 0;
 
     .services-content {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
-      max-width: 1200px;
-      margin: auto;
 
-      @media (max-width: 768px) {
-        flex-direction: column;
-        gap: 3rem;
-      }
+      max-width: calc(100% - 106px);
+      padding: 100px 0;
+      margin: auto;
     }
 
     .service {
       display: flex;
       align-items: center;
-      gap: 2rem;
-      padding: 2rem;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease;
+      gap: 10px;
+    }
 
-      &:hover {
-        transform: translateY(-5px);
-      }
+    .service-info h3 {
+      font-size: 2.5rem;
+      font-weight: 600;
 
-      .service-icon {
-        width: 50px;
-        height: 50px;
-      }
+      color: #242424;
+    }
 
-      .service-info {
-        h3 {
-          font-size: 2rem;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 0.5rem;
-        }
+    .service-info p {
+      margin-top: 2px;
 
-        p {
-          font-size: 1.6rem;
-          color: #666;
-        }
-      }
+      font-size: 2rem;
+      font-weight: 500;
+
+      color: #898989;
     }
   }
 }
-
