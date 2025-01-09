@@ -1,78 +1,78 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    font-size: 62.5%;
+  font-size: 62.5%;
 }
 
 body {
-    font-size: 1.6rem;
-    font-family: "Poppins";
+  font-size: 1.6rem;
+  font-family: "Poppins";
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input {
-    border: none;
+  border: none;
 }
 
 button {
-    margin: 0;
-    padding: 0;
-    border: none;
-    background: none;
-    font: inherit;
-    color: inherit;
-    cursor: pointer;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 
 select {
-    border: none;
+  border: none;
 }
 
 .error-message {
-    display: flex;
-    align-items: center;
-    column-gap: 9px;
+  display: flex;
+  align-items: center;
+  column-gap: 9px;
 
-    width: 22%;
-    height: 68px;
-    border-radius: 6px;
+  width: 22%;
+  height: 68px;
+  border-radius: 6px;
 
-    background: #eb5757;
+  background: #eb5757;
 
-    position: absolute;
-    top: 2%;
-    right: 2%;
+  position: absolute;
+  top: 2%;
+  right: 2%;
 
-    transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
 .error-message img {
-    margin-left: 15px;
+  margin-left: 15px;
 }
 
 .error-message .error-title {
-    font-weight: 600;
+  font-weight: 600;
 
-    color: #fff;
+  color: #fff;
 }
 
 .error-message .error-title + p {
-    margin-top: 4px;
+  margin-top: 4px;
 
-    font-size: 1.4rem;
+  font-size: 1.4rem;
 
-    color: #fff;
+  color: #fff;
 }
 
 @import "header";

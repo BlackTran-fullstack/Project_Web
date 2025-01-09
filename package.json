@@ -21,6 +21,7 @@
     "description": "",
     "dependencies": {
         "@supabase/supabase-js": "^2.47.10",
+        "algoliasearch": "^5.19.0",
         "bcrypt": "^5.1.1",
         "concurrently": "^9.1.0",
         "cookie-parser": "^1.4.7",
@@ -43,6 +44,7 @@
         "dotenv": "^16.4.5",
         "morgan": "^1.10.0",
         "nodemon": "^3.1.9",
+        "prettier": "^3.4.2",
         "sass": "^1.83.0"
     }
 }
