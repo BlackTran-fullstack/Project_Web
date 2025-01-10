@@ -41,8 +41,8 @@
                                         this.quantity
                                     }}"
                                 >{{multiply this.price this.quantity}}</td>
-                                <td><span
-                                        onclick="reviewProduct('{{this.id}}', '{{this.orderDetailId}}')"
+                                <td><span class="review-btn"
+                                        onclick="reviewProduct('{{this.id}}', '{{this.orderDetailId}}', '{{this.status}}')"
                                     >Review</span></td>
                             </tr>
                         {{/each}}

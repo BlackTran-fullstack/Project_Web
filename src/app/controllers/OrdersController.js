@@ -31,16 +31,17 @@ class OrdersController {
         try {
             const orderId = req.params.orderId;
             const orderDetails = await OrderDetails.find({ orderId });
+            const order = await Orders.findOne({ _id: orderId });
             let products = [];
             for (const item of orderDetails) {
                 const product = await Products.findOne({ _id: item.productId });
-                console.log("product:", product);
                 products.push({
                     orderDetailId: item._id,
                     id: product._id,
                     name: product.name,
                     price: product.price,
                     quantity: item.quantity,
+                    status: order.status,
                 });
             }
             res.render("orderDetail", {
