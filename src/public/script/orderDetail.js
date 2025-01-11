@@ -1,4 +1,9 @@
-async function reviewProduct(id, orderDetailId) {
+async function reviewProduct(id, orderDetailId, status) {
+    if (status !== "APPROVED") {
+        alert("You can only review products that have been approved.");
+        return;
+    }
+
     try {
         const isReviewed = await checkReviewed(orderDetailId);
         if (isReviewed) {
