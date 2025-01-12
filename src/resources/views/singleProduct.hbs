@@ -35,21 +35,21 @@
 
                     <div class="reviews">
                         <ul class="stars">
-                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
-                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
-                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
-                            <li class="star"><img src="/img/star_full.svg" alt="" /></li>
-                            <li class="star"><img src="/img/star_half.svg" alt="" /></li>
+                            {{#each (range 1 6)}}
+                                {{#if (lt @index ../rate)}}
+                                    <li class="star"><img src="/img/star_full.svg" alt="Full Star"></li>
+                                {{/if}}
+                            {{/each}}
                         </ul>
 
-                        <div class="partition"></div>
+                        <div class="partition" style="display: none;"></div>
 
-                        <p class="review-count">5 Customer Reviews</p>
+                        <p class="review-count" style="display: none;">{{reviewersCount}} Customer Reviews</p>                        
                     </div>
 
-                    <p class="product-desc">{{product.long_description}}</p>
+                    <p class="product-desc">{{product.description}}</p>
 
-                    <div class="size-options">
+                    {{!-- <div class="size-options">
                         <p class="size-title">Size</p>
 
                         <div class="sizes">
@@ -57,15 +57,15 @@
                             <button class="size">XL</button>
                             <button class="size">XS</button>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    <div class="color-options">
+                    {{!-- <div class="color-options">
                         <p class="color-title">Color</p>
 
                         <button class="color" style="background: #816DFA;"></button>
                         <button class="color" style="background: #000000;"></button>
                         <button class="color" style="background: #B88E2F;"></button>
-                    </div>
+                    </div> --}}
 
                     <div class="actions">
                         <input type="hidden" name="productId" data-id="{{product._id}}" class="product-id" />
@@ -76,8 +76,9 @@
                             <button class="quantity-btn increase">+</button>
                         </div>
 
-                        <button id="addToCart" class="add-to-cart">Add To Cart</button>
-                        <button class="compare">+ Compare</button>
+                        <button id="addToCart" class="add-to-cart {{#if (eq product.stock 0)}}disabled{{/if}}"
+                        {{#if (eq product.stock 0)}}disabled{{/if}} data-stock="{{product.stock}}">{{#if (eq product.stock 0)}}Out of Stock{{else}}Add To Cart{{/if}}</button>
+                        {{!-- <button class="compare">+ Compare</button> --}}
                     </div>
 
                     <div class="separation"></div>
@@ -133,7 +134,7 @@
             <div class="overview-content">
                 <div class="heading">
                     <h2 class="tab active" data-tab="description">Description</h2>
-                    <h2 class="tab" data-tab="additional-info">Additional Information</h2>
+                    {{!-- <h2 class="tab" data-tab="additional-info">Additional Information</h2> --}}
                     <h2 class="tab" data-tab="reviews">Reviews [{{feedbacksCount}}]</h2>
                 </div>
 
@@ -175,27 +176,21 @@
                                     </div>
                                 </div>
                                 <div class="productReviews">
-                                    {{#each feedbacks}}
-                                    <div class="feedback-item">
-                                        <div class="feedback-item-container">
-                                            <img src="{{this.user.avatar}}" />
-                                        </div>
-                                        <div class="feedback-content">
-                                            <div class="feedback-content-header">
-                                                <div class="feedback-content-header-left">
-                                                    <h3>{{this.user.email}}</h3>
-                                                    <div class="feedback-rating">
-                                                        <img src="/img/star_full.svg" alt="" />
-                                                        <p>{{this.rating}}</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="feedback-content-body">
-                                                <p>{{this.message}}</p>
-                                            </div>
+                                    <div class="productReviews-content">
+
+                                    </div>
+
+                                    <div class="pagination">
+                                        <div class="actions">
+                                            <button class="btn btn-prev">
+                                                <i class="fa-solid fa-chevron-left"></i>
+                                            </button>
+
+                                            <button class="btn btn-next">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </button>
                                         </div>
                                     </div>
-                                    {{/each}}
                                 </div>
                             </div>
                         </div>

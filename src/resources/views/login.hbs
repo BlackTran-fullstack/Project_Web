@@ -11,19 +11,13 @@
     </div>
 
     <div class="login-body">
-
-        {{#if messages.error}}
-            <div id="error-message" class="error-message" style="display:none;">
-                <img src="/img/error.svg" alt="" />
-
-                <div class="error-info">
-                    <h2 class="error-title">Error</h2>
-                    <p>{{messages.error}}</p>
-                </div>
-            </div>
-        {{/if}}
         <div class="login-container">
             <h2 class="sub-title">Login</h2>
+
+            <div class="notification">
+                <i class="fa-solid fa-check"></i>
+                <p class="notification-text"></p>
+            </div>
 
             <p class="title-form">Insert your account information:</p>
 

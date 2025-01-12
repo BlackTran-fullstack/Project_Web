@@ -8,7 +8,6 @@ const Cart = require("../app/models/Cart");
 
 router.post(
     "/add",
-    SiteController.checkAuthenticated,
     CartController.addToCart
 );
 
@@ -17,6 +16,8 @@ router.post(
     SiteController.checkAuthenticated,
     CartController.removeFromCart
 );
+
+router.post("/sync", CartController.syncCart);
 
 router.get("/summary", CartController.cartSummary);
 

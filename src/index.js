@@ -29,6 +29,10 @@ handlebars.registerHelper("reduce", function (array, options) {
     }, []);
 });
 
+handlebars.registerHelper("eq", function (a, b, options) {
+    return a === b ? options.fn(this) : options.inverse(this);
+});
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use(
@@ -67,8 +71,17 @@ app.engine(
     engine({
         extname: ".hbs",
         helpers: {
-            multiply: (a, b) => a * b
-        }
+            range: (start, end) => {
+                let result = [];
+                for (let i = start; i < end; i++) {
+                    result.push(i);
+                }
+                return result;
+            },
+            eq: (a, b) => a === b,
+            multiply: (a, b) => a * b,
+            lt: (a, b) => a < b,
+        },
     })
 );
 

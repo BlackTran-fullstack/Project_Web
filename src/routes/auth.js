@@ -18,4 +18,6 @@ router.get(
     AuthController.googleCallback
 );
 
+router.get("/status", AuthController.authStatus);
+
 module.exports = router;

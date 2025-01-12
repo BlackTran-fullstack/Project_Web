@@ -40,9 +40,23 @@ class ShopController {
 
         const product = await Products.findOne({ slug: slug });
 
+        if (!product) {
+            return res.status(404).send("Product not found!");
+        }
+
         const feedbacks = await Feedbacks.find({ productId: product._id });
         const feedbacksObject = mutipleMongooseToObject(feedbacks);
         const feedbacksCount = feedbacks.length;
+
+        const uniqueReviewersCount = await Feedbacks.aggregate([
+            { $match: { productId: product._id } },
+            { $group: { _id: "$userId" } },
+            { $count: "uniqueUsers" },
+        ]);
+        const reviewersCount =
+            uniqueReviewersCount.length > 0
+                ? uniqueReviewersCount[0].uniqueUsers
+                : 0;
 
         for (const feedback of feedbacksObject) {
             const user = await Users.findById(feedback.userId);
@@ -55,13 +69,16 @@ class ShopController {
         const userId = req.user ? req.user._id : null;
 
         let orders = await Orders.find({ userId });
-        if (!userId)
-        {
+        if (!userId) {
             orders = [];
         }
-        const orderIds = orders.map(order => order._id);
+        const orderIds = orders.map((order) => order._id);
 
-        const orderDetail = await OrderDetails.findOne({ orderId: { $in: orderIds }, productId: product._id, isReview: false });
+        const orderDetail = await OrderDetails.findOne({
+            orderId: { $in: orderIds },
+            productId: product._id,
+            isReview: false,
+        });
 
         let isReviewed = orderDetail ? false : true;
 
@@ -96,8 +113,10 @@ class ShopController {
                             user: mongooseToObject(req.user), // Người dùng
                             feedbacks: feedbacksObject, // Đánh giá
                             feedbacksCount: feedbacksCount, // Số lượng đánh giá
+                            reviewersCount: reviewersCount, // Số lượng user duy nhất đã đánh giá
                             isReviewed: isReviewed, // Đã đánh giá
                             orderDetailId: orderDetail ? orderDetail._id : null, // Chi tiết đơn hàng
+                            rate: product.rate,
                         });
                     })
                     .catch(next);
@@ -105,9 +124,62 @@ class ShopController {
             .catch(next);
     }
 
+    // [GET] /shop/:slug/api/reviews
+    async getPaginatedReviews(req, res, next) {
+        try {
+            const slug = req.params.slug;
+
+            const product = await Products.findOne({ slug: slug });
+
+            const page = parseInt(req.query.page) || 1;
+            const limit = parseInt(req.query.limit) || 5;
+
+            const skip = (page - 1) * limit;
+
+            const feedbacks = await Feedbacks.find({ productId: product._id })
+                .populate("userId")
+                .skip(skip)
+                .limit(limit);
+
+            console.log(feedbacks);
+
+            const totalItems = await Feedbacks.countDocuments({
+                productId: product._id,
+            });
+            const totalPages = Math.ceil(totalItems / limit);
+
+            const feedback = feedbacks
+                .map((item) => {
+                    if (!item.userId) {
+                        console.error(
+                            `User not found for feedback item with ID ${item._id}`
+                        );
+                        return null;
+                    }
+                    return {
+                        avatar: item.userId.avatar,
+                        email: item.userId.email,
+                        rating: item.rating,
+                        message: item.message,
+                    };
+                })
+                .filter((item) => item !== null);
+
+            res.json({
+                feedback,
+                page,
+                totalPages,
+            });
+        } catch (error) {
+            console.error("Error paginating reviews:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }
+    }
+
     // [POST] /shop/postFeedback
     async postFeedback(req, res, next) {
-        const { rating, feedback, productId, userId, orderDetailsId } = req.body;
+        const { rating, feedback, productId, userId, orderDetailsId } =
+            req.body;
 
         try {
             const feedbackData = {
@@ -123,16 +195,39 @@ class ShopController {
             const orderDetail = await OrderDetails.findById(orderDetailsId);
 
             if (!orderDetail) {
-                throw new Error('OrderDetail not found');
+                throw new Error("OrderDetail not found");
             }
 
-            const result = await OrderDetails.updateOne({orderId: orderDetail.orderId, productId: orderDetail.productId}, { $set: { isReview: true } });
+            const result = await OrderDetails.updateOne(
+                {
+                    orderId: orderDetail.orderId,
+                    productId: orderDetail.productId,
+                },
+                { $set: { isReview: true } }
+            );
 
             if (!result) {
-                throw new Error('Failed to update orderDetail');
+                throw new Error("Failed to update orderDetail");
             }
 
-            res.json({ success: true });
+            const allFeedbacks = await Feedbacks.find({ productId });
+            const totalRating = allFeedbacks.reduce(
+                (sum, item) => sum + item.rating,
+                0
+            );
+            const averageRating = Math.round(totalRating / allFeedbacks.length);
+
+            const productUpdate = await Products.findByIdAndUpdate(
+                productId,
+                { $set: { rate: averageRating } },
+                { new: true }
+            );
+
+            if (!productUpdate) {
+                throw new Error("Failed to update product rating");
+            }
+
+            res.json({ success: true, averageRating });
         } catch (error) {
             console.error("Error in postFeedback:", error);
             res.json({ success: false, message: error.message });

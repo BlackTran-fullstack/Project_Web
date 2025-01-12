@@ -66,6 +66,35 @@
   bottom: -1px;
 }
 
+#login .login-container .notification {
+  display: flex;
+  align-items: baseline;
+
+  margin-top: 15px;
+
+  font-size: 1.3rem;
+
+  color: #34c759;
+
+  display: none;
+  opacity: 0;
+}
+
+#login .login-container .notification.active {
+  display: flex;
+  opacity: 1;
+  transition: opacity 1s ease-out;
+}
+
+#login .login-container .notification .fa-solid {
+  margin-right: 6px;
+  font-size: 1.5rem;
+}
+
+#login .login-container .notification .notification-text {
+  line-height: 1.5;
+}
+
 #login .login-container .title-form {
   margin-top: 15px;
 

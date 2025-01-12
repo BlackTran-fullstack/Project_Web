@@ -19,6 +19,7 @@ const Users = new Schema(
                 "https://latarfaitdjumzdjmqxd.supabase.co/storage/v1/object/public/images/avatars/userdefault.png",
         },
         role: { type: String, default: "Customer" },
+        isBanned: { type: Boolean, default: false },
     },
     {
         timestamps: true,

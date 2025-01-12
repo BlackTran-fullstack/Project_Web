@@ -224,16 +224,24 @@ class SiteController {
             if (err) return next(err);
 
             if (!user) {
-                req.flash("error", info.message);
-                return res.redirect("/login");
+                return res.status(400).json({
+                    success: false,
+                    errors: [info.message],
+                });
+            }
+
+            if (user.isBanned) {
+                return res.status(400).json({
+                    success: false,
+                    errors: ["Account has been banned."],
+                });
             }
 
             if (!user.verified) {
-                req.flash(
-                    "error",
-                    "Your account has not been verified. Please check your email."
-                );
-                return res.redirect("/login");
+                return res.status(400).json({
+                    success: false,
+                    errors: ["Please verify your email address."],
+                });
             }
 
             req.logIn(user, (err) => {
@@ -254,7 +262,10 @@ class SiteController {
                     });
                 }
 
-                res.redirect("/");
+                return res.status(200).json({
+                    success: true,
+                    message: "Login successful.",
+                });
             });
         })(req, res, next);
     }

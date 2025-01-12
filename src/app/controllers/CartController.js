@@ -116,7 +116,7 @@ class CartController {
     async addToCart(req, res) {
         try {
             const { productId, quantity } = req.body;
-            const userId = req.user.id; //Lay thong tin user da dang nhap
+            const userId = req.user ? req.user.id : null;
             const quantityInt = parseInt(quantity, 10);
 
             if (isNaN(quantityInt) || quantityInt <= 0) {
@@ -131,31 +131,99 @@ class CartController {
             if (!product) {
                 return res
                     .status(404)
-                    .json({ success: false, message: "Product not found" });
+                    .json({ success: false, message: "Product not found." });
             }
 
-            //Kiem tra xem trong cart da co san pham nay chua
-            const existingCart = await Cart.findOne({ userId, productId });
+            if (product.stock < quantityInt) {
+                return res.status(404).json({ success: false, message: "Product quantity is not enough."})
+            }
 
-            if (existingCart) {
-                // Neu co thi cong them so luong
-                existingCart.quantity += quantityInt;
-                await existingCart.save(); // Luu vao database
-            } else {
-                // Chua co thi tao moi
-                const newCart = new Cart({
-                    userId,
-                    productId,
-                    quantity: quantityInt,
+            product.stock -= quantity;
+            await product.save();
+
+            if (userId) {
+                //Kiem tra xem trong cart da co san pham nay chua
+                const existingCart = await Cart.findOne({ userId, productId });
+
+                if (existingCart) {
+                    // Neu co thi cong them so luong
+                    existingCart.quantity += quantityInt;
+                    await existingCart.save(); // Luu vao database
+                } else {
+                    // Chua co thi tao moi
+                    const newCart = new Cart({
+                        userId,
+                        productId,
+                        quantity: quantityInt,
+                    });
+                    await newCart.save(); // Luu vao database
+                }
+                res.status(200).json({
+                    success: true,
+                    message: "Product added to cart successfully",
                 });
-                await newCart.save(); // Luu vao database
+            } else {
+                return res.status(401).json({
+                    success: false,
+                    message: "User not logged in. Save cart in client-side storage."
+                })
             }
-            res.status(200).json({
-                success: true,
-                message: "Product added to cart successfully",
-            });
         } catch (error) {
             console.error("Error adding to cart:", error);
+            res.status(500).json({
+                success: false,
+                message: "Internal Server Error",
+            });
+        }
+    }
+
+    // [POST] /cart/sync
+    async syncCart(req, res) {
+        try {
+            if (!req.user) {
+                return res.status(401).json({
+                    success: false,
+                    message: "User not logged in",
+                });
+            }
+
+            const userId = req.user.id;
+            const cartItems = req.body;
+
+            for (const item of cartItems) {
+                const { productId, quantity } = item;
+                const quantityInt = parseInt(quantity, 10);
+                
+                if (isNaN(quantityInt) || quantityInt <= 0) {
+                    continue;
+                }
+
+                const product = await Products.findById(productId);
+                if (!product) {
+                    continue;
+                }
+
+                const existingCart = await Cart.findOne({ userId, productId});
+
+                if (existingCart) {
+                    existingCart.quantity += quantityInt;
+                    await existingCart.save();
+                } else {
+                    const newCart = new Cart({
+                        userId, 
+                        productId, 
+                        quantity: quantityInt,
+                    });
+                    await newCart.save();
+                }
+            }
+
+            res.status(200).json({
+                success: true,
+                message: "Cart synchronized successfully",
+            })
+        } catch(error) {
+            console.error("Error synchronizing cart:", error);
             res.status(500).json({
                 success: false,
                 message: "Internal Server Error",
@@ -174,6 +242,22 @@ class CartController {
                     success: false,
                     message: "Product ID is required",
                 });
+            }
+
+            const cartItem = await Cart.findOne({ userId, productId});
+            if (!cartItem) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Item not found in cart",
+                });
+            }
+
+            const quantityInCart = cartItem.quantity;
+
+            const product = await Products.findById(productId);
+            if (product) {
+                product.stock += quantityInCart;
+                await product.save();
             }
 
             const result = await Cart.findOneAndDelete({ userId, productId });

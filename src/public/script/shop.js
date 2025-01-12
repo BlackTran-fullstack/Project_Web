@@ -25,6 +25,11 @@ async function loadProducts(page = 1, limit = 8) {
         );
         const data = await response.json();
 
+        const startIndex = (page - 1) * limit + 1;
+        const endIndex = startIndex + data.results.length - 1;
+
+        const resultsCountElement = document.querySelector(".results-count");
+        resultsCountElement.textContent = `Showing ${startIndex}–${endIndex} of ${data.totalDocuments} results`;
         // Xử lý hiển thị sản phẩm
         renderProducts(data.results);
         renderPagination(
@@ -59,7 +64,7 @@ function applyFilters() {
             : parseInt(priceMaxInput);
 
     const limit = document.getElementById("show-count").value;
-    const sortBy = document.getElementById("sort-by").value; 
+    const sortBy = document.getElementById("sort-by").value;
 
     currentFilters = {
         categories: selectedCategories,
@@ -134,13 +139,16 @@ function renderProducts(products) {
 
 function renderPagination(previous, current, next, totalPages) {
     paginationContainer.innerHTML = ""; // Xóa nội dung cũ
+    const limit = document.getElementById("show-count").value;
 
     // Nút "Previous"
     if (previous) {
         const prevButton = document.createElement("button");
         prevButton.textContent = "Previous";
         prevButton.classList.add("page", "page-in-de");
-        prevButton.addEventListener("click", () => loadProducts(previous.page));
+        prevButton.addEventListener("click", () =>
+            loadProducts(previous.page, limit)
+        );
         paginationContainer.appendChild(prevButton);
     }
 
@@ -155,7 +163,7 @@ function renderPagination(previous, current, next, totalPages) {
         if (page === current) {
             pageButton.classList.add("active"); // Đánh dấu trang hiện tại
         }
-        pageButton.addEventListener("click", () => loadProducts(page));
+        pageButton.addEventListener("click", () => loadProducts(page, limit));
         paginationContainer.appendChild(pageButton);
     }
 
@@ -164,7 +172,9 @@ function renderPagination(previous, current, next, totalPages) {
         const nextButton = document.createElement("button");
         nextButton.textContent = "Next";
         nextButton.classList.add("page", "page-in-de");
-        nextButton.addEventListener("click", () => loadProducts(next.page));
+        nextButton.addEventListener("click", () =>
+            loadProducts(next.page, limit)
+        );
         paginationContainer.appendChild(nextButton);
     }
 }

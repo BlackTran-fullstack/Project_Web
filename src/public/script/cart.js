@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const loggedIn = isLoggedIn();
+    if (loggedIn) {
+        syncCartAfterLogin();
+        updateCartCount();
+    }
+
     const cartTable = document.querySelector(".list-items");
 
     cartTable.addEventListener("click", async (e) => {

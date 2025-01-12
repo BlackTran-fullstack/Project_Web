@@ -85,6 +85,10 @@ function paginatedResults(model) {
                 .sort(sortCriteria)
                 .exec();
 
+            results.currentResultsCount = results.results.length;
+
+            results.totalDocuments = totalDocuments;
+
             // Gắn kết quả vào response
             res.paginatedResults = results;
             next();

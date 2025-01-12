@@ -74,6 +74,10 @@ form.addEventListener("submit", async (e) => {
             const data = await res.json();
 
             if (res.ok && data.success) {
+                sessionStorage.setItem(
+                    "notification",
+                    "Please check your email to verify your account."
+                );
                 window.location.href = "/login";
             } else if (data.errors) {
                 data.errors.forEach((error) => {
