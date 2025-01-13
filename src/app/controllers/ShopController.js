@@ -79,8 +79,15 @@ class ShopController {
             productId: product._id,
             isReview: false,
         });
+        let curOrder;
 
-        let isReviewed = orderDetail ? false : true;
+        if(orderDetail) {
+            curOrder = await Orders.findOne({ _id: orderDetail.orderId, status: "APPROVED" });
+        }
+
+        console.log("curOrder", curOrder);
+
+        let isReviewed = curOrder ? false : true;
 
         if (!userId) {
             isReviewed = true;
