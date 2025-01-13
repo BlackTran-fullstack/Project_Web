@@ -238,3 +238,38 @@
     background-color: #d32f2f;
   }
 }
+
+@media (max-width: 768px) {
+  #Profile .shop-header {
+    height: 200px;
+    background-position: center;
+  }
+
+  #Profile .shop-header .shop-title {
+    font-size: 3rem;
+  }
+
+  #Profile .profile-content {
+    margin: 20px;
+    max-width: 100%;
+  }
+
+  #Profile .profile-info .profile-info__avatar {
+    flex-direction: column;
+    gap: 10px;
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  #Profile .profile-info__detail .name .form-group {
+    width: 100%;
+  }
+
+  #Profile .overlay-content {
+    width: 100%;
+    max-width: 300px;
+  }
+}

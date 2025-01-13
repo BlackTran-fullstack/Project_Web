@@ -236,3 +236,129 @@
 
   color: #898989;
 }
+
+#cartPage {
+  // Existing styles remain unchanged
+
+  @media (max-width: 768px) {
+    .cart-header {
+      height: 200px;
+
+      .cart-title {
+        font-size: 3rem;
+      }
+
+      .cart-breadcrumb {
+        font-size: 1.4rem;
+      }
+    }
+
+    .cart-container {
+      margin: 40px 20px;
+      flex-direction: column;
+
+      .cart-content {
+        width: 100%;
+      }
+
+      .cart-detail {
+        width: 100%;
+        overflow-x: auto;
+
+        .list-items {
+          min-width: 100%;
+          width: max-content;
+
+          .cart-item-image {
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              display: block;
+            }
+          }
+
+          th,
+          td {
+            padding: 8px;
+            font-size: 1.4rem;
+            white-space: nowrap;
+          }
+
+          th:first-child, td:first-child { // Image column
+            width: 70px;
+          }
+
+          th:nth-child(2), td:nth-child(2) { // Product name column
+            min-width: 120px;
+            max-width: 200px;
+          }
+
+          th:nth-child(3), td:nth-child(3), // Price column
+          th:nth-child(4), td:nth-child(4), // Quantity column
+          th:nth-child(5), td:nth-child(5) { // Subtotal column
+            min-width: 80px;
+          }
+
+          th:last-child, td:last-child { // Remove button column
+            min-width: 60px;
+          }
+        }
+      }
+
+      .cart-total {
+        width: 100%;
+        margin-left: 0;
+        margin-top: 40px;
+
+        .header {
+          font-size: 2.4rem;
+        }
+
+        .total-price {
+          font-size: 1.4rem;
+
+          .total p {
+            font-size: 1.8rem;
+          }
+        }
+
+        .checkout-btn {
+          margin-top: 30px;
+          margin-bottom: 40px;
+          padding: 15px 30px;
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    .shop-services {
+      margin-top: 60px;
+
+      .services-content {
+        flex-direction: column;
+        gap: 20px;
+        padding: 60px 0;
+        max-width: calc(100% - 40px);
+        align-items: center;
+
+        .service {
+          flex-direction: column;
+          text-align: center;
+        }
+
+      }
+
+      .service-info h3 {
+        font-size: 2rem;
+      }
+
+      .service-info p {
+        font-size: 1.6rem;
+      }
+    }
+  }
+}

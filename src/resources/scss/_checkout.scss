@@ -325,3 +325,72 @@
   display: flex;
   flex-direction: row;
 }
+
+
+@media (max-width: 768px) {
+
+  #checkout #checkout-form{
+    flex-direction: column;
+  }
+
+  #checkout .checkout-header {
+    height: 200px;
+    background-position: center;
+  }
+
+  #checkout .checkout-header .checkout-title {
+    font-size: 3rem;
+  }
+
+  #checkout .checkout-page {
+    margin-top: 20px;
+  }
+
+  #checkout .checkout-page .checkout-content {
+    flex-direction: column;
+    max-width: 100%;
+    margin: 0 20px;
+  }
+
+  #checkout .checkout-content .billing-details,
+  #checkout .checkout-content .order-summary {
+    width: 100%;
+    padding: 20px 0;
+  }
+
+  #checkout .billing-details .sub-title,
+  #checkout .billing-details form {
+    width: 100%;
+  }
+
+  #checkout .billing-details .name .form-group {
+    width: 100%;
+  }
+
+  #checkout .order-summary-content .place-order-btn {
+    width: 100%;
+  }
+
+  #checkout .checkout-services .services-content {
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 0;
+  }
+
+  #checkout .checkout-services .service {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #checkout .checkout-services .service-info h3 {
+    font-size: 2rem;
+  }
+
+  #checkout .checkout-services .service-info p {
+    font-size: 1.5rem;
+  }
+
+  #checkout #deliveryMethodContainer {
+    grid-template-columns: 1fr;
+  }
+}
