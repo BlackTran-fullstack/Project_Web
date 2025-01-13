@@ -74,7 +74,86 @@
                 <span class="quantity-in-cart">{{totalQuantity}}</span>
             </a>
         </div>
+
+        <div class="toggle-btn">
+            <i class="fa-solid fa-bars"></i>
+        </div>
     </nav>
+
+    <div class="dropdown-menu-res">
+        <ul class="navbar-menu">
+            <li>
+                <a href="/" class="nav-item" data-page="home">Home</a>
+            </li>
+            <li>
+                <a href="/shop" class="nav-item" data-page="shop">Shop</a>
+            </li>
+            <li>
+                <a href="/about" class="nav-item" data-page="about">About</a>
+            </li>
+            <li>
+                <a
+                    href="/contact"
+                    class="nav-item"
+                    data-page="contact"
+                >Contact</a>
+            </li>
+        </ul>
+
+        <div class="navbar-icons">
+            {{#if user}}
+                <div class="profile-dropdown">
+                    <i class="fa-solid fa-user" onclick="toggleRes()"></i>
+
+                    <ul
+                        id="user-dropdown"
+                        class="dropdown-menu profile-dropdown-list"
+                    >
+                        <li class="profile-dropdown-list-item">
+                            <a href="/profile" class="dropdown-item"><i
+                                    class="fa-solid fa-user"
+                                ></i>Profile</a>
+                        </li>
+
+                        <li class="profile-dropdown-list-item">
+                            <a href="/list-orders" class="dropdown-item"><i
+                                    class="fa-solid fa-box"
+                                ></i>Orders</a>
+                        </li>
+
+                        <hr />
+
+                        <li class="profile-dropdown-list-item">
+                            <form action="/logout?_method=DELETE" method="POST">
+                                <button class="dropdown-item"><i
+                                        class="fa-solid fa-arrow-right-from-bracket"
+                                    ></i>Log out</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            {{else}}
+                <a href="/login" class="user"><img
+                        src="/img/profile.svg"
+                        alt="Profile"
+                    /></a>
+            {{/if}}
+            <a href="/search" class="search"><img
+                    src="/img/search.svg"
+                    alt="Search"
+                /></a>
+            <a href="#!" class="heart"><img
+                    src="/img/favourite.svg"
+                    alt="Favourite"
+                /></a>
+            <a href="/cart" class="shopping-cart"><img
+                    src="/img/cart.svg"
+                    alt="Cart"
+                />
+                <span class="quantity-in-cart">{{totalQuantity}}</span>
+            </a>
+        </div>
+    </div>
 </header>
 
 <script src="/script/header.js"></script>

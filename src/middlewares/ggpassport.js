@@ -12,6 +12,15 @@ function initializeGG(passport) {
             },
             async (accessToken, refreshToken, profile, done) => {
                 try {
+                    const emailUser = await Users.findOne({
+                        email: profile.emails[0].value,
+                    });
+                    if (emailUser && !emailUser.googleId) {
+                        return done(null, false, {
+                            message:
+                                "This email is already used by another account.",
+                        });
+                    }
                     let user = await Users.findOne({ googleId: profile.id });
 
                     if (!user) {
@@ -22,6 +31,12 @@ function initializeGG(passport) {
                         });
 
                         await user.save();
+                    }
+
+                    if (user.isBanned) {
+                        return done(null, false, {
+                            message: "Your account has been locked.",
+                        });
                     }
 
                     done(null, user);
