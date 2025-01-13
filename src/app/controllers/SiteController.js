@@ -849,7 +849,7 @@ async function handleMomoPayment(total, order_id, cart) {
         var requestId = partnerCode + new Date().getTime();
         var orderId = order_id;
         var orderInfo = "Pay with MoMo";
-        var redirectUrl = "http://localhost:3000/momo/redirect";
+        var redirectUrl = "https://project-web-0hth.onrender.com/momo/redirect";
         var ipnUrl = "https://callback.url/notify";
         var requestType = "captureWallet";
         var extraData = JSON.stringify({ orderId, cart });
