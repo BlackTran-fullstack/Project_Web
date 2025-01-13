@@ -39,6 +39,8 @@ router.get(
     siteController.checkout
 );
 
+router.get("/momo/redirect", siteController.momoRedirect);
+
 router.get("/about", siteController.about);
 
 router.get("/contact", siteController.contact);

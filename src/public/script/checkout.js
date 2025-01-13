@@ -70,8 +70,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 const data = await res.json();
 
                 if (res.ok && data.success) {
-                    alert("Order placed successfully.");
-                    window.location.href = "/list-orders";
+                    if (data.paymentUrl) {
+                        // Nếu server trả về URL thanh toán MoMo
+                        window.location.href = data.paymentUrl;
+                    } else {
+                        alert("Order placed successfully.");
+                        window.location.href = "/list-orders";
+                    }
                 } else {
                     alert("An error occurred. Please try again.");
                 }

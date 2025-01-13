@@ -25,6 +25,7 @@ require("dotenv").config();
 const path = require("path");
 const { stat } = require("fs");
 const mongoose = require("../../util/mongoose");
+const { default: axios } = require("axios");
 
 // nodemailer stuff
 const transporter = nodemailer.createTransport({
@@ -712,43 +713,80 @@ class SiteController {
                 });
             }
 
-            // Set cart
+            // Xử lý giỏ hàng
             const cart = cartItems
                 .map((item) => {
                     if (!item.productId) {
                         console.error(
                             `Product not found for cart item with ID ${item._id}`
                         );
-                        return null; // Avoid accessing properties of undefined
+                        return null;
                     }
                     return {
                         productId: item.productId,
                         quantity: item.quantity,
                     };
                 })
-                .filter((item) => item !== null); // Filter out null values if there are errors with products
+                .filter((item) => item !== null);
 
-            // Set total
+            // Tính tổng tiền
             const total =
                 cart.reduce(
                     (sum, item) => sum + item.productId.price * item.quantity,
                     0
                 ) + deliveryUnit.Fee;
 
+            // Thanh toán qua Momo
+            if (req.body.paymentMethod === "Momo") {
+                const order = new Orders({
+                    userId: userId,
+                    products: cart,
+                    total: total,
+                    deliveryUnit: deliveryUnit.name,
+                    paymentMethod: req.body.paymentMethod,
+                    status: "PENDING",
+                    createdAt: Date.now(),
+                });
+
+                await order.save();
+
+                const paymentResult = await handleMomoPayment(
+                    total,
+                    order._id,
+                    cart
+                );
+
+                if (paymentResult.success) {
+                    return res.status(200).json({
+                        success: true,
+                        paymentUrl: paymentResult.paymentUrl,
+                        message: "Redirecting to Momo payment gateway.",
+                    });
+                } else {
+                    // Thanh toán thất bại
+                    return res.status(400).json({
+                        success: false,
+                        message:
+                            "Payment failed. Redirecting to checkout page.",
+                        redirectUrl: "/checkout",
+                    });
+                }
+            }
+
+            // Thanh toán không qua Momo
             const order = new Orders({
                 userId: userId,
                 products: cart,
                 total: total,
-                deliveryUnit: deliveryUnit.name, // Use delivery unit name
-                paymentMethod: req.body.paymentMethod, // Use payment method name
+                deliveryUnit: deliveryUnit.name,
+                paymentMethod: req.body.paymentMethod,
                 status: "PENDING",
                 createdAt: Date.now(),
             });
 
-            // Save the order to generate the _id
             await order.save();
 
-            // Save order details
+            // Lưu chi tiết đơn hàng
             const orderDetails = cart.map((item) => ({
                 orderId: order._id,
                 productId: item.productId,
@@ -756,7 +794,7 @@ class SiteController {
             }));
             await OrderDetails.insertMany(orderDetails);
 
-            // Clear cart
+            // Xóa giỏ hàng
             await Cart.deleteMany({ userId });
 
             res.status(200).json({
@@ -770,6 +808,94 @@ class SiteController {
                 errors: ["Server error. Please try again later."],
             });
         }
+    }
+
+    // [GET] /momo/redirect
+    async momoRedirect(req, res) {
+        const { resultCode, extraData } = req.query;
+        const parsedData = JSON.parse(extraData);
+        const userId = req.user.id;
+
+        const { orderId, cart } = parsedData;
+
+        console.log(cart);
+        console.log(orderId);
+
+        if (resultCode === "0") {
+            // Lưu chi tiết đơn hàng
+            const orderDetails = cart.map((item) => ({
+                orderId: orderId,
+                productId: item.productId,
+                quantity: item.quantity,
+            }));
+            await OrderDetails.insertMany(orderDetails);
+
+            // Xóa giỏ hàng
+            await Cart.deleteMany({ userId });
+
+            return res.redirect("/list-orders");
+        } else {
+            await Orders.deleteOne({ _id: orderId });
+            return res.redirect("/checkout");
+        }
+    }
+}
+
+async function handleMomoPayment(total, order_id, cart) {
+    try {
+        var partnerCode = "MOMO";
+        var accessKey = "F8BBA842ECF85";
+        var secretkey = "K951B6PE1waDMi640xX08PD3vg6EkVlz";
+        var requestId = partnerCode + new Date().getTime();
+        var orderId = order_id;
+        var orderInfo = "Pay with MoMo";
+        var redirectUrl = "http://localhost:3000/momo/redirect";
+        var ipnUrl = "https://callback.url/notify";
+        var requestType = "captureWallet";
+        var extraData = JSON.stringify({ orderId, cart });
+
+        var rawSignature = `accessKey=${accessKey}&amount=${total}&extraData=${extraData}&ipnUrl=${ipnUrl}&orderId=${orderId}&orderInfo=${orderInfo}&partnerCode=${partnerCode}&redirectUrl=${redirectUrl}&requestId=${requestId}&requestType=${requestType}`;
+
+        const crypto = require("crypto");
+        var signature = crypto
+            .createHmac("sha256", secretkey)
+            .update(rawSignature)
+            .digest("hex");
+
+        const requestBody = JSON.stringify({
+            partnerCode,
+            accessKey,
+            requestId,
+            amount: total,
+            orderId,
+            orderInfo,
+            redirectUrl,
+            ipnUrl,
+            extraData,
+            requestType,
+            signature,
+            lang: "vi",
+        });
+
+        const axios = require("axios");
+        const options = {
+            method: "POST",
+            url: "https://test-payment.momo.vn/v2/gateway/api/create",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            data: requestBody,
+        };
+
+        const result = await axios(options);
+
+        return {
+            success: true,
+            paymentUrl: result.data.payUrl,
+        };
+    } catch (error) {
+        console.error("Momo API Error:", error.response?.data || error.message);
+        return { success: false };
     }
 }
 
