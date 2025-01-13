@@ -50,3 +50,27 @@ document.addEventListener("click", (event) => {
         dropdownMenu.classList.remove("show");
     }
 });
+
+function toggleRes() {
+    const dropdownMenu = document.querySelector(
+        ".dropdown-menu-res.open #user-dropdown"
+    );
+
+    console.log(1);
+
+    if (dropdownMenu) {
+        dropdownMenu.classList.toggle("show");
+        console.log(2);
+    }
+}
+
+const toggleBtn = document.querySelector(".toggle-btn");
+const toggleBtnIcon = document.querySelector(".toggle-btn i");
+const dropdownMenuRes = document.querySelector(".dropdown-menu-res");
+
+toggleBtn.onclick = function () {
+    dropdownMenuRes.classList.toggle("open");
+    const isOpen = dropdownMenuRes.classList.contains("open");
+
+    toggleBtnIcon.classList = isOpen ? "fa-solid fa-xmark" : "fa-solid fa-bars";
+};
