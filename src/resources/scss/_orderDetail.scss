@@ -94,3 +94,33 @@
 #orderDetail .review-btn:hover {
     cursor: pointer;
 }
+
+@media (max-width: 768px) {
+  #orderDetail .orderDetail-header {
+    height: 200px;
+    background-position: center;
+  }
+
+  #orderDetail .orderDetail-header .orderDetail-title {
+    font-size: 3rem;
+  }
+
+  #orderDetail .orderDetail-body .orderDetail-container {
+    width: 90%;
+    padding: 20px 0;
+  }
+
+  #orderDetail .sub-title {
+    font-size: 1.8rem;
+  }
+
+  #orderDetail .orderDetail-table {
+    overflow-x: auto;
+  }
+
+  #orderDetail th,
+  #orderDetail td {
+    padding: 8px 10px;
+    font-size: 1.4rem;
+  }
+}

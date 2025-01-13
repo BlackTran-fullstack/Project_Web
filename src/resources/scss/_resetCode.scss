@@ -183,3 +183,45 @@
   color: #b88e2f;
   background: #fff;
 }
+
+@media (max-width: 768px) {
+  #reset-code .reset-code-header {
+    height: 200px;
+    background-position: center;
+  }
+
+  #reset-code .reset-code-header .reset-code-title {
+    font-size: 3rem;
+  }
+
+  #reset-code .reset-code-body .reset-code-container {
+    width: 90%;
+    padding: 20px 0;
+  }
+
+  #reset-code .reset-code-container .sub-title {
+    font-size: 1.8rem;
+  }
+
+  #reset-code .reset-code-container .title-form {
+    font-size: 1.2rem;
+  }
+
+  #reset-code #reset-code-form .fa-code {
+    font-size: 1.6rem;
+    left: 10px;
+  }
+
+  #reset-code #reset-code-form input {
+    padding-left: 40px;
+  }
+
+  #reset-code #reset-code-form .input-group::after {
+    left: 30px;
+  }
+
+  #reset-code .reset-code-container .reset-code-btn {
+    height: 45px;
+    font-size: 1.4rem;
+  }
+}

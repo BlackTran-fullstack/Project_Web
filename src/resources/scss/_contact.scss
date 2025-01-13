@@ -12,11 +12,19 @@
     background-size: cover;
     background-position: bottom center;
 
+    @media (max-width: 768px) {
+      height: 200px;
+    }
+
     .shop-title {
       font-size: 4.8rem;
       font-weight: 500;
 
       text-align: center;
+
+      @media (max-width: 768px) {
+        font-size: 3.2rem;
+      }
     }
 
     .shop-breadcrumb {
@@ -26,6 +34,10 @@
       gap: 6px;
 
       margin-top: 20px;
+
+      @media (max-width: 768px) {
+        font-size: 1.4rem;
+      }
 
       a {
         font-weight: 500;
@@ -38,15 +50,27 @@
   .contact-page {
     padding: 4rem 2rem;
 
+    @media (max-width: 768px) {
+      padding: 2rem 1rem;
+    }
+
     .contact-header {
       margin-bottom: 12rem;
       text-align: center;
       line-height: 1.5;
 
+      @media (max-width: 768px) {
+        margin-bottom: 6rem;
+      }
+
       .contact-title {
         font-size: 3.6rem;
         font-weight: 600;
         margin-bottom: 1rem;
+
+        @media (max-width: 768px) {
+          font-size: 2.8rem;
+        }
       }
 
       .contact-description {
@@ -56,6 +80,10 @@
         margin: 0 auto;
         font-size: 1.5rem;
         opacity: 0.7;
+
+        @media (max-width: 768px) {
+          font-size: 1.4rem;
+        }
       }
     }
 
@@ -65,12 +93,21 @@
       justify-content: space-evenly;
       gap: 2rem;
 
+      @media (max-width: 768px) {
+        flex-direction: column;
+      }
+
       .contact-info {
         flex: 1 1 100%;
         max-width: 30%;
         display: flex;
         flex-direction: column;
         gap: 5rem;
+
+        @media (max-width: 768px) {
+          max-width: 100%;
+          gap: 3rem;
+        }
 
         .info-item {
           display: flex;
@@ -80,18 +117,31 @@
           .info-icon {
             width: 40px;
             height: 40px;
+
+            @media (max-width: 768px) {
+              width: 30px;
+              height: 30px;
+            }
           }
 
           .info-title {
             font-size: 2.4rem;
             font-weight: 600;
             margin-bottom: 1rem;
+
+            @media (max-width: 768px) {
+              font-size: 2rem;
+            }
           }
 
           .info-text {
             font-size: 1.6rem;
             margin-bottom: 0.5rem;
             opacity: 0.8;
+
+            @media (max-width: 768px) {
+              font-size: 1.4rem;
+            }
           }
         }
       }
@@ -99,6 +149,10 @@
       .contact-form {
         flex: 1 1 100%;
         max-width: 50%;
+
+        @media (max-width: 768px) {
+          max-width: 100%;
+        }
 
         .form {
           display: flex;
@@ -109,6 +163,10 @@
             font-size: 1.6rem;
             font-weight: 500;
             margin-bottom: 1rem;
+
+            @media (max-width: 768px) {
+              font-size: 1.4rem;
+            }
           }
 
           .form-input,
@@ -118,6 +176,12 @@
             border-radius: 1rem;
             font-size: 2rem;
             margin-bottom: 2rem;
+
+            @media (max-width: 768px) {
+              padding: 1.5rem;
+              font-size: 1.6rem;
+              margin-bottom: 1.5rem;
+            }
           }
 
           .form-button {
@@ -131,6 +195,11 @@
             &:hover {
               background-color: #a67c2a;
             }
+
+            @media (max-width: 768px) {
+              padding: 1.5rem;
+              font-size: 1.4rem;
+            }
           }
         }
       }
@@ -141,6 +210,10 @@
     margin-top: 85px;
     background: #faf3ea;
 
+    @media (max-width: 768px) {
+      margin-top: 50px;
+    }
+
     .services-content {
       display: flex;
       justify-content: space-between;
@@ -149,12 +222,25 @@
       max-width: calc(100% - 106px);
       padding: 100px 0;
       margin: auto;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        max-width: calc(100% - 40px);
+        align-items: center;
+        gap: 20px;
+        padding: 50px 0;
+      }
     }
 
     .service {
       display: flex;
       align-items: center;
       gap: 10px;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+      }
     }
 
     .service-info h3 {
@@ -162,6 +248,10 @@
       font-weight: 600;
 
       color: #242424;
+
+      @media (max-width: 768px) {
+        font-size: 2rem;
+      }
     }
 
     .service-info p {
@@ -171,6 +261,11 @@
       font-weight: 500;
 
       color: #898989;
+
+      @media (max-width: 768px) {
+        font-size: 1.6rem;
+      }
     }
   }
 }
+

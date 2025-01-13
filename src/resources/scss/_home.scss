@@ -1,437 +1,534 @@
-#home .hero {
-  width: 100%;
-  height: 100vh;
+// Variables
+$primary-color: #b88e2f;
+$text-color: #3a3a3a;
+$background-color: #fff3e3;
 
-  background-image: url(/img/home_background.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
-
-  position: relative;
-}
-
-#home .hero-introduce {
-  width: 45%;
-
-  border-radius: 10px;
-
-  background: #fff3e3;
-
-  position: absolute;
-  top: 50%;
-  right: 4%;
-  transform: translateY(-50%);
-}
-
-#home .hero-content {
-  padding: 62px 0 37px 39px;
-}
-
-#home .hero-content .sub-title {
-  font-weight: 600;
-  letter-spacing: 0.3rem;
-}
-
-#home .hero-content .title {
-  margin-top: 4px;
-
-  font-size: 5.2rem;
-  font-weight: 700;
-  line-height: 1.25;
-
-  color: #b88e2f;
-}
-
-#home .hero-content .desc {
-  margin-top: 17px;
-
-  font-size: 1.8rem;
-  font-weight: 500;
-  line-height: 1.33;
-}
-
-#home .hero-content .hero-btn {
-  max-width: 222px;
-  height: 74px;
-  margin-top: 46px;
-
-  font-weight: 700;
-
-  color: #fff;
-  background: #b88e2f;
-}
-
-#home .browse {
-  margin-top: 56px;
-}
-
-#home .browse-content {
-  max-width: calc(100% - 252px);
-  margin: auto;
-}
-
-#home .browse-introduce .sec-title {
-  font-size: 3.2rem;
-  font-weight: 700;
-  text-align: center;
-
-  color: #333;
-}
-
-#home .browse-introduce .desc {
-  margin-top: 5px;
-
-  font-size: 2rem;
-  text-align: center;
-
-  color: #666;
-}
-
-#home .browse-category {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-
-  margin-top: 62px;
-}
-
-#home .category-item {
-  flex: 1;
-}
-
-#home .category-item img {
-  width: 100%;
-  height: 480px;
-
-  border-radius: 12px;
-
-  object-fit: cover;
-}
-
-#home .category-item .category-title {
-  margin-top: 30px;
-
-  font-size: 2.4rem;
-  font-weight: 600;
-
-  text-align: center;
-}
-
-#home .products {
-  margin-top: 56px;
-}
-
-#home .products .products-content {
-  max-width: calc(100% - 204px);
-  margin: auto;
-}
-
-#home .products-content .sub-title {
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 1.2;
-
-  text-align: center;
-
-  color: #3a3a3a;
-}
-
-#home .products .list-products {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
-
-  margin-top: 32px;
-}
-
-#home .list-products .product {
-  background: #f4f5f7;
-  height: 400px;
-  position: relative;
-}
-
-#home .list-products .product-image {
-  width: 100%;
-  height: 65%;
-  object-fit: cover;
-}
-
-#home .list-products .product-info {
-  padding: 16px 0 30px 16px;
-  height: 35%;
-}
-
-#home .product-info .product-name {
-  font-size: 2.4rem;
-  font-weight: 600;
-
-  color: #3a3a3a;
-}
-
-#home .product-info .product-desc {
-  width: 80%;
-  margin-top: 8px;
-
-  font-size: 1.4rem;
-  line-height: 1.5;
-
-  color: #898989;
-}
-
-#home .product-info .product-price {
-  margin-top: 8px;
-
-  font-size: 2rem;
-  font-weight: 600;
-
-  color: #3a3a3a;
-}
-
-#home .products-content .products-btn {
-  max-width: 245px;
-  height: 48px;
-  border: 1px solid #b88e2f;
-  margin: 32px auto 0;
-
-  font-weight: 600;
-
-  color: #b88e2f;
-
-  transition: all 0.5s ease;
-}
-
-#home .products-content .products-btn:hover {
-  border: none;
-
-  background: #b88e2f;
-  color: #fff;
-}
-
-#home .list-products .product-hover {
+// Mixins
+@mixin flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  width: 100%;
-  height: 100%;
-
-  background-color: rgba(51, 51, 51, 0.72);
-
-  position: absolute;
-  top: 0;
-
-  display: none;
 }
 
-#home .product-hover .product-actions {
-  width: 88%;
+@mixin responsive-padding {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-#home .product-hover .actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#home {
+  .hero {
+    width: 100%;
+    height: 100vh;
+    background-image: url(/img/home_background.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
 
-  margin-top: 24px;
-}
+    @media (max-width: 768px) {
+      height: 70vh;
+    }
+  }
 
-#home .product-hover .cart-btn {
-  max-width: 80%;
-  height: 48px;
-  margin: auto;
+  .hero-introduce {
+    width: 45%;
+    border-radius: 10px;
+    background: $background-color;
+    position: absolute;
+    top: 50%;
+    right: 4%;
+    transform: translateY(-50%);
 
-  font-weight: 600;
+    @media (max-width: 1024px) {
+      width: 60%;
+    }
 
-  color: #b88e2f;
-  background: #fff;
+    @media (max-width: 768px) {
+      width: 90%;
+      right: 5%;
+      left: 5%;
+    }
+  }
 
-  transition: all 0.5s ease;
-}
+  .hero-content {
+    padding: 62px 39px 37px;
 
-#home .product-hover .cart-btn:hover {
-  background: #b88e2f;
-  color: #fff;
-}
+    @media (max-width: 768px) {
+      padding: 30px 20px;
+    }
 
-#home .product-hover .action {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
+    .sub-title {
+      font-weight: 600;
+      letter-spacing: 0.3rem;
+    }
 
-#home .product-hover .action-name {
-  font-weight: 600;
+    .title {
+      margin-top: 4px;
+      font-size: 5.2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: $primary-color;
 
-  color: #fff;
-}
+      @media (max-width: 768px) {
+        font-size: 3.6rem;
+      }
+    }
 
-#home .product:hover .product-hover {
-  display: flex;
-}
+    .desc {
+      margin-top: 17px;
+      font-size: 1.8rem;
+      font-weight: 500;
+      line-height: 1.33;
 
-#home .inspiration {
-  margin-top: 69px;
+      @media (max-width: 768px) {
+        font-size: 1.6rem;
+      }
+    }
 
-  background: #fcf8f3;
+    .hero-btn {
+      max-width: 222px;
+      height: 74px;
+      margin-top: 46px;
+      font-weight: 700;
+      color: #fff;
+      background: $primary-color;
 
-  overflow: hidden;
-}
+      @media (max-width: 768px) {
+        max-width: 100%;
+        height: 60px;
+        margin-top: 30px;
+      }
+    }
+  }
 
-#home .inspiration .inspiration-content {
-  display: flex;
-  align-items: center;
-  padding: 44px 0 44px 100px;
+  .browse {
+    margin-top: 56px;
+    @include responsive-padding;
+  }
 
-  position: relative;
-}
+  .browse-content {
+    max-width: 1200px;
+    margin: auto;
+  }
 
-#home .inspiration .inspiration-introduce {
-  flex-shrink: 0;
+  .browse-introduce {
+    .sec-title {
+      font-size: 3.2rem;
+      font-weight: 700;
+      text-align: center;
+      color: $text-color;
 
-  width: 30%;
-  margin-right: 42px;
-}
+      @media (max-width: 768px) {
+        font-size: 2.8rem;
+      }
+    }
 
-#home .inspiration-introduce .sub-title {
-  font-size: 4rem;
-  font-weight: 700;
-  line-height: 1.2;
+    .desc {
+      margin-top: 5px;
+      font-size: 2rem;
+      text-align: center;
+      color: #666;
 
-  color: #3a3a3a;
-}
+      @media (max-width: 768px) {
+        font-size: 1.8rem;
+      }
+    }
+  }
 
-#home .inspiration-introduce .desc {
-  margin-top: 7px;
+  .browse-category {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 62px;
 
-  font-weight: 500;
-  line-height: 1.5;
+    @media (max-width: 768px) {
+      flex-direction: column;
+      margin-top: 40px;
+    }
+  }
 
-  color: #616161;
-}
+  .category-item {
+    flex: 1;
 
-#home .inspiration-introduce .inspiration-btn {
-  margin-top: 25px;
+    img {
+      width: 100%;
+      height: 480px;
+      border-radius: 12px;
+      object-fit: cover;
 
-  max-width: 176px;
-  height: 48px;
+      @media (max-width: 768px) {
+        height: 300px;
+      }
+    }
 
-  font-weight: 600;
-  line-height: 1.5;
+    .category-title {
+      margin-top: 30px;
+      font-size: 2.4rem;
+      font-weight: 600;
+      text-align: center;
 
-  color: #fff;
-  background: #b88e2f;
-}
+      @media (max-width: 768px) {
+        font-size: 2rem;
+        margin-top: 20px;
+      }
+    }
+  }
 
-#home .inspiration-content .inspiration-rooms {
-  flex-shrink: 0;
+  .products {
+    margin-top: 56px;
+    @include responsive-padding;
+  }
 
-  display: flex;
-  gap: 24px;
+  .products-content {
+    max-width: 1200px;
+    margin: auto;
 
-  width: 83%;
-}
+    .sub-title {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      color: $text-color;
 
-#home .inspiration-rooms .room {
-  flex-shrink: 0;
+      @media (max-width: 768px) {
+        font-size: 3.2rem;
+      }
+    }
+  }
 
-  width: 31%;
-  height: 486px;
+  .list-products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    margin-top: 32px;
 
-  position: relative;
-}
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
 
-#home .inspiration-rooms .room:first-child {
-  width: 34%;
-  height: 582px;
-}
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
 
-#home .room .room-picture {
-  width: 100%;
-  height: 100%;
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
 
-  object-fit: cover;
-}
+    .product {
+      background: #f4f5f7;
+      height: 400px;
+      position: relative;
 
-#home .room .room-introduce {
-  width: 54%;
-  height: 130px;
+      @media (max-width: 768px) {
+        height: 350px;
+      }
+    }
 
-  background: #fff;
+    .product-image {
+      width: 100%;
+      height: 65%;
+      object-fit: cover;
+    }
 
-  opacity: 72%;
+    .product-info {
+      padding: 16px;
+      height: 35%;
 
-  position: absolute;
-  bottom: 4%;
-  left: 6%;
-}
+      .product-name {
+        font-size: 2.4rem;
+        font-weight: 600;
+        color: $text-color;
 
-#home .room-introduce .info {
-  padding: 15% 8% 0 15%;
-}
+        @media (max-width: 768px) {
+          font-size: 2rem;
+        }
+      }
 
-#home .room-introduce .general-information {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+      .product-desc {
+        width: 80%;
+        margin-top: 8px;
+        font-size: 1.4rem;
+        line-height: 1.5;
+        color: #898989;
 
-#home .room-introduce .numerical-order {
-  font-weight: 500;
+        @media (max-width: 768px) {
+          font-size: 1.2rem;
+        }
+      }
 
-  color: #616161;
-}
+      .product-price {
+        margin-top: 8px;
+        font-size: 2rem;
+        font-weight: 600;
+        color: $text-color;
 
-#home .room-introduce .general-information div {
-  width: 27px;
-  height: 1px;
+        @media (max-width: 768px) {
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
 
-  background: #616161;
-}
+  .products-btn {
+    max-width: 245px;
+    height: 48px;
+    border: 1px solid $primary-color;
+    margin: 32px auto 0;
+    font-weight: 600;
+    color: $primary-color;
+    transition: all 0.5s ease;
 
-#home .room-introduce .room-type {
-  font-weight: 500;
+    &:hover {
+      background: $primary-color;
+      color: #fff;
+    }
 
-  color: #616161;
-}
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
+  }
 
-#home .room-introduce .inspiration-name {
-  margin-top: 20px;
+  .product-hover {
+    @include flex-center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(51, 51, 51, 0.72);
+    position: absolute;
+    top: 0;
+    display: none;
 
-  font-size: 2.5rem;
-  font-weight: 600;
+    .product-actions {
+      width: 88%;
+    }
 
-  color: #3a3a3a;
-}
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 24px;
+    }
 
-#home .room .room-detail {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    .cart-btn {
+      max-width: 80%;
+      height: 48px;
+      margin: auto;
+      font-weight: 600;
+      color: $primary-color;
+      background: #fff;
+      transition: all 0.5s ease;
 
-  width: 48px;
-  height: 48px;
+      &:hover {
+        background: $primary-color;
+        color: #fff;
+      }
+    }
 
-  background: #b88e2f;
+    .action {
+      display: flex;
+      align-items: center;
+      gap: 2px;
 
-  position: absolute;
-  right: 27.1%;
-  bottom: 4%;
-}
+      &-name {
+        font-weight: 600;
+        color: #fff;
+      }
+    }
+  }
 
-#home .inspiration-rooms .next-room {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .product:hover .product-hover {
+    display: flex;
+  }
 
-  width: 48px;
-  height: 48px;
+  .inspiration {
+    margin-top: 69px;
+    background: #fcf8f3;
+    overflow: hidden;
 
-  border-radius: 50%;
+    @media (max-width: 768px) {
+      margin-top: 40px;
+    }
+  }
 
-  background: #fff;
+  .inspiration-content {
+    display: flex;
+    align-items: center;
+    padding: 44px 0 44px 100px;
+    position: relative;
 
-  position: absolute;
-  top: 50%;
-  right: 4%;
-  transform: translateY(-50%);
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      padding: 44px 20px;
+    }
+  }
+
+  .inspiration-introduce {
+    flex-shrink: 0;
+    width: 30%;
+    margin-right: 42px;
+
+    @media (max-width: 1024px) {
+      width: 100%;
+      margin-right: 0;
+      margin-bottom: 30px;
+    }
+
+    .sub-title {
+      font-size: 4rem;
+      font-weight: 700;
+      line-height: 1.2;
+      color: $text-color;
+
+      @media (max-width: 768px) {
+        font-size: 3.2rem;
+      }
+    }
+
+    .desc {
+      margin-top: 7px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #616161;
+    }
+
+    .inspiration-btn {
+      margin-top: 25px;
+      max-width: 176px;
+      height: 48px;
+      font-weight: 600;
+      line-height: 1.5;
+      color: #fff;
+      background: $primary-color;
+
+      @media (max-width: 768px) {
+        max-width: 100%;
+      }
+    }
+  }
+
+  .inspiration-rooms {
+    flex-shrink: 0;
+    display: flex;
+    gap: 24px;
+    width: 83%;
+    overflow-x: auto;
+    padding-bottom: 20px;
+
+    @media (max-width: 1024px) {
+      width: 100%;
+    }
+
+    .room {
+      flex-shrink: 0;
+      width: 31%;
+      height: 486px;
+      position: relative;
+
+      @media (max-width: 768px) {
+        width: 80%;
+        height: 400px;
+      }
+
+      &:first-child {
+        width: 34%;
+        height: 582px;
+
+        @media (max-width: 768px) {
+          width: 80%;
+          height: 400px;
+        }
+      }
+
+      .room-picture {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .room-introduce {
+        width: 54%;
+        height: 130px;
+        background: #fff;
+        opacity: 72%;
+        position: absolute;
+        bottom: 4%;
+        left: 6%;
+
+        @media (max-width: 768px) {
+          width: 80%;
+          height: auto;
+          padding: 10px;
+        }
+
+        .info {
+          padding: 15% 8% 0 15%;
+
+          @media (max-width: 768px) {
+            padding: 10px;
+          }
+        }
+
+        .general-information {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          div {
+            width: 27px;
+            height: 1px;
+            background: #616161;
+          }
+        }
+
+        .numerical-order,
+        .room-type {
+          font-weight: 500;
+          color: #616161;
+        }
+
+        .inspiration-name {
+          margin-top: 20px;
+          font-size: 2.5rem;
+          font-weight: 600;
+          color: $text-color;
+
+          @media (max-width: 768px) {
+            font-size: 2rem;
+            margin-top: 10px;
+          }
+        }
+      }
+
+      .room-detail {
+        @include flex-center;
+        width: 48px;
+        height: 48px;
+        background: $primary-color;
+        position: absolute;
+        right: 27.1%;
+        bottom: 4%;
+
+        @media (max-width: 768px) {
+          right: 10%;
+          bottom: 10%;
+        }
+      }
+    }
+
+    .next-room {
+      @include flex-center;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      position: absolute;
+      top: 50%;
+      right: 4%;
+      transform: translateY(-50%);
+
+      @media (max-width: 1024px) {
+        display: none;
+      }
+    }
+  }
 }

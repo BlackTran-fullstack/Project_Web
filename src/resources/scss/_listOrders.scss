@@ -126,3 +126,32 @@
 
   color: #b88e2f;
 }
+
+@media (max-width: 768px) {
+  #listOrder .listOrder-header {
+    height: 200px;
+    background-position: center;
+  }
+
+  #listOrder .listOrder-header .listOrder-title {
+    font-size: 3rem;
+  }
+
+  #listOrder .listOrder-container {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  #listOrder .sub-title {
+    font-size: 20px;
+  }
+
+  #listOrder th,
+  #listOrder td {
+    padding: 8px 10px;
+  }
+
+  #listOrder .listOrder-table {
+    overflow-x: auto;
+  }
+}
