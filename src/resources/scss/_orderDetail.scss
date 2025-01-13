@@ -106,8 +106,9 @@
   }
 
   #orderDetail .orderDetail-body .orderDetail-container {
-    width: 90%;
+    width: 95%;
     padding: 20px 0;
+    max-width: none;
   }
 
   #orderDetail .sub-title {
@@ -121,6 +122,6 @@
   #orderDetail th,
   #orderDetail td {
     padding: 8px 10px;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
   }
 }
