@@ -17,10 +17,16 @@
             <div class="singleProduct-info">
                 <div class="product-image">
                     <ul class="image-gallery">
+                        {{!-- <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
                         <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
                         <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
-                        <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
-                        <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li>
+                        <li class="thumbnail"><img src="{{product.imagePath}}" alt="{{product.name}}" /></li> --}}
+
+                        {{#if product.extraImages.length}}
+                            {{#each product.extraImages}}
+                                <li class="thumbnail"><img src="{{this}}" alt="{{product.name}}"></li>
+                            {{/each}}
+                        {{/if}}
                     </ul>
 
                     <div class="main-image">

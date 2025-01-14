@@ -4,6 +4,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const reduceBtn = document.querySelector(".quantity-btn.reduce");
     const addToCartBtn = document.getElementById("addToCart");
 
+    const mainImage = document.querySelector(".main-image img");
+    const thumbnails = document.querySelectorAll(".thumbnail img");
+
+    thumbnails.forEach((thumbnail) => {
+        thumbnail.addEventListener("click", () => {
+            const tempSrc = mainImage.src;
+
+            mainImage.src = thumbnail.src;
+
+            thumbnail.src = tempSrc;
+        });
+    });
+
     if (!quantityElement || !increaseBtn || !reduceBtn || !addToCartBtn) {
         console.error("Required DOM elements not found.");
         return;
