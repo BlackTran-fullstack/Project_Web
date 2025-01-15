@@ -81,6 +81,9 @@ app.engine(
             eq: (a, b) => a === b,
             multiply: (a, b) => a * b,
             lt: (a, b) => a < b,
+            gt: (a, b) => a > b,
+            add: (a, b) => a + b,
+            sub: (a, b) => a - b,
         },
     })
 );

@@ -13,16 +13,82 @@ const paginatedResults = require("../../middlewares/paginated");
 class ShopController {
     // [GET] /shop
     shop(req, res, next) {
-        Promise.all([Products.find({}), Categories.find({}), Brands.find({})])
-            .then(([products, categories, brands]) => {
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 8;
+
+        const filters = {};
+
+        if (req.query.categories) {
+            filters.categoriesId = { $in: req.query.categories.split(",") };
+        }
+
+        if (req.query.brands) {
+            filters.brandsId = { $in: req.query.brands.split(",") };
+        }
+
+        if (req.query.priceMin && req.query.priceMax) {
+            filters.price = {
+                $gte: parseInt(req.query.priceMin),
+                $lte: parseInt(req.query.priceMax),
+            };
+        }
+
+        const sortBy = req.query.sortBy;
+        let sortCriteria = {};
+
+        switch (sortBy) {
+            case "stock_0":
+                sortCriteria = { stock: -1 };
+                break;
+            case "stock_1":
+                sortCriteria = { stock: 1 };
+                break;
+            case "rating_0":
+                sortCriteria = { rate: -1 };
+                break;
+            case "rating_1":
+                sortCriteria = { rate: 1 };
+                break;
+            case "price_0":
+                sortCriteria = { price: -1 };
+                break;
+            case "price_1":
+                sortCriteria = { price: 1 };
+                break;
+            default:
+                sortCriteria = {};
+        }
+
+        const startIndex = (page - 1) * limit;
+
+        Promise.all([
+            Products.find(filters)
+                .sort(sortCriteria)
+                .skip(startIndex)
+                .limit(limit),
+            Products.countDocuments(filters),
+            Categories.find({}),
+            Brands.find({}),
+        ])
+            .then(([products, totalDocuments, categories, brands]) => {
+                const totalPages = Math.ceil(totalDocuments / limit);
+
                 res.render("shop", {
                     products: mutipleMongooseToObject(products),
                     categories: mutipleMongooseToObject(categories),
                     brands: mutipleMongooseToObject(brands),
+                    currentPage: page,
+                    totalPages,
+                    filters: req.query,
                     user: mongooseToObject(req.user),
                 });
             })
-            .catch(next);
+            .catch((err) => {
+                console.error(err);
+                res.status(500).render("error", {
+                    message: "Unable to load shop data.",
+                });
+            });
     }
 
     // [GET] /shop/api/products
@@ -81,8 +147,11 @@ class ShopController {
         });
         let curOrder;
 
-        if(orderDetail) {
-            curOrder = await Orders.findOne({ _id: orderDetail.orderId, status: "APPROVED" });
+        if (orderDetail) {
+            curOrder = await Orders.findOne({
+                _id: orderDetail.orderId,
+                status: "APPROVED",
+            });
         }
 
         console.log("curOrder", curOrder);

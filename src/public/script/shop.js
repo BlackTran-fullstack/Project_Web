@@ -5,7 +5,12 @@ let currentFilters = {
     brands: [],
     priceMin: 0,
     priceMax: 20000000,
+    sortBy: null,
 };
+
+function isAjaxRequest() {
+    return !!window.XMLHttpRequest;
+}
 
 // Hàm tải dữ liệu từ API
 async function loadProducts(page = 1, limit = 8) {
@@ -20,16 +25,18 @@ async function loadProducts(page = 1, limit = 8) {
             sortBy: currentFilters.sortBy,
         });
 
+        if (!isAjaxRequest()) {
+            window.location.href = `/shop?${queryParams.toString()}`;
+            return;
+        }
+
         const response = await fetch(
             `/shop/api/products?${queryParams.toString()}`
         );
         const data = await response.json();
 
-        const startIndex = (page - 1) * limit + 1;
-        const endIndex = startIndex + data.results.length - 1;
+        history.pushState(null, "", `/shop?${queryParams.toString()}`);
 
-        const resultsCountElement = document.querySelector(".results-count");
-        resultsCountElement.textContent = `Showing ${startIndex}–${endIndex} of ${data.totalDocuments} results`;
         // Xử lý hiển thị sản phẩm
         renderProducts(data.results);
         renderPagination(
@@ -38,6 +45,12 @@ async function loadProducts(page = 1, limit = 8) {
             data.next, // Trang tiếp theo (next)
             data.totalPages
         );
+
+        const startIndex = (page - 1) * limit + 1;
+        const endIndex = startIndex + data.results.length - 1;
+
+        const resultsCountElement = document.querySelector(".results-count");
+        resultsCountElement.textContent = `Showing ${startIndex}–${endIndex} of ${data.totalDocuments} results`;
     } catch (error) {
         console.error("Error fetching products:", error);
     }
@@ -189,5 +202,12 @@ function filter_toggle() {
     const filterSidebar = document.getElementById("filter-sidebar");
     filterSidebar.classList.toggle("active");
 }
+
+window.addEventListener("popstate", (event) => {
+    const queryParams = new URLSearchParams(window.location.search);
+    const page = parseInt(queryParams.get("page")) || 1;
+    const limit = parseInt(queryParams.get("limit")) || 8;
+    loadProducts(page, limit); // Gọi lại hàm tải dữ liệu
+});
 
 loadProducts();
